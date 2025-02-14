@@ -1,10 +1,10 @@
-package com.monsieurabarbe;
+package com.monsieurabarbeback;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MonsieurabarbeApplicationTests {
+class MonsieurabarbebackApplicationTests {
 
 	@Test
 	void contextLoads() {
