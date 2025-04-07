@@ -10,8 +10,7 @@
   grid-template-rows: 20px 1fr 20px;
   align-items: center;
   justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
+  padding: 20px;
   gap: 64px;
   font-family: var(--font-geist-sans);
 }
@@ -27,11 +26,38 @@
   }
 }
 
+.header {
+  background-color: #bb1e1e;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .main {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 32px;
   grid-row-start: 2;
+  /* background-color: aqua; */
+  width: 100%;
+
+}
+
+.main .intro{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url("/banniere-1.png");
+  background-size: cover;
+  width: 100%;
+  min-height: 60dvh ;
+  padding: 10px;
+  gap: 32px;
 }
 
 .main ol {
@@ -56,8 +82,10 @@
   font-weight: 600;
 }
 
+
 .ctas {
   display: flex;
+  justify-content: center;
   gap: 16px;
 }
 
@@ -95,7 +123,10 @@ a.secondary {
 .footer {
   grid-row-start: 3;
   display: flex;
+  justify-content: center;
   gap: 24px;
+  background-color: #bb1e1e;
+  width: 100%;
 }
 
 .footer a {
