@@ -1,0 +1,23 @@
+/* Header styles */
+.header {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    display : flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.header a:not(.title):hover {
+    text-decoration: underline;
+}
+
