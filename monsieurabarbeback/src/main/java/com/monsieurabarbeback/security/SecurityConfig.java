@@ -14,7 +14,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -29,23 +28,25 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOriginPatterns(List.of("*")); // Permet toutes les origines
+                    config.setAllowedOriginPatterns(List.of("*"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true); // Permet l'envoi de cookies/JWT
                     return config;
                 }))
-                .csrf(csrf -> csrf.disable()) // Désactive CSRF car API stateless
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
-                                "/api/auth/**",
-                                "/swagger-ui/**",       // Swagger UI
-                                "/v3/api-docs/**",      // Documentation OpenAPI
-                                "/swagger-resources/**",// Swagger resources
-                                "/webjars/**",          // Webjars utilisés par Swagger
-                                "/actuator/**"
-                        ).permitAll()
-                        .anyRequest().authenticated()
+                                "/api/auth/**",           // Authentification
+                                "/swagger-ui/**",         // Swagger UI
+                                "/v3/api-docs/**",        // Documentation OpenAPI
+                                "/swagger-resources/**",
+                                "/webjars/**",
+                                "/actuator/**",
+                                "/swagger-ui.html"
+
+                        ).permitAll()  // Autoriser l'accès sans authentification
+                        .anyRequest().authenticated() // Authentifier toutes les autres requêtes
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -58,7 +59,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("*")); // Gère correctement les origines dynamiques
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
