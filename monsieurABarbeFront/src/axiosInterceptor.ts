@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Créez une instance Axios
 const axiosI = axios.create({
-  baseURL: process.env.BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   headers: {
     "Content-Type": "application/json;charset=utf-8",
     "Access-Control-Allow-Origin": "*",

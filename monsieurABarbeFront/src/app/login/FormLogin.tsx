@@ -3,19 +3,22 @@
 // import { redirect } from "next/navigation";
 import { useState } from "react";
 import styles from "./login.module.css";
+import { AuthStatus, useAuth } from "@/contexts/AuthContext";
+import { authStatusToString } from "@/utils/enumToString";
 
 export default function FormLogin() {
-  const [username, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  //   const { submitLogin } = useAuth();
+  const { submitLogin } = useAuth();
+
   const submit = async () => {
-    if (username && password) {
-      //   const status = await submitLogin({ username, password });
-      //   if (status != AuthStatus.OK) {
-      //     setErrorMessage(authStatusToString(status));
-      //     return;
-      //   }
+    if (email && password) {
+      const status = await submitLogin({ email, password });
+      if (status != AuthStatus.OK) {
+        setErrorMessage(authStatusToString(status));
+        return;
+      }
     } else {
       setErrorMessage("Veuillez remplir tous les champs");
       return;
@@ -28,16 +31,16 @@ export default function FormLogin() {
         e.preventDefault();
         submit();
       }}
-      action={""}
+      // action={""}
       className={styles.formLogin}
     >
       <div className="">
         <input
           type="text"
           className={styles.formInputLogin}
-          placeholder="Email ou Pseudo"
-          value={username}
-          onChange={(e) => setUserName(e.target.value)}
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           autoFocus
           required
         />
