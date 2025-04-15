@@ -1,3 +1,4 @@
+"use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getProtected, loginRequest, registerRequest } from "@/api/auth/auth";
 import axios from "axios";
@@ -10,22 +11,22 @@ type UserInfo =
   | { state: LoginState.LOGGED_IN };
 
 export type UserSignup = {
-  name: string;
+  userName: string;
   email: string;
   password: string;
 };
 
 export type UserLogin = {
-  username: string;
+  email: string;
   password: string;
 };
 
 interface IAuthContext {
   userInfo: UserInfo | null;
-  submitLogin: ({ username, password }: UserLogin) => Promise<AuthStatus>;
+  submitLogin: ({ email, password }: UserLogin) => Promise<AuthStatus>;
   logout: () => Promise<void>;
   submitRegister: ({
-    name,
+    userName,
     email,
     password,
   }: UserSignup) => Promise<AuthStatus>;
@@ -147,7 +148,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return AuthStatus.OK;
     } catch (err) {
       console.log(err);
-      if (axios.isAxiosError(err) && err.request.status === 403) {
+      if (axios.isAxiosError(err) && err.request?.status === 403) {
         //Wrong credentials
         return AuthStatus.WRONG_CREDENTIALS;
       }
