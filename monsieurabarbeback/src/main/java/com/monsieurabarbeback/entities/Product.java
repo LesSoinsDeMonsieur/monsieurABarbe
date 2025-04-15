@@ -1,14 +1,22 @@
 package com.monsieurabarbeback.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"boxItems", "orderItems", "cartItems"})
 @Entity
 @Table(name = "products")
 public class Product {
@@ -31,12 +39,17 @@ public class Product {
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<BoxItem> boxItems = new HashSet<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<OrderItem> orderItems = new HashSet<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<CartItem> cartItems = new HashSet<>();
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return id != null && id.equals(product.getId());
+    }
+    
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
