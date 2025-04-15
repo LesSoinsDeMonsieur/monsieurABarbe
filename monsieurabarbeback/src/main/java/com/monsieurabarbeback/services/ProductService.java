@@ -14,6 +14,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
+        System.out.println(productRepository.findAll());
         return productRepository.findAll();
     }
 
