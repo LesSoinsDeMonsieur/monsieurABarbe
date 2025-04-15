@@ -1,21 +1,21 @@
 "use client";
 
-// import { redirect } from "next/navigation";
 import { useState } from "react";
-import styles from "./login.module.css";
+import styles from "./register.module.css";
 import { AuthStatus, useAuth } from "@/contexts/AuthContext";
 import { authStatusToString } from "@/utils/enumToString";
 import { redirect } from "next/navigation";
 
-export default function FormLogin() {
+export default function FormRegister() {
   const [email, setEmail] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const { submitLogin } = useAuth();
+  const { submitRegister } = useAuth();
 
   const submit = async () => {
-    if (email && password) {
-      const status = await submitLogin({ email, password });
+    if (email && password && userName) {
+      const status = await submitRegister({ email, userName, password });
       if (status != AuthStatus.OK) {
         setErrorMessage(authStatusToString(status));
         return;
@@ -46,6 +46,17 @@ export default function FormLogin() {
           required
         />
       </div>
+      <div className="">
+        <input
+          type="text"
+          className={styles.formInputLogin}
+          placeholder="UserName"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          autoFocus
+          required
+        />
+      </div>
 
       <div className="">
         <input
@@ -61,15 +72,15 @@ export default function FormLogin() {
       {errorMessage && <div className="">{errorMessage}</div>}
 
       <button type="submit" className={styles.formButtonLogin}>
-        Se connecter
+        Créer un compte
       </button>
 
       <div className="">
         <div
-          onClick={() => redirect("/register")}
+          onClick={() => redirect("/login")}
           className={styles.formAuthMethod}
         >
-          Créer un compte
+          Se connecter
         </div>
       </div>
     </form>

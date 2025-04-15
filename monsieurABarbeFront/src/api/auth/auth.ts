@@ -8,7 +8,11 @@ export async function loginRequest(
 }
 
 export async function registerRequest(user: UserSignup) {
-  return await axiosI.post("/auth/register", user);
+  return await axiosI.post("/auth/register", {
+    email: user.email,
+    username: user.userName,
+    password: user.password,
+  });
 }
 export async function getProtected() {
   //   return await axiosI.get("/auth/protected");
