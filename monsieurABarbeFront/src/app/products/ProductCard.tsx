@@ -2,14 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
+import Product from '@/types/product';
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-}
 
 interface ProductCardProps {
   product: Product;

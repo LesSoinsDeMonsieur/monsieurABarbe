@@ -3,38 +3,30 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "./ProductCard";
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-  stock: number;
-  boxItems: any[];
-  orderItems: any[];
-  cartItems: any[];
-}
+import Product from "@/types/product";
+import axiosI from "@/axiosInterceptor";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzQ0NzA5MTczLCJleHAiOjE3NDQ3OTU1NzN9.I8W2cb21VlG2gAyvT_rWC9z56x9P8j2DRRBtColJqr4";
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get<Product[]>(
-          "http://localhost:8080/api/products",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const token = localStorage.getItem("accessToken");
+        axios.get("http://localhost:8080/api/products", {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        );
-        setProducts(response.data);
+        })
+        .then(response => {
+          setProducts(response.data);
+        })
+        .catch(error => {
+          console.error("Erreur lors de la récupération des produits :", error);
+        });
       } catch (err: any) {
         setError(err.message || "Erreur inconnue");
       } finally {

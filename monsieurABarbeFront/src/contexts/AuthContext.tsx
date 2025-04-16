@@ -72,8 +72,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem("accessToken", accessToken);
 
       const interceptor = axiosI.interceptors.request.use((config) => {
+        
         if (config?.headers && !config.headers.Authorization) {
-          config.headers.Authorization = `${accessToken}`;
+          config.headers.Authorization = `Bearer ${accessToken}`;
         }
         return config;
       });
@@ -137,7 +138,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const submitLogin = async (user: UserLogin): Promise<AuthStatus> => {
     try {
       const result = await loginRequest(user);
-      console.log(result);
       if (!result) {
         //Unknown error
         return AuthStatus.ERROR;

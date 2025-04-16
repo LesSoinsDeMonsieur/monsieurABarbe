@@ -1,6 +1,7 @@
 package com.monsieurabarbeback.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -32,8 +33,11 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    @JsonBackReference("product-cartitems")
+    @JsonManagedReference("product-cartitems") // Utilise @JsonManagedReference pour exposer les données
     private Product product;
+    
+
+
     
     @Override
     public boolean equals(Object o) {
