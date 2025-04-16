@@ -25,11 +25,7 @@ interface IAuthContext {
   userInfo: UserInfo | null;
   submitLogin: ({ email, password }: UserLogin) => Promise<AuthStatus>;
   logout: () => Promise<void>;
-  submitRegister: ({
-    userName,
-    email,
-    password,
-  }: UserSignup) => Promise<AuthStatus>;
+  submitRegister: ({ userName, email, password }: UserSignup) => Promise<AuthStatus>;
   // retrieveUserInfos: () => void;
 }
 
@@ -72,7 +68,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem("accessToken", accessToken);
 
       const interceptor = axiosI.interceptors.request.use((config) => {
-        
         if (config?.headers && !config.headers.Authorization) {
           config.headers.Authorization = `Bearer ${accessToken}`;
         }
@@ -132,6 +127,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUserInfo({ state: LoginState.LOGGED_OUT });
       }
     } catch (e) {
+      console.error(e);
       setUserInfo({ state: LoginState.LOGGED_OUT });
     }
   };

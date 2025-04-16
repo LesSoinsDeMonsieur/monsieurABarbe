@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Cart from "@/types/cart";
 import CartItem from "@/types/cartItem";
-import Product from "@/types/product";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -29,6 +28,7 @@ const CartPage = () => {
         });
         setCartItems(Array.from(response.data.cartItems));
       } catch (err) {
+        console.error(err);
         setError("Impossible de récupérer le panier.");
       } finally {
         setLoading(false);
@@ -48,9 +48,7 @@ const CartPage = () => {
         },
       });
 
-      setCartItems((prevItems) =>
-        prevItems.filter((item) => item.id !== itemId)
-      );
+      setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
     } catch (err) {
       console.error("Erreur lors de la suppression de l'article", err);
     }
@@ -81,7 +79,11 @@ const CartPage = () => {
                     src={item.product.imageUrl}
                     alt={item.product.name}
                     className="rounded"
-                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                    }}
                   />
                   <div className="ms-3 flex-grow-1">
                     <h5 className="mb-1">{item.product.name}</h5>

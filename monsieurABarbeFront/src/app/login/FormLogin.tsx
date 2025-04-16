@@ -65,10 +65,7 @@ export default function FormLogin() {
       </button>
 
       <div className="">
-        <div
-          onClick={() => redirect("/register")}
-          className={styles.formAuthMethod}
-        >
+        <div onClick={() => redirect("/register")} className={styles.formAuthMethod}>
           Créer un compte
         </div>
       </div>

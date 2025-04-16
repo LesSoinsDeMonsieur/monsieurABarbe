@@ -2,8 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import Product from '@/types/product';
-
+import Product from "@/types/product";
 
 interface ProductCardProps {
   product: Product;
@@ -23,14 +22,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <div>
             <h5 className="card-title fw-bold text-center">{product.name}</h5>
             <p className="card-text text-center text-muted">{product.price.toFixed(2)} €</p>
-            <div className="text-warning text-center fs-5 mb-2">
-              {"★".repeat(5)}
-            </div>
+            <div className="text-warning text-center fs-5 mb-2">{"★".repeat(5)}</div>
           </div>
           <div className="text-center">
-            <span className="btn btn-outline-dark mt-2 fw-semibold">
-              VOIR LE PRODUIT
-            </span>
+            <span className="btn btn-outline-dark mt-2 fw-semibold">VOIR LE PRODUIT</span>
           </div>
         </div>
       </div>

@@ -25,16 +25,14 @@ const ProductDetailPage = () => {
 
     const fetchProduct = async () => {
       try {
-        const response = await axios.get<Product>(
-          `http://localhost:8080/api/products/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get<Product>(`http://localhost:8080/api/products/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setProduct(response.data);
-      } catch (err: any) {
+      } catch (err) {
+        console.log(err);
         setError("Erreur lors du chargement du produit");
       } finally {
         setLoading(false);
@@ -59,7 +57,7 @@ const ProductDetailPage = () => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       setSuccessMessage("Produit ajouté au panier !");
       setAddToCartError(null);
@@ -91,17 +89,10 @@ const ProductDetailPage = () => {
           <h4 className="text-dark mb-3">{product.price.toFixed(2)} €</h4>
           <div className="mb-3 text-warning fs-4">{"★".repeat(5)}</div>
 
-          {successMessage && (
-            <div className="alert alert-success py-2">{successMessage}</div>
-          )}
-          {addToCartError && (
-            <div className="alert alert-danger py-2">{addToCartError}</div>
-          )}
+          {successMessage && <div className="alert alert-success py-2">{successMessage}</div>}
+          {addToCartError && <div className="alert alert-danger py-2">{addToCartError}</div>}
 
-          <button
-            className="btn btn-dark px-4 py-2 fw-semibold"
-            onClick={handleAddToCart}
-          >
+          <button className="btn btn-dark px-4 py-2 fw-semibold" onClick={handleAddToCart}>
             Ajouter au panier
           </button>
         </div>
