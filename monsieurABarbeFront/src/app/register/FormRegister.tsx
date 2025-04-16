@@ -76,10 +76,7 @@ export default function FormRegister() {
       </button>
 
       <div className="">
-        <div
-          onClick={() => redirect("/login")}
-          className={styles.formAuthMethod}
-        >
+        <div onClick={() => redirect("/login")} className={styles.formAuthMethod}>
           Se connecter
         </div>
       </div>

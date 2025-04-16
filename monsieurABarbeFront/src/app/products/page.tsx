@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
 import ProductCard from "./ProductCard";
 import Product from "@/types/product";
 import axiosI from "@/axiosInterceptor";
@@ -11,24 +10,26 @@ const ProductsPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        axios.get("http://localhost:8080/api/products", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        .then(response => {
-          setProducts(response.data);
-        })
-        .catch(error => {
-          console.error("Erreur lors de la récupération des produits :", error);
-        });
-      } catch (err: any) {
-        setError(err.message || "Erreur inconnue");
+        axiosI
+          .get("http://localhost:8080/api/products", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            setProducts(response.data);
+          })
+          .catch((error) => {
+            console.error("Erreur lors de la récupération des produits :", error);
+          });
+      } catch (err) {
+        console.error(err);
+        const error = err as Error;
+        setError(error.message || "Erreur inconnue");
       } finally {
         setLoading(false);
       }

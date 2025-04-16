@@ -21,7 +21,7 @@ axiosI.interceptors.response.use(
       return axiosI(originalRequest);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosI;
