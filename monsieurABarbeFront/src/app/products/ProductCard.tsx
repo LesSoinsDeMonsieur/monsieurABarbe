@@ -2,14 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-}
+import { Product } from "@/types/products";
 
 interface ProductCardProps {
   product: Product;
@@ -17,7 +10,10 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <Link href={`/products/${product.id}`} className="text-decoration-none text-dark">
+    <Link
+      href={`/products/${product.id}`}
+      className="text-decoration-none text-dark"
+    >
       <div className="card h-100 shadow-sm border-0">
         <img
           src={product.imageUrl}
@@ -28,7 +24,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="card-body d-flex flex-column justify-content-between">
           <div>
             <h5 className="card-title fw-bold text-center">{product.name}</h5>
-            <p className="card-text text-center text-muted">{product.price.toFixed(2)} €</p>
+            <p className="card-text text-center text-muted">
+              {product.price.toFixed(2)} €
+            </p>
             <div className="text-warning text-center fs-5 mb-2">
               {"★".repeat(5)}
             </div>

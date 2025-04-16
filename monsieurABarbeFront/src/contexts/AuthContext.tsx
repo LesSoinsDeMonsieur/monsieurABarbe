@@ -68,12 +68,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
+    console.log("la ?");
     if (accessToken) {
       localStorage.setItem("accessToken", accessToken);
-
+      console.log(accessToken);
       const interceptor = axiosI.interceptors.request.use((config) => {
         if (config?.headers && !config.headers.Authorization) {
-          config.headers.Authorization = `${accessToken}`;
+          config.headers.Authorization = `Bearer ${accessToken}`;
         }
         return config;
       });
