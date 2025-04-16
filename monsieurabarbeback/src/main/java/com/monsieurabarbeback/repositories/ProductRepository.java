@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     boolean existsByName(String name);
-    List<Product> findByName(String name);
 }

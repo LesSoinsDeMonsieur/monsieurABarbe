@@ -39,10 +39,7 @@ public class ProductController {
             productDTO.getDescription(),
             productDTO.getPrice(),
             productDTO.getStock(),
-            productDTO.getImageUrl(),
-            new HashSet<>(),  // Une liste vide pour les relations OneToMany
-            new HashSet<>(),
-            new HashSet<>()
+            productDTO.getImageUrl()
         );
 
         // Appel au service pour sauvegarder le produit
@@ -62,7 +59,6 @@ public class ProductController {
 
     @PostMapping("/batch")
     public ResponseEntity<List<Product>> createMultipleProducts(@RequestBody List<ProductDTO> productDTOs) {
-        System.out.println("Start");
         List<Product> savedProducts = productDTOs.stream()
                 .map(dto -> {
                     Product product = new Product();

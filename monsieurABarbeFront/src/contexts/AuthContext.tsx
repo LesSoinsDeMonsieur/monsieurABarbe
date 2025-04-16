@@ -25,11 +25,7 @@ interface IAuthContext {
   userInfo: UserInfo | null;
   submitLogin: ({ email, password }: UserLogin) => Promise<AuthStatus>;
   logout: () => Promise<void>;
-  submitRegister: ({
-    userName,
-    email,
-    password,
-  }: UserSignup) => Promise<AuthStatus>;
+  submitRegister: ({ userName, email, password }: UserSignup) => Promise<AuthStatus>;
   // retrieveUserInfos: () => void;
 }
 
@@ -132,13 +128,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUserInfo({ state: LoginState.LOGGED_OUT });
       }
     } catch (e) {
+      console.error(e);
       setUserInfo({ state: LoginState.LOGGED_OUT });
     }
   };
   const submitLogin = async (user: UserLogin): Promise<AuthStatus> => {
     try {
       const result = await loginRequest(user);
-      console.log(result);
       if (!result) {
         //Unknown error
         return AuthStatus.ERROR;
