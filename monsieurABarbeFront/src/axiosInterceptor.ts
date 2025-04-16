@@ -17,7 +17,7 @@ axiosI.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       //TODO Gérer de redemander à l'utilisateur de se connecter si il est déconnecté
-      // originalRequest.headers.Authorization = `Bearer ${access_token}`;
+      // originalRequest.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
       return axiosI(originalRequest);
     }
     return Promise.reject(error);
