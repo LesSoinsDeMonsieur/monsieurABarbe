@@ -64,10 +64,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    console.log("la ?");
     if (accessToken) {
       localStorage.setItem("accessToken", accessToken);
-      console.log(accessToken);
       const interceptor = axiosI.interceptors.request.use((config) => {
         if (config?.headers && !config.headers.Authorization) {
           config.headers.Authorization = `Bearer ${accessToken}`;
@@ -144,7 +142,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       return AuthStatus.OK;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (axios.isAxiosError(err) && err.request?.status === 403) {
         //Wrong credentials
         return AuthStatus.WRONG_CREDENTIALS;
