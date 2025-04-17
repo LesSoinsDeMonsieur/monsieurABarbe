@@ -1,18 +1,19 @@
 /* Header styles */
 .header {
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 20px;
     text-align: center;
     font-family: Arial, sans-serif;
     display : flex;
     justify-content: space-between;
     align-items: center;
-
+    margin-right: 200px;
+    margin-left: 200px;
 }
 
 .header a {
-    color: white;
+    color: black;
     text-decoration: none;
     margin: 0 10px;
 }
@@ -21,3 +22,19 @@
     text-decoration: underline;
 }
 
+.headerMilieu {
+    display : flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.headerDroit {
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoIcon {
+    padding: 10px;
+}
