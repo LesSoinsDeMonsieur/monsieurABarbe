@@ -16,9 +16,13 @@ function Header() {
     ]);
 
     const [imgDroit, setimgDroit] = useState<{ chemin: string; url: string; }[]>([
+        { chemin: "/user.png", url: "/profile" },
         { chemin: "/bag.png", url: "/panier" },
-        { chemin: "/user.png", url: "/profile" }
     ]);
+
+    const headerGauche = (
+        <Link href="/"><Image src="/logo.png" alt="Logo" className={styles.logo} width={185} height={40}/></Link>
+    );
 
     const headerMilieu = ongletsMilieu.map((onglet, index) => (
         <div key={index} className={styles.navItem}>
@@ -38,14 +42,14 @@ function Header() {
 
     return (
         <div className={styles.header}>
-            <Image src="/logo.png" alt="Logo" className={styles.logo} width={185} height={40}/>
+            <div className={styles.headerGauche}>
+                {headerGauche}
+            </div>
             <div className={styles.headerMilieu}>
                 {headerMilieu}
             </div>
-            <div>
-                <div className={styles.headerDroit}>
-                    {headerDroit}
-                </div>
+            <div className={styles.headerDroit}>
+                {headerDroit}
             </div>
         </div>
     );
