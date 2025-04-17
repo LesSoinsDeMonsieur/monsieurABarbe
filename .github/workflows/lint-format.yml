@@ -20,7 +20,9 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: |
+          cd monsieurABarbeFront
+          yarn install --frozen-lockfile
 
       - name: Run ESLint (Next.js)
         run: yarn lint
