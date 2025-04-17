@@ -13,7 +13,6 @@
   grid-template-rows: 20px 1fr 20px;
   align-items: center;
   justify-items: center;
-  padding: 20px;
   gap: 64px;
   font-family: var(--font-geist-sans);
 }
@@ -135,6 +134,8 @@
 
 .tutoriel .etapes {
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 5rem;
   width: 80%;
 }
@@ -143,7 +144,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 30%;
+}
+
+.etape img {
+  width: 200px !important;
+  height: 200px !important;
+  margin-bottom: 0.5rem;
 }
 
 .tutoriel .etapes .etape img {
@@ -219,6 +225,10 @@
   width: 92.5%;
   min-height: 25rem;
   gap: 3rem;
+}
+
+.section_avis p {
+  margin-bottom: 0;
 }
 
 .section_avis .voir_tous_les_avis {
@@ -361,7 +371,7 @@ a.primary {
 
 a.secondary {
   border-color: var(--gray-alpha-200);
-  min-width: 158px;
+  /* min-width: 158px; */
 }
 
 .footer {
