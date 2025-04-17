@@ -30,11 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AuthProvider>{children}</AuthProvider>
         <div className={styles.page}>
-          <Navbar/>
+          <AuthProvider>{children}</AuthProvider>
+          {/* <Navbar/>
           {children}
-          <Footer/>
+          <Footer/> */}
         </div>
       </body>
     </html>
