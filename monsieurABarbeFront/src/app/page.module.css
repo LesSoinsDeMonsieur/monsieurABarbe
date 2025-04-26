@@ -185,9 +185,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url("/banniere-1.png");
+  background-image: url("/Box-Entretien-Barbe.jpeg");
   width: 30%;
   gap: 10px;
+
+  background-size: cover;
+  background-position: center;
+}
+
+.abonnements .abonnement:nth-child(1) {
+  background-image: url("/Box-Entretien-Barbe.jpeg");
+}
+
+.abonnements .abonnement:nth-child(2) {
+  background-image: url("/Produit-dentretien-pour-la-barbe.jpeg");
+}
+
+.abonnements .abonnement:nth-child(3) {
+  background-image: url("/Combos-produits-1.jpeg");
 }
 
 .abonnement .contenu {

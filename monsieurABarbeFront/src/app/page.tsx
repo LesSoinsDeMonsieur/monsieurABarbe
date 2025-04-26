@@ -8,71 +8,6 @@ import ListeAbonnements from "@/components/ListeAbonnements";
 import ListeAvis from "@/components/ListeAvis";
 
 export default function Home() {
-  const [lesAvis, setAvis] = useState<
-    {
-      logo: string;
-      pseudo: string;
-      notes: string;
-      date: string;
-      description: string;
-    }[]
-  >([
-    {
-      logo: "/Produits-cosmetiques.jpg",
-      pseudo: "Marc Leberch",
-      notes: "NOTES",
-      date: "novembre 28, 2024",
-      description:
-        "Une super surprise à chaque fois que je reçois ma box. On sent que les produits sont sélectionnés avec soin. Un vrai must pour les barbus !",
-    },
-    {
-      logo: "/Produits-cosmetiques.jpg",
-      pseudo: "Marc Leberch",
-      notes: "NOTES",
-      date: "novembre 28, 2024",
-      description:
-        "Une super surprise à chaque fois que je reçois ma box. On sent que les produits sont sélectionnés avec soin. Un vrai must pour les barbus !",
-    },
-    {
-      logo: "/Produits-cosmetiques.jpg",
-      pseudo: "Marc Leberch",
-      notes: "NOTES",
-      date: "novembre 28, 2024",
-      description:
-        "Une super surprise à chaque fois que je reçois ma box. On sent que les produits sont sélectionnés avec soin. Un vrai must pour les barbus !",
-    },
-  ]);
-
-  const listAvis = lesAvis.map((avis, index) => (
-    <div key={index} className={styles.avis}>
-      <div className={styles.entete}>
-        <div className={styles.gauche}>
-          {
-            <Image
-              className={styles.logo}
-              src={avis.logo}
-              alt="Vercel logomark"
-              width={40}
-              height={40}
-            />
-          }
-        </div>
-        <div className={styles.droite}>
-          <div className={styles.auteur_note}>
-            <p>{avis.pseudo}</p>
-            <p>{avis.notes}</p>
-          </div>
-          <div className={styles.date}>
-            <p>{avis.date}</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p>{avis.description}</p>
-      </div>
-    </div>
-  ));
-
   return (
     <main className={styles.main}>
       <div className={styles.intro}>
@@ -100,8 +35,8 @@ export default function Home() {
             className={styles.logo}
             src="/Produits-cosmetiques.jpg"
             alt="Vercel logomark"
-            width={20}
-            height={20}
+            width={400}
+            height={400}
           />
         }
         <div className={styles.contenu}>
