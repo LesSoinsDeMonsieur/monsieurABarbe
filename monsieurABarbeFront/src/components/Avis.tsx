@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "../app/page.module.css";
 import Image from "next/image";
 
@@ -13,8 +12,6 @@ interface AvisProps {
 }
 
 export default function Avis({ avis: avis }: AvisProps) {
-  const [hovered, setHovered] = useState(false);
-
   return (
     <div className={styles.avis}>
       <div className={styles.entete}>

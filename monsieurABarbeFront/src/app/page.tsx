@@ -2,7 +2,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
 import ListeProduits from "@/components/ListeProduits";
 import ListeAbonnements from "@/components/ListeAbonnements";
 import ListeAvis from "@/components/ListeAvis";
@@ -99,7 +98,7 @@ export default function Home() {
         <a href="">PLUS DE DÉTAILS</a>
       </div>
       <div className={styles.section_abonnements}>
-        <h1> Nos offres d’abonnement </h1>
+        <h1> Nos offres d'abonnement </h1>
         <ListeAbonnements />
         <a href="">J'OFFRE UN ABONNEMENT</a>
         <div className={styles.section_avis}>

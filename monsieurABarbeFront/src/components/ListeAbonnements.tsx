@@ -9,21 +9,21 @@ interface AbonnementType {
 }
 
 export default function ListeAbonnements() {
-  const [abonnements, setAbonnement] = useState<AbonnementType[]>([
+  const [abonnements, _] = useState<AbonnementType[]>([
     {
       titre: "35,90€ / mois",
-      description: "- Sans engagement (résiliable à tout moment)",
+      description: "- Sans engagement (résiliable à tout moment)\n ",
       texteBouton: "JE LA VEUX",
     },
     {
       titre: "35,90€ / mois",
-      description: "- Sans engagement (résiliable à tout moment)",
+      description: "- Engagement 3 mois\n ",
       texteBouton: "JE LA VEUX",
     },
     {
-      titre: "35,90€ / mois",
-      description: "- Sans engagement (résiliable à tout moment)",
-      texteBouton: "JE LA VEUX",
+      titre: "lre box offerte",
+      description: "- Puis 35,90€/mois\n- Engagement 12 mois",
+      texteBouton: "J'EN PROFITE",
     },
   ]);
 

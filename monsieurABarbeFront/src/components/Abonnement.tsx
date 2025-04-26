@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "../app/page.module.css";
 
 interface AbonnementProps {
@@ -10,8 +9,6 @@ interface AbonnementProps {
 }
 
 export default function Abonnement({ abonnement }: AbonnementProps) {
-  const [hovered, setHovered] = useState(false);
-
   return (
     <div className={styles.abonnement}>
       <div className={styles.contenu}>

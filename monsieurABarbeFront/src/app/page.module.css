@@ -216,6 +216,7 @@
   width: 90%;
   height: 100%;
   border-radius: 10px;
+  white-space: break-spaces;
 }
 
 .section_abonnements a {
