@@ -11,7 +11,7 @@ interface ProduitType {
 }
 
 export default function ListeProduits() {
-  const [produits, _] = useState<ProduitType[]>([
+  const [produits] = useState<ProduitType[]>([
     {
       imageUne: "/Gel-douche-burberry-1.jpeg",
       imageDeux: "/Gel-douche-burberry-2.jpg",

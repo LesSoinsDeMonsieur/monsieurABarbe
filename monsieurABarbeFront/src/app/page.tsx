@@ -92,18 +92,18 @@ export default function Home() {
               />
             }
             <h2>3</h2>
-            <p>Je découvre ce qu'on m'a préparé</p>
+            <p>Je découvre ce qu’on m’a préparé</p>
           </div>
         </div>
         <a href="">PLUS DE DÉTAILS</a>
       </div>
       <div className={styles.section_abonnements}>
-        <h1> Nos offres d'abonnement </h1>
+        <h1> Nos offres d’abonnement </h1>
         <ListeAbonnements />
-        <a href="">J'OFFRE UN ABONNEMENT</a>
+        <a href="">J’OFFRE UN ABONNEMENT</a>
         <div className={styles.section_avis}>
           <div className={styles.voir_tous_les_avis}>
-            <h2>Les avis parlent d'eux-mêmes</h2>
+            <h2>Les avis parlent d’eux-mêmes</h2>
             <p>Consultez les avis de nos clients avant de vous lancer</p>
             <a href="">VOIR TOUS LES AVIS</a>
           </div>

@@ -11,7 +11,7 @@ interface AvisType {
 }
 
 export default function ListeAvis() {
-  const [lesAvis, _] = useState<AvisType[]>([
+  const [lesAvis] = useState<AvisType[]>([
     {
       logo: "/Produits-cosmetiques.jpg",
       pseudo: "Marc Leberch",

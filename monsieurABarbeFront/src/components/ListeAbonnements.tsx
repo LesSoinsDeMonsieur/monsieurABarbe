@@ -9,7 +9,7 @@ interface AbonnementType {
 }
 
 export default function ListeAbonnements() {
-  const [abonnements, _] = useState<AbonnementType[]>([
+  const [abonnements] = useState<AbonnementType[]>([
     {
       titre: "35,90€ / mois",
       description: "- Sans engagement (résiliable à tout moment)\n ",
