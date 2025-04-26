@@ -32,9 +32,6 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <div className={styles.page}>
           <AuthProvider>{children}</AuthProvider>
-          {/* <Navbar/>
-          {children}
-          <Footer/> */}
         </div>
       </body>
     </html>
