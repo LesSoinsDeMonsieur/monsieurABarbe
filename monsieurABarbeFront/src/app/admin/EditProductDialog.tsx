@@ -60,7 +60,7 @@ export default function EditProductDialog({
       formData.append("price", editedProduct.price.toString());
 
       // Exemple de requête API pour envoyer les données et l'image
-      // axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      // axiosI.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       //   .then(response => {
       //     console.log('Image uploaded successfully', response);
       //   })
