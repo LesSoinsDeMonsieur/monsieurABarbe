@@ -32,6 +32,7 @@ export default function EditProductDialog({
   onSave,
 }: EditProductDialogProps) {
   const [editedProduct, setEditedProduct] = useState(product);
+  const [imageFile, setImageFile] = useState<File | null>(null); // Nouvel état pour l'image
 
   // Met à jour l'état local quand le champ change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,15 +43,43 @@ export default function EditProductDialog({
     }));
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setImageFile(file);
+    }
+  };
+
   const handleSubmit = () => {
-    onSave(editedProduct);
+    // Si une image est sélectionnée, ajouter l'image au produit sous forme de FormData
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+      formData.append("name", editedProduct.name);
+      formData.append("description", editedProduct.description);
+      formData.append("price", editedProduct.price.toString());
+
+      // Exemple de requête API pour envoyer les données et l'image
+      // axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      //   .then(response => {
+      //     console.log('Image uploaded successfully', response);
+      //   })
+      //   .catch(error => {
+      //     console.error('Error uploading image:', error);
+      //   });
+    } else {
+      onSave(editedProduct); // Si pas d'image, sauvegarder juste les infos du produit
+    }
     onClose();
   };
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>Modifier le produit</DialogTitle>
-      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+      <DialogContent
+        sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
+        style={{ paddingTop: "5px" }}
+      >
         <TextField
           label="Nom"
           name="name"
@@ -75,16 +104,15 @@ export default function EditProductDialog({
           onChange={handleChange}
           fullWidth
         />
-        <TextField
-          label="URL de l'image"
-          name="imageUrl"
-          value={editedProduct.imageUrl}
-          onChange={handleChange}
-          fullWidth
-        />
+        <input type="file" onChange={handleImageChange} accept="image/*" style={{ marginTop: 8 }} />
+        {imageFile && (
+          <div style={{ marginTop: 10 }}>
+            <p>Image sélectionnée : {imageFile.name}</p>
+          </div>
+        )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="secondary">
+        <Button onClick={onClose} color="info">
           Annuler
         </Button>
         <Button onClick={handleSubmit} variant="contained" color="primary">
