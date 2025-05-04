@@ -1,7 +1,7 @@
 "use client";
 
 import axiosI from "@/axiosInterceptor";
-import Product from "@/types/product";
+import Product, { NewProduct } from "@/types/product";
 import {
   Button,
   Dialog,
@@ -19,10 +19,12 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import EditProductDialog from "./EditProductDialog";
+import AddProductDialog from "./AddProductDialog";
 
 export default function Page() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isAdding, setIsAdding] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [openConfirmDelete, setOpenConfirmDelete] = useState<boolean>(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
@@ -78,6 +80,19 @@ export default function Page() {
       console.error("Erreur lors de la mise à jour du produit:", error);
     }
   };
+  const handleAdd = async (product: NewProduct) => {
+    try {
+      await axiosI.post(`/products`, product);
+
+      setIsEdit(false);
+      getProducts();
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour du produit:", error);
+    }
+  };
+  const onAddProduct = () => {
+    setIsAdding(true);
+  };
 
   return (
     <>
@@ -88,6 +103,9 @@ export default function Page() {
           product={selectedProduct}
           onSave={handleSave}
         />
+      )}
+      {isAdding && (
+        <AddProductDialog open={isAdding} onClose={() => setIsAdding(false)} onAdd={handleAdd} />
       )}
 
       {/* Modal de confirmation de suppression */}
@@ -107,44 +125,66 @@ export default function Page() {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <TableContainer component={Paper} style={{ width: "70%", marginTop: "20em" }}>
-        <Table sx={{ minWidth: 50 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Nom</TableCell>
-              <TableCell align="right">Description</TableCell>
-              <TableCell align="right">Prix</TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products.map((product) => (
-              <TableRow key={product.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  {product.name}
-                </TableCell>
-                <TableCell align="right">{product.description}</TableCell>
-                <TableCell align="right">{product.price}</TableCell>
-                <TableCell align="right" sx={{ width: 100 }}>
-                  <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-                    <img
-                      src="edit.svg"
-                      style={{ width: "30px", cursor: "pointer" }}
-                      onClick={() => handleEdit(product)}
-                    />
-                    <img
-                      src="delete.svg"
-                      style={{ width: "30px", cursor: "pointer" }}
-                      onClick={() => handleDeleteClick(product)}
-                    />
-                  </div>
-                </TableCell>
+      <div
+        style={{
+          width: "60%",
+          marginTop: "25em",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "start",
+          gap: "20px",
+        }}
+      >
+        <Button
+          style={{ display: "flex", width: "30%" }}
+          variant="contained"
+          onClick={() => onAddProduct()}
+        >
+          Ajouter un produit
+        </Button>
+        <TableContainer component={Paper} style={{ display: "flex" }}>
+          <Table sx={{ minWidth: 50 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Nom</TableCell>
+                <TableCell align="right">Description</TableCell>
+                <TableCell align="right">Prix</TableCell>
+                <TableCell align="right">Stock</TableCell>
+                <TableCell align="right"></TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {products.map((product) => (
+                <TableRow
+                  key={product.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {product.name}
+                  </TableCell>
+                  <TableCell align="right">{product.description}</TableCell>
+                  <TableCell align="right">{product.price}</TableCell>
+                  <TableCell align="right">{product.stock}</TableCell>
+                  <TableCell align="right" sx={{ width: 100 }}>
+                    <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                      <img
+                        src="edit.svg"
+                        style={{ width: "30px", cursor: "pointer" }}
+                        onClick={() => handleEdit(product)}
+                      />
+                      <img
+                        src="delete.svg"
+                        style={{ width: "30px", cursor: "pointer" }}
+                        onClick={() => handleDeleteClick(product)}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </>
   );
 }

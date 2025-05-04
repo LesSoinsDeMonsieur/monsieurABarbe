@@ -9,22 +9,23 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import Product from "@/types/product";
+import { NewProduct } from "@/types/product";
+import axiosI from "@/axiosInterceptor";
 
-interface EditProductDialogProps {
+interface AddProductDialogProps {
   open: boolean;
   onClose: () => void;
-  product: Product;
-  onSave: (updatedProduct: Product) => void;
+  onAdd: (product: NewProduct) => void;
 }
 
-export default function EditProductDialog({
-  open,
-  onClose,
-  product,
-  onSave,
-}: EditProductDialogProps) {
-  const [editedProduct, setEditedProduct] = useState(product);
+export default function AddProductDialog({ open, onClose, onAdd }: AddProductDialogProps) {
+  const [editedProduct, setEditedProduct] = useState<NewProduct>({
+    description: "",
+    imageUrl: "",
+    name: "",
+    price: 0,
+    stock: 1,
+  });
   const [imageFile, setImageFile] = useState<File | null>(null); // Nouvel état pour l'image
 
   // Met à jour l'état local quand le champ change
@@ -51,7 +52,6 @@ export default function EditProductDialog({
       formData.append("name", editedProduct.name);
       formData.append("description", editedProduct.description);
       formData.append("price", editedProduct.price.toString());
-      formData.append("stock", editedProduct.stock.toString());
 
       // Exemple de requête API pour envoyer les données et l'image
       // axiosI.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
@@ -62,14 +62,14 @@ export default function EditProductDialog({
       //     console.error('Error uploading image:', error);
       //   });
     } else {
-      onSave(editedProduct); // Si pas d'image, sauvegarder juste les infos du produit
+      onAdd(editedProduct); // Si pas d'image, sauvegarder juste les infos du produit
     }
     onClose();
   };
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Modifier le produit</DialogTitle>
+      <DialogTitle>Ajouter un produit</DialogTitle>
       <DialogContent
         sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
         style={{ paddingTop: "5px" }}
@@ -118,7 +118,7 @@ export default function EditProductDialog({
           Annuler
         </Button>
         <Button onClick={handleSubmit} variant="contained" color="primary">
-          Enregistrer
+          Ajouter
         </Button>
       </DialogActions>
     </Dialog>
