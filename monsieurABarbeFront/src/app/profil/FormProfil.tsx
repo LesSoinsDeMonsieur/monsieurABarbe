@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./profil.module.css";
 import { AuthStatus, useAuth } from "@/contexts/AuthContext";
 import { authStatusToString } from "@/utils/enumToString";
@@ -15,9 +15,8 @@ export default function FormProfil() {
   const [userName, setUserName] = useState<string>("");
   const [biographie, setBiographie] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const { submitRegister } = useAuth();
+  // const { submitRegister } = useAuth();
   const [error, setError] = useState<string | null>(null);
-  const [profil, setProfil] = useState<UserProfil | null>(null);
 
   type UserProfil = {
     prenom: string;
@@ -33,16 +32,16 @@ export default function FormProfil() {
         //   Authorization: `Bearer ${token}`,
         // },
       });
-      setProfil(response.data);
-      if (profil != null) {
-        setPrenom(profil.prenom);
-        setNom(profil.nom);
-        setUserName(profil.userName);
-        setBiographie(profil.biographie);
+      const user = response.data;
+      if (user != null) {
+        setPrenom(user.prenom);
+        setNom(user.nom);
+        setUserName(user.userName);
+        setBiographie(user.biographie);
       }
     } catch (err) {
       console.error(err);
-      setError("Impossible de récupérer le panier.");
+      setError("Impossible de récupérer le profil.");
     }
   };
 
@@ -79,8 +78,8 @@ export default function FormProfil() {
   };
 
   const submit = async () => {
-    if (prenom && nom && userName && biographie /*&& password*/) {
-      const status = await submitUpdateProfil({ prenom, nom, biographie, userName }); // MODIFIER POUR QUE CA MODIFIE JUSTE LES DONNEES DU USER
+    if (prenom && nom && userName && biographie) {
+      const status = await submitUpdateProfil({ prenom, nom, biographie, userName });
       if (status != AuthStatus.OK) {
         setErrorMessage(authStatusToString(status));
         return;
@@ -91,6 +90,11 @@ export default function FormProfil() {
     }
     redirect("/");
   };
+
+  useEffect(() => {
+    fetchProfil();
+  }, []);
+
   return (
     <form
       onSubmit={(e) => {
