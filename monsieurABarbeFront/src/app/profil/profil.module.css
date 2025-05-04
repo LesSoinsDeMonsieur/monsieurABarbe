@@ -1,0 +1,43 @@
+.loginBody {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-top: 8%;
+  flex-direction: column;
+  gap: 50;
+}
+
+.formLogin {
+  display: flex;
+  gap: 30;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formInputLogin {
+  color: #333;
+  padding: 0.5rem 1rem;
+  width: 17em;
+  font-size: medium;
+}
+
+.formButtonLogin {
+  background-color: white;
+  padding: 2% 2rem;
+  border-radius: 5px;
+  font-size: large;
+}
+.formButtonLogin:hover {
+  cursor: pointer;
+}
+
+.formAuthMethod {
+  background-color: white;
+  padding: 2% 2rem;
+  border-radius: 5px;
+  font-size: medium;
+  border: solid 1px;
+}
+.formAuthMethod:hover {
+  cursor: pointer;
+}
