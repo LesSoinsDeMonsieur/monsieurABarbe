@@ -10,7 +10,6 @@ import {
   Button,
 } from "@mui/material";
 import { NewProduct } from "@/types/product";
-import axiosI from "@/axiosInterceptor";
 
 interface AddProductDialogProps {
   open: boolean;
