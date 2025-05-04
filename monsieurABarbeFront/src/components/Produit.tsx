@@ -31,7 +31,9 @@ export default function Produit({ produit }: ProduitProps) {
         <strong>{produit.titre}</strong>
       </a>
       <p>{produit.prix}</p>
-      <p>{produit.notes}</p>
+      <div className={styles.note}>
+        {"★".repeat(Number(produit.notes)) + "☆".repeat(5 - Number(produit.notes))}
+      </div>
       <a href="" className={styles.ajout_panier}>
         AJOUTER AU PANIER
       </a>
