@@ -2,11 +2,23 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axiosI from "@/axiosInterceptor";
+import { Product } from "@/types/products";
+import { useEffect } from "react";
 import ListeProduits from "@/components/ListeProduits";
 import ListeAbonnements from "@/components/ListeAbonnements";
 import ListeAvis from "@/components/ListeAvis";
 
 export default function Home() {
+  const fetchData = async () => {
+    const response = await axiosI.get<Product[]>("/products");
+    console.log(response.data);
+    return response.data;
+  };
+
+  useEffect(() => {
+    fetchData();
+  });
   return (
     <main className={styles.main}>
       <div className={styles.intro}>

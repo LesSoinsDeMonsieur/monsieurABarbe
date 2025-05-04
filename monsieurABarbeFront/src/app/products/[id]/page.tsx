@@ -32,7 +32,7 @@ const ProductDetailPage = () => {
         });
         setProduct(response.data);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setError("Erreur lors du chargement du produit");
       } finally {
         setLoading(false);
