@@ -35,6 +35,7 @@ const ProductDetailPage = () => {
         });
         setProduct(response.data);
       } catch (err) {
+        console.error(err);
         setError("Erreur lors du chargement du produit");
       } finally {
         setLoading(false);
@@ -53,6 +54,7 @@ const ProductDetailPage = () => {
       });
       setCartItems(response.data?.cartItems || []);
     } catch (err) {
+      console.error(err);
       console.error("Erreur lors du chargement du panier");
     }
   };
@@ -73,6 +75,7 @@ const ProductDetailPage = () => {
       );
       await fetchCart();
     } catch (err) {
+      console.error(err);
       console.error("Erreur ajout au panier");
     }
   };
@@ -87,6 +90,7 @@ const ProductDetailPage = () => {
       );
       await fetchCart();
     } catch (err) {
+      console.error(err);
       console.error("Erreur increment");
     }
   };
@@ -101,6 +105,7 @@ const ProductDetailPage = () => {
       );
       await fetchCart();
     } catch (err) {
+      console.error(err);
       console.error("Erreur decrement");
     }
   };
