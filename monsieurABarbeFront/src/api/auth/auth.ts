@@ -2,6 +2,8 @@ import axiosI from "@/axiosInterceptor";
 import { UserLogin, UserSignup } from "@/contexts/AuthContext";
 
 export async function loginRequest(user: UserLogin): Promise<{ token: string }> {
+  console.log(user);
+  console.log(await axiosI.post("/auth/login", user));
   return (await axiosI.post("/auth/login", user)).data;
 }
 
