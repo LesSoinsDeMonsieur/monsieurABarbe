@@ -6,13 +6,14 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
-  display: grid;
+  --gris: #3b3b3b;
+  --blanc: #ffffff;
+
+  /* display: grid;
   grid-template-rows: 20px 1fr 20px;
   align-items: center;
   justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
+  gap: 64px; */
   font-family: var(--font-geist-sans);
 }
 
@@ -27,11 +28,320 @@
   }
 }
 
+.header {
+  background-color: #bb1e1e;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .main {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 32px;
   grid-row-start: 2;
+  width: 100%;
+  font-family: "Georgia", serif;
+  color: #3a3a3a;
+}
+
+.main a {
+  text-decoration: none;
+  color: #3a3a3a;
+}
+
+.main .intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url("/banniere-1.png");
+  background-size: cover;
+  background-position: center;
+
+  width: 100%;
+  padding: 10px;
+  gap: 32px;
+}
+
+.intro h1 {
+  color: #3a3a3a;
+  text-shadow: 6px 6px 4px #78787833;
+  font-size: 40px;
+  font-weight: 500;
+  text-transform: none;
+  font-family: "Georgia", serif;
+  margin-top: 61px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.intro a {
+  background: var(--gris) !important;
+  font-family: "Georgia", serif;
+  border-radius: 3px !important;
+  padding-right: 45px !important;
+  padding-left: 45px !important;
+  color: var(--blanc) !important;
+}
+
+.decouverte {
+  display: flex;
+  gap: 30px;
+  width: 80%;
+}
+
+.decouverte img {
+  width: 50%;
+  height: auto !important;
+}
+
+.decouverte .contenu {
+  width: 50%;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+.decouverte .contenu p {
+  font-size: 1.8rem;
+  margin-bottom: 3.5rem;
+}
+
+.decouverte .contenu a {
+  background: var(--gris);
+  font-family: "Georgia", serif;
+  border-radius: 3px;
+  padding: 12px 40px;
+  color: var(--blanc);
+}
+
+.tutoriel {
+  background-color: var(--gris);
+  color: var(--blanc);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem 0;
+  gap: 2rem;
+}
+
+.tutoriel .etapes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  width: 80%;
+}
+.tutoriel .etapes .etape {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.etape img {
+  width: 200px !important;
+  height: 200px !important;
+  margin-bottom: 0.5rem;
+}
+
+.tutoriel .etapes .etape img {
+  width: 100%;
+  height: 100%;
+}
+
+.tutoriel a {
+  color: var(--gris);
+  background-color: var(--blanc);
+  border-radius: 3px !important;
+  padding: 12px 40px;
+}
+
+.section_abonnements {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+}
+
+.section_abonnements .abonnements {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.section_abonnements .abonnements .abonnement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/Box-Entretien-Barbe.jpeg");
+  width: 30%;
+  gap: 10px;
+
+  background-size: cover;
+  background-position: center;
+}
+
+.abonnements .abonnement:nth-child(1) {
+  background-image: url("/Box-Entretien-Barbe.jpeg");
+}
+
+.abonnements .abonnement:nth-child(2) {
+  background-image: url("/Produit-dentretien-pour-la-barbe.jpeg");
+}
+
+.abonnements .abonnement:nth-child(3) {
+  background-image: url("/Combos-produits-1.jpeg");
+}
+
+.abonnement .contenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 170px;
+  margin-bottom: 20px;
+  padding: 1rem;
+  background-color: var(--blanc);
+  width: 90%;
+  height: 100%;
+  border-radius: 10px;
+  white-space: break-spaces;
+}
+
+.section_abonnements a {
+  background: var(--gris);
+  border-radius: 3px;
+  padding: 12px 40px;
+  color: var(--blanc);
+  text-align: center;
+}
+
+.abonnement .contenu h2 {
+  font-size: 40px;
+  font-weight: 100;
+}
+
+.abonnement .contenu strong {
+  font-weight: 900;
+}
+
+.section_avis {
+  display: flex;
+  width: 92.5%;
+  min-height: 25rem;
+  gap: 3rem;
+}
+
+.section_avis p {
+  margin-bottom: 0;
+}
+
+.section_avis .voir_tous_les_avis {
+  background-color: var(--gris);
+  color: var(--blanc);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 15px;
+  min-width: 44%;
+  padding: 10px;
+}
+
+.voir_tous_les_avis h2 {
+  font-size: 35px;
+}
+
+.voir_tous_les_avis a {
+  border: var(--blanc) solid 1px;
+  width: 90%;
+}
+
+.section_avis .liste_avis {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.liste_avis .avis {
+  display: flex;
+  flex-direction: column;
+}
+
+.avis .entete {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.avis .entete .droite {
+  display: flex;
+  flex-direction: column;
+}
+
+.avis .entete .droite .auteur_note {
+  display: flex;
+  gap: 10px;
+}
+
+.note {
+  color: #f5b50a;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.section_produits {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+  width: 80%;
+}
+
+.section_produits .produits {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.section_produits .produits .produit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  align-items: flex-start;
+}
+
+.produit p {
+  margin-bottom: 0;
+}
+
+.section_produits .ajout_panier {
+  border: rgba(59, 59, 59, 1) solid 2px;
+  width: auto;
+  padding: 15px;
+}
+
+.section_produits .voir_tous_les_produits {
+  background: var(--gris);
+  border-radius: 3px;
+  padding: 12px 40px;
+  color: var(--blanc);
+  text-align: center;
 }
 
 .main ol {
@@ -58,6 +368,7 @@
 
 .ctas {
   display: flex;
+  justify-content: center;
   gap: 16px;
 }
 
@@ -89,13 +400,16 @@ a.primary {
 
 a.secondary {
   border-color: var(--gray-alpha-200);
-  min-width: 158px;
+  /* min-width: 158px; */
 }
 
 .footer {
   grid-row-start: 3;
   display: flex;
+  justify-content: center;
   gap: 24px;
+  background-color: #bb1e1e;
+  width: 100%;
 }
 
 .footer a {
