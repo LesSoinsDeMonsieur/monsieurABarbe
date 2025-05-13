@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "install": "next build"
   },
   "dependencies": {
     "axios": "^1.8.4",
@@ -26,5 +27,8 @@
     "eslint-config-prettier": "^10.1.2",
     "prettier": "^3.5.3",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": "20.15.0"
   }
 }
