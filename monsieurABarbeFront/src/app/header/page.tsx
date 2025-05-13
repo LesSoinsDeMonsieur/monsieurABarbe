@@ -4,9 +4,7 @@ import Image from "next/image";
 import styles from "./header.module.css";
 import { useState } from "react";
 function Header() {
-  const [ongletsMilieu /*, setongletsMilieu*/] = useState<
-    { nom: string; url: string }[]
-  >([
+  const [ongletsMilieu /*, setongletsMilieu*/] = useState<{ nom: string; url: string }[]>([
     { nom: "Box", url: "/Box" },
     { nom: "Shop", url: "/Shop" },
     { nom: "Offrir", url: "/Offrir" },
@@ -16,12 +14,10 @@ function Header() {
     { nom: "Blog", url: "/Blog" },
   ]);
   const [texteBandeau /*, settexteBandeau*/] = useState<string>(
-    "Livraison offerte sur tous les abonnements à une box"
+    "Livraison offerte sur tous les abonnements à une box",
   );
 
-  const [imgDroit /*, setimgDroit*/] = useState<
-    { chemin: string; url: string }[]
-  >([
+  const [imgDroit /*, setimgDroit*/] = useState<{ chemin: string; url: string }[]>([
     { chemin: "/user.png", url: "/profile" },
     { chemin: "/bag.png", url: "/panier" },
   ]);
@@ -34,13 +30,7 @@ function Header() {
 
   const headerGauche = (
     <Link href="/">
-      <Image
-        src="/logo.png"
-        alt="Logo"
-        className={styles.logo}
-        width={185}
-        height={40}
-      />
+      <Image src="/logo.png" alt="Logo" className={styles.logo} width={185} height={40} />
     </Link>
   );
 
@@ -55,13 +45,7 @@ function Header() {
   const headerDroit = imgDroit.map((img, index) => (
     <div key={index} className={styles.HeaderDroitObjet}>
       <Link href={img.url}>
-        <Image
-          src={img.chemin}
-          alt="Logo"
-          className={styles.logoIcon}
-          width={48}
-          height={48}
-        />
+        <Image src={img.chemin} alt="Logo" className={styles.logoIcon} width={48} height={48} />
       </Link>
     </div>
   ));
