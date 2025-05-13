@@ -13,7 +13,6 @@ export default function FormProfil() {
   const [prenom, setPrenom] = useState<string>("");
   const [nom, setNom] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
-  const [biographie, setBiographie] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   // const { submitRegister } = useAuth();
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +20,6 @@ export default function FormProfil() {
   type UserProfil = {
     prenom: string;
     nom: string;
-    biographie: string;
     userName: string;
   };
 
@@ -37,7 +35,6 @@ export default function FormProfil() {
         setPrenom(user.prenom);
         setNom(user.nom);
         setUserName(user.userName);
-        setBiographie(user.biographie);
       }
     } catch (err) {
       console.error(err);
@@ -50,7 +47,6 @@ export default function FormProfil() {
     return await axiosI.post("/auth/profil", {
       prenom: user.prenom,
       nom: user.nom,
-      bio: user.biographie,
       username: user.userName,
     });
   }
@@ -78,8 +74,8 @@ export default function FormProfil() {
   };
 
   const submit = async () => {
-    if (prenom && nom && userName && biographie) {
-      const status = await submitUpdateProfil({ prenom, nom, biographie, userName });
+    if (prenom && nom && userName) {
+      const status = await submitUpdateProfil({ prenom, nom, userName });
       if (status != AuthStatus.OK) {
         setErrorMessage(authStatusToString(status));
         return;
@@ -133,17 +129,6 @@ export default function FormProfil() {
           placeholder="UserName"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
-          autoFocus
-          required
-        />
-      </div>
-      <div className="">
-        <input
-          type="text"
-          className={styles.formInputLogin}
-          placeholder="Bio"
-          value={biographie}
-          onChange={(e) => setBiographie(e.target.value)}
           autoFocus
           required
         />
