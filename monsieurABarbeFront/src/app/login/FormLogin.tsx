@@ -1,6 +1,5 @@
 "use client";
 
-// import { redirect } from "next/navigation";
 import { useState } from "react";
 import styles from "./login.module.css";
 import { AuthStatus, useAuth } from "@/contexts/AuthContext";

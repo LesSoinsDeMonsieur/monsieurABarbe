@@ -9,11 +9,11 @@
   --gris: #3b3b3b;
   --blanc: #ffffff;
 
-  display: grid;
+  /* display: grid;
   grid-template-rows: 20px 1fr 20px;
   align-items: center;
   justify-items: center;
-  gap: 64px;
+  gap: 64px; */
   font-family: var(--font-geist-sans);
 }
 
@@ -298,6 +298,12 @@
   gap: 10px;
 }
 
+.note {
+  color: #f5b50a;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
 .section_produits {
   display: flex;
   flex-direction: column;
@@ -315,9 +321,13 @@
 .section_produits .produits .produit {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 8px;
   text-align: left;
-  align-items: flex-start; /* ou center, selon ton besoin */
+  align-items: flex-start;
+}
+
+.produit p {
+  margin-bottom: 0;
 }
 
 .section_produits .ajout_panier {

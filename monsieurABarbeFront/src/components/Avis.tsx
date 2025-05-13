@@ -29,7 +29,9 @@ export default function Avis({ avis: avis }: AvisProps) {
         <div className={styles.droite}>
           <div className={styles.auteur_note}>
             <p>{avis.pseudo}</p>
-            <p>{avis.notes}</p>
+            <div className={styles.note}>
+              {"★".repeat(Number(avis.notes)) + "☆".repeat(5 - Number(avis.notes))}
+            </div>
           </div>
           <div className={styles.date}>
             <p>{avis.date}</p>

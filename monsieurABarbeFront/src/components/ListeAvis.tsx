@@ -15,7 +15,7 @@ export default function ListeAvis() {
     {
       logo: "/Produits-cosmetiques.jpg",
       pseudo: "Marc Leberch",
-      notes: "NOTES",
+      notes: "5",
       date: "novembre 28, 2024",
       description:
         "Une super surprise à chaque fois que je reçois ma box. On sent que les produits sont sélectionnés avec soin. Un vrai must pour les barbus !",
@@ -23,7 +23,7 @@ export default function ListeAvis() {
     {
       logo: "/Produits-cosmetiques.jpg",
       pseudo: "Marc Leberch",
-      notes: "NOTES",
+      notes: "3",
       date: "novembre 28, 2024",
       description:
         "Une super surprise à chaque fois que je reçois ma box. On sent que les produits sont sélectionnés avec soin. Un vrai must pour les barbus !",
@@ -31,7 +31,7 @@ export default function ListeAvis() {
     {
       logo: "/Produits-cosmetiques.jpg",
       pseudo: "Marc Leberch",
-      notes: "NOTES",
+      notes: "4",
       date: "novembre 28, 2024",
       description:
         "Une super surprise à chaque fois que je reçois ma box. On sent que les produits sont sélectionnés avec soin. Un vrai must pour les barbus !",
