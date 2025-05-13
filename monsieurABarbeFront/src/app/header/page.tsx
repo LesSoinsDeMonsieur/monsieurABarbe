@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./header.module.css";
 import { useState } from "react";
 function Header() {
-  const [ongletsMilieu, setongletsMilieu] = useState<
+  const [ongletsMilieu /*, setongletsMilieu*/] = useState<
     { nom: string; url: string }[]
   >([
     { nom: "Box", url: "/Box" },
@@ -15,11 +15,13 @@ function Header() {
     { nom: "Contact", url: "/Contact" },
     { nom: "Blog", url: "/Blog" },
   ]);
-  const [texteBandeau, settexteBandeau] = useState<string>(
+  const [texteBandeau /*, settexteBandeau*/] = useState<string>(
     "Livraison offerte sur tous les abonnements à une box"
   );
 
-  const [imgDroit, setimgDroit] = useState<{ chemin: string; url: string }[]>([
+  const [imgDroit /*, setimgDroit*/] = useState<
+    { chemin: string; url: string }[]
+  >([
     { chemin: "/user.png", url: "/profile" },
     { chemin: "/bag.png", url: "/panier" },
   ]);
