@@ -4,12 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import Product from "@/types/product";
-
-interface CartItem {
-  id: number;
-  quantity: number;
-  product: Product;
-}
+import CartItem from "@/types/cartItem";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -30,9 +25,12 @@ const ProductDetailPage = () => {
     if (!token) return;
     const fetchProduct = async () => {
       try {
-        const response = await axios.get<Product>(`http://localhost:8080/api/products/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get<Product>(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         setProduct(response.data);
       } catch (err) {
         console.error(err);
@@ -49,7 +47,7 @@ const ProductDetailPage = () => {
   const fetchCart = async () => {
     if (!token) return;
     try {
-      const response = await axios.get(`http://localhost:8080/api/cart`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCartItems(response.data?.cartItems || []);
@@ -69,7 +67,7 @@ const ProductDetailPage = () => {
     if (!product || !token) return;
     try {
       await axios.post(
-        "http://localhost:8080/api/cart/add",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/add`,
         { productId: product.id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -84,7 +82,7 @@ const ProductDetailPage = () => {
     if (!product || !token) return;
     try {
       await axios.post(
-        "http://localhost:8080/api/cart/add",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/add`,
         { productId: product.id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -99,7 +97,7 @@ const ProductDetailPage = () => {
     if (!product || !token) return;
     try {
       await axios.post(
-        "http://localhost:8080/api/cart/decrement",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/decrement`,
         { productId: product.id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } },
       );
