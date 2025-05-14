@@ -39,6 +39,10 @@ public class Product {
 
     private String imageUrl;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<ProductImage> images = new HashSet<>();
+
     
     @Override
     public boolean equals(Object o) {
