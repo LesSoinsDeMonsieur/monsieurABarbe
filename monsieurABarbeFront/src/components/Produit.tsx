@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "../app/page.module.css";
+import Link from "next/link";
 
 interface ProduitProps {
   produit: {
@@ -27,9 +28,9 @@ export default function Produit({ produit }: ProduitProps) {
         onMouseLeave={() => setHovered(false)}
         style={{ transition: "3s ease-in-out" }}
       />
-      <a href="">
+      <Link href="/product">
         <strong>{produit.titre}</strong>
-      </a>
+      </Link>
       <p>{produit.prix}</p>
       <div className={styles.note}>
         {"★".repeat(Number(produit.notes)) + "☆".repeat(5 - Number(produit.notes))}
