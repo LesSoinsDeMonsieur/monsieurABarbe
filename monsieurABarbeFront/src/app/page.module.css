@@ -100,7 +100,7 @@
 
 .decouverte img {
   width: 50%;
-  height: auto !important;
+  height: 100% !important;
 }
 
 .decouverte .contenu {
