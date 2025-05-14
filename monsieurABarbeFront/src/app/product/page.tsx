@@ -9,6 +9,8 @@ interface ProductType {
   price: string;
   stock: string;
   imageUrl: string;
+  image2: string;
+  image3: string;
 }
 
 export default function Page() {
@@ -20,6 +22,8 @@ export default function Page() {
       price: "9,90€",
       stock: "20",
       imageUrl: "/Gel-douche-burberry-1.jpeg",
+      image2: "/Gel-douche-burberry-2.jpg",
+      image3: "/Gel-douche-burberry-2.jpg",
     },
   ]);
 

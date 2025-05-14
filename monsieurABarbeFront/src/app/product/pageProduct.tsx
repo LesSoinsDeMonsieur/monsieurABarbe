@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./product.module.css";
 import Image from "next/image";
 
@@ -10,59 +11,37 @@ interface Product {
     price: string;
     stock: string;
     imageUrl: string;
+    image2: string;
+    image3: string;
   };
 }
 
 export default function Product({ product }: Product) {
+  const [mainImage, setMainImage] = useState(product.imageUrl);
+
   return (
     <div className={styles.fiche_produit}>
       <div className={styles.product}>
         <div className={styles.images}>
           <ul>
-            <li>
-              <button>
-                {
+            {[product.imageUrl, product.image2, product.image3].map((img, idx) => (
+              <li key={idx}>
+                <button onClick={() => setMainImage(img)}>
                   <Image
                     className={styles.logos}
-                    src={product.imageUrl}
-                    alt="Vercel logomark"
+                    src={img}
+                    alt={`Miniature ${idx + 1}`}
                     width={60}
                     height={60}
                   />
-                }
-              </button>
-            </li>
-            <li>
-              <button>
-                {
-                  <Image
-                    className={styles.logos}
-                    src={product.imageUrl}
-                    alt="Vercel logomark"
-                    width={60}
-                    height={60}
-                  />
-                }
-              </button>
-            </li>
-            <li>
-              <button>
-                {
-                  <Image
-                    className={styles.logos}
-                    src={product.imageUrl}
-                    alt="Vercel logomark"
-                    width={60}
-                    height={60}
-                  />
-                }
-              </button>
-            </li>
+                </button>
+              </li>
+            ))}
           </ul>
           {
             <Image
               className={styles.logo}
-              src={product.imageUrl}
+              src={mainImage}
               alt="Vercel logomark"
               width={400}
               height={400}
