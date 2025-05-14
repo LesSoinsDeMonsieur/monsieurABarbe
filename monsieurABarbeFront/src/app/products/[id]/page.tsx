@@ -111,8 +111,8 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     console.log(product);
-    if (product?.imageUrl) {
-      setMainImage("/Gel-douche-burberry-1.jpeg");
+    if (product?.images) {
+      setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath);
     }
   }, [product]);
 
@@ -138,15 +138,16 @@ const ProductDetailPage = () => {
                 flexShrink: 0, // empêche que ça se réduise
               }}
             >
-              {[
-                "/Gel-douche-burberry-1.jpeg",
-                "/Gel-douche-burberry-2.jpg",
-                "/Gel-douche-burberry-2.jpg",
-              ].map((img, idx) => (
+              {product.images.map((image, idx) => (
                 <li key={idx}>
-                  <button onClick={() => setMainImage(img)} className="border-0 bg-transparent p-0">
+                  <button
+                    onClick={() =>
+                      setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath)
+                    }
+                    className="border-0 bg-transparent p-0"
+                  >
                     <img
-                      src={img}
+                      src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath}
                       alt={product.name}
                       className="img-fluid rounded shadow"
                       style={{
@@ -162,7 +163,9 @@ const ProductDetailPage = () => {
 
             {/* Image principale */}
             <img
-              src={mainImage || product.imageUrl}
+              src={
+                mainImage || process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
+              }
               alt={product.name}
               className="img-fluid rounded shadow"
               style={{
