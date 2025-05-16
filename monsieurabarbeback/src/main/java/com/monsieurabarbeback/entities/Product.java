@@ -1,21 +1,15 @@
 package com.monsieurabarbeback.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.ToString;
-
+import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @ToString(exclude = {"boxItems", "orderItems", "cartItems"})
 @Entity
 @Table(name = "products")
@@ -43,7 +37,16 @@ public class Product {
     @JsonManagedReference
     private Set<ProductImage> images = new HashSet<>();
 
-    
+    // Constructeur custom pour ProductController
+    public Product(Long id, String name, String description, double price, Integer stock, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,7 +54,7 @@ public class Product {
         Product product = (Product) o;
         return id != null && id.equals(product.getId());
     }
-    
+
     @Override
     public int hashCode() {
         return getClass().hashCode();
