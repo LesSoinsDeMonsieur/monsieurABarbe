@@ -49,6 +49,7 @@ public class SecurityConfig {
                     .requestMatchers("/swagger-ui.html").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/boxes/**").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/uploads/**").permitAll()
 
                     // Auth required for anything else
                     .anyRequest().authenticated()
