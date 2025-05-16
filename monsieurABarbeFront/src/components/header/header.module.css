@@ -6,10 +6,9 @@
   text-align: center;
   font-family: Arial, sans-serif;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  margin-right: 184px;
-  margin-left: 184px;
+  margin: 0 184px;
 }
 
 .header a {
@@ -26,9 +25,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 18px;
   flex-grow: 1;
-  flex-shrink: 1;
+  flex-wrap: wrap;
 }
 
 .headerDroit {
@@ -54,7 +52,61 @@
   padding: 10px;
   text-align: center;
   font-family: "Libre Baskerville", serif;
-  margin-right: 184px;
-  margin-left: 184px;
-  margin-top: 10px;
+  margin: 10px 184px 0 184px;
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+  .header {
+    margin: 0 40px;
+  }
+
+  .bandeau {
+    margin: 10px 40px 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+    margin: 0 20px;
+  }
+
+  .headerMilieu {
+    display: none;
+  }
+
+  .menuBurger {
+    display: block;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .headerDroit {
+    width: auto;
+  }
+
+  .bandeau {
+    margin: 10px 20px 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    margin: 0 10px;
+  }
+
+  .bandeau {
+    margin: 10px 10px 0 10px;
+    font-size: 14px;
+  }
+
+  .logoIcon {
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+  }
 }
