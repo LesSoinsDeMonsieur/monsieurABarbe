@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // 👈 ajoute ça
+import { useState } from "react";
 
 interface HeaderProps {
   hiddenRoutes?: string[];
@@ -12,6 +12,7 @@ interface HeaderProps {
 
 function Header({ hiddenRoutes = [] }: HeaderProps) {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   if (hiddenRoutes.includes(pathname)) {
     return null;
@@ -28,6 +29,8 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
   ];
 
   const bandeauTexte = "Livraison offerte sur tous les abonnements à une box";
+
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (
     <>
@@ -48,21 +51,19 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
             aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+            onClick={toggleMenu}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
           {/* Liens */}
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className={`collapse navbar-collapse${menuOpen ? " show" : ""}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               {ongletsMilieu.map((onglet, index) => (
                 <li key={index} className="nav-item">
-                  <Link className="nav-link" href={onglet.url}>
+                  <Link className="nav-link" href={onglet.url} onClick={() => setMenuOpen(false)}>
                     {onglet.nom}
                   </Link>
                 </li>
@@ -71,10 +72,10 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
 
             {/* Icônes à droite */}
             <div className="d-flex align-items-center">
-              <Link href="/profile" className="me-3">
+              <Link href="/profile" className="me-3" onClick={() => setMenuOpen(false)}>
                 <Image src="/user.png" alt="Profile" width={32} height={32} />
               </Link>
-              <Link href="/panier">
+              <Link href="/panier" onClick={() => setMenuOpen(false)}>
                 <Image src="/bag.png" alt="Panier" width={32} height={32} />
               </Link>
             </div>
