@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // <-- importer useRouter
 import styles from "./login.module.css";
 import { AuthStatus, useAuth } from "@/contexts/AuthContext";
 import { authStatusToString } from "@/utils/enumToString";
-import { redirect } from "next/navigation";
 
 export default function FormLogin() {
   const [email, setEmail] = useState<string>("");
@@ -12,10 +12,12 @@ export default function FormLogin() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const { submitLogin } = useAuth();
 
+  const router = useRouter(); // <-- créer le router
+
   const submit = async () => {
     if (email && password) {
       const status = await submitLogin({ email, password });
-      if (status != AuthStatus.OK) {
+      if (status !== AuthStatus.OK) {
         setErrorMessage(authStatusToString(status));
         return;
       }
@@ -23,18 +25,18 @@ export default function FormLogin() {
       setErrorMessage("Veuillez remplir tous les champs");
       return;
     }
-    redirect("/");
+    router.push("/"); // <-- redirection côté client
   };
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
         submit();
       }}
-      // action={""}
       className={styles.formLogin}
     >
-      <div className="">
+      <div>
         <input
           type="text"
           className={styles.formInputLogin}
@@ -46,7 +48,7 @@ export default function FormLogin() {
         />
       </div>
 
-      <div className="">
+      <div>
         <input
           type="password"
           className={styles.formInputLogin}
@@ -57,14 +59,17 @@ export default function FormLogin() {
         />
       </div>
 
-      {errorMessage && <div className="">{errorMessage}</div>}
+      {errorMessage && <div>{errorMessage}</div>}
 
       <button type="submit" className={styles.formButtonLogin}>
         Se connecter
       </button>
 
-      <div className="">
-        <div onClick={() => redirect("/register")} className={styles.formAuthMethod}>
+      <div>
+        <div
+          onClick={() => router.push("/register")} // <-- redirection côté client
+          className={styles.formAuthMethod}
+        >
           Créer un compte
         </div>
       </div>
