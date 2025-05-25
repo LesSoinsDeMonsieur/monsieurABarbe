@@ -106,7 +106,7 @@ function Footer() {
             <div className={style.ligne}></div>
           </div>
           <div className={style.description}>
-            <p>
+            <p className={style.descriptionText}>
               Pour recevoir des surprises dans votre boîte aux lettres tous les
               mois, rejoignez Monsieur à Barbe.
             </p>
