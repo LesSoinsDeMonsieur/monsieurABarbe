@@ -34,4 +34,8 @@ build/
 
 .env
 
-/uploads
+### Images ###
+
+!**/uploads/**
+
+
