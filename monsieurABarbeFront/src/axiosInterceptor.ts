@@ -6,7 +6,6 @@ import axios from "axios";
 const axiosI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   headers: {
-    "Content-Type": "application/json;charset=utf-8",
     "Access-Control-Allow-Origin": "*",
   },
 });
