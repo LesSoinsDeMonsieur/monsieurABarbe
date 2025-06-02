@@ -49,6 +49,7 @@ public class ProductController {
         Product createdProduct = productService.createProduct(product);
 
         ProductDTO createdProductDTO = new ProductDTO(
+            createdProduct.getId(),
             createdProduct.getName(),
             createdProduct.getDescription(),
             createdProduct.getPrice(),
