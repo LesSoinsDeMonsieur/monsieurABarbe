@@ -1,3 +1,5 @@
+"use client";
+
 import axios from "axios";
 
 // Créez une instance Axios

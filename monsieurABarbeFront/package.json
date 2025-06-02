@@ -8,19 +8,22 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "install": "next build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^7.0.2",
+    "@popperjs/core": "^2.11.8",
     "axios": "^1.8.4",
-    "bootstrap": "^5.3.5",
+    "bootstrap": "^5.3.6",
     "next": "15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -29,5 +32,8 @@
     "eslint-config-prettier": "^10.1.2",
     "prettier": "^3.5.3",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": "20.15.0"
   }
 }

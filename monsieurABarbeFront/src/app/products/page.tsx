@@ -15,7 +15,7 @@ const ProductsPage = () => {
       try {
         const token = localStorage.getItem("accessToken");
         axiosI
-          .get("http://localhost:8080/api/products", {
+          .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

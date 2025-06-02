@@ -2,21 +2,27 @@ package com.monsieurabarbeback.controllers;
 
 import com.monsieurabarbeback.controllers.dto.ProductDTO;
 import com.monsieurabarbeback.entities.Product;
+import com.monsieurabarbeback.entities.ProductImage;
+import com.monsieurabarbeback.services.ProductImageService;
 import com.monsieurabarbeback.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashSet;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/products")  // La route de base est déjà /api/products
+@RequestMapping("/api/products")
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductImageService productImageService;
+
+    // ----- Produits
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
@@ -30,23 +36,20 @@ public class ProductController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping 
+    @PostMapping
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
-        // Conversion du DTO en entité Product
         Product product = new Product(
-            null,  // L'ID sera généré automatiquement
+            null,
             productDTO.getName(),
             productDTO.getDescription(),
             productDTO.getPrice(),
             productDTO.getStock(),
             productDTO.getImageUrl()
         );
-
-        // Appel au service pour sauvegarder le produit
         Product createdProduct = productService.createProduct(product);
 
-        // Retourne une réponse contenant le produit créé (ou un DTO si nécessaire)
         ProductDTO createdProductDTO = new ProductDTO(
+            createdProduct.getId(),
             createdProduct.getName(),
             createdProduct.getDescription(),
             createdProduct.getPrice(),
@@ -54,7 +57,7 @@ public class ProductController {
             createdProduct.getImageUrl()
         );
 
-        return ResponseEntity.status(201).body(createdProductDTO);  // Utilise 201 pour la création
+        return ResponseEntity.status(201).body(createdProductDTO);
     }
 
     @PostMapping("/batch")
@@ -82,5 +85,38 @@ public class ProductController {
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // ----- Images
+
+    // Upload images produit
+    @PostMapping("/{productId}/images")
+    public ResponseEntity<?> uploadProductImages(
+            @PathVariable Long productId,
+            @RequestParam("images") MultipartFile[] imageFiles
+    ) throws IOException {
+        productImageService.uploadImages(productId, imageFiles);
+        return ResponseEntity.ok("Images uploadées avec succès !");
+    }
+
+    // Récupérer les images d'un produit
+    @GetMapping("/{productId}/images")
+    public ResponseEntity<List<ProductImage>> getProductImages(@PathVariable Long productId) {
+        List<ProductImage> images = productImageService.getImagesByProduct(productId);
+        return ResponseEntity.ok(images);
+    }
+
+    // Supprimer une image spécifique
+    @DeleteMapping("/images/{imageId}")
+    public ResponseEntity<?> deleteProductImage(@PathVariable Long imageId) throws IOException {
+        productImageService.deleteImage(imageId);
+        return ResponseEntity.ok("Image supprimée avec succès !");
+    }
+
+    // Nettoyer les fichiers orphelins
+    @DeleteMapping("/images/clean-orphans")
+    public ResponseEntity<?> cleanOrphanFiles() throws IOException {
+        productImageService.cleanOrphanFiles();
+        return ResponseEntity.ok("Fichiers orphelins nettoyés.");
     }
 }

@@ -21,12 +21,16 @@ const CartPage = () => {
 
     const fetchCart = async () => {
       try {
-        const response = await axios.get<Cart>("http://localhost:8080/api/cart", {
+        const response = await axios.get<Cart>(process.env.NEXT_PUBLIC_BACKEND_URL + "/cart", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setCartItems(Array.from(response.data.cartItems));
+        if (response.data.cartItems) {
+          setCartItems(Array.from(response.data.cartItems));
+        } else {
+          setCartItems([]);
+        }
       } catch (err) {
         console.error(err);
         setError("Impossible de récupérer le panier.");
@@ -42,7 +46,7 @@ const CartPage = () => {
     if (!token) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/cart/remove/${itemId}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/remove/${itemId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
