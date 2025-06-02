@@ -73,6 +73,13 @@ public List<ProductImage> getImagesByProduct(Long productId) {
         productImageRepository.delete(image);
     }
 
+    public void deleteAllProductImage(Long productId){
+        List<ProductImage> images = productImageRepository.findByProductId(productId);
+        images.forEach(image -> 
+            productImageRepository.delete(image)
+        );
+    }
+
     public void cleanOrphanFiles() throws IOException {
         Path uploadPath = Paths.get(uploadDirectory);
         if (!Files.exists(uploadPath)) return;
