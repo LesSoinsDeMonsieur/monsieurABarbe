@@ -26,7 +26,11 @@ const CartPage = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setCartItems(Array.from(response.data.cartItems));
+        if (response.data.cartItems) {
+          setCartItems(Array.from(response.data.cartItems));
+        } else {
+          setCartItems([]);
+        }
       } catch (err) {
         console.error(err);
         setError("Impossible de récupérer le panier.");
