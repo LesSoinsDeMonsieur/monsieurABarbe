@@ -17,15 +17,9 @@ interface EditProductDialogProps {
   open: boolean;
   onClose: () => void;
   product: Product;
-  onSave: (updatedProduct: Product) => void;
 }
 
-export default function EditProductDialog({
-  open,
-  onClose,
-  product,
-  onSave,
-}: EditProductDialogProps) {
+export default function EditProductDialog({ open, onClose, product }: EditProductDialogProps) {
   const [editedProduct, setEditedProduct] = useState<Product>(product);
   const [imagesToDelete, setImageToDelete] = useState<number[]>([]);
   const [imageFile, setImageFile] = useState<File[]>([]); // Nouvel état pour l'image
@@ -58,7 +52,7 @@ export default function EditProductDialog({
   };
 
   const handleSubmit = async () => {
-    if (imageFile) {
+    if (imageFile.length > 0) {
       await addImages({ images: imageFile, id: product.id });
     }
     if (imagesToDelete.length > 0) {

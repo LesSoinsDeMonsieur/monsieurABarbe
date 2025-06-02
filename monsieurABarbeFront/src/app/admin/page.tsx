@@ -1,7 +1,7 @@
 "use client";
 
 import axiosI from "@/axiosInterceptor";
-import Product, { NewProduct } from "@/types/product";
+import Product from "@/types/product";
 import {
   Button,
   Dialog,
@@ -68,18 +68,6 @@ export default function Page() {
     }, 200); // attendre la fin de l’animation (~200ms)
   };
 
-  const handleSave = async (updatedProduct: Product) => {
-    try {
-      await axiosI.put(`/products/${updatedProduct.id}`, updatedProduct);
-      setProducts((prev) =>
-        prev.map((product) => (product.id === updatedProduct.id ? updatedProduct : product)),
-      );
-      setIsEdit(false);
-      getProducts();
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour du produit:", error);
-    }
-  };
   const close = async () => {
     setIsAdding(false);
     await getProducts();
@@ -95,7 +83,6 @@ export default function Page() {
           open={isEdit}
           onClose={() => setIsEdit(false)}
           product={selectedProduct}
-          onSave={handleSave}
         />
       )}
       {isAdding && (
