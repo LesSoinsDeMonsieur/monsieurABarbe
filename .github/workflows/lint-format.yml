@@ -1,0 +1,33 @@
+name: Lint and Format
+
+on:
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  lint-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.15.0"
+
+      - name: Install dependencies
+        run: |
+          cd monsieurABarbeFront
+          yarn install
+
+      - name: Run ESLint (Next.js)
+        run: |
+          cd monsieurABarbeFront  
+          yarn lint
+
+      - name: Check Prettier formatting
+        run: |
+          cd monsieurABarbeFront
+          yarn format:check
