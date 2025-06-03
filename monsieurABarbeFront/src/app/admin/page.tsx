@@ -34,7 +34,8 @@ export default function Page() {
   }, []);
 
   const getProducts = async () => {
-    const data = (await axiosI.get<Product[]>("/products")).data;
+    const response = await axiosI.get("/products");
+    const data = Array.isArray(response.data) ? response.data : [];
     setProducts(data);
   };
 
