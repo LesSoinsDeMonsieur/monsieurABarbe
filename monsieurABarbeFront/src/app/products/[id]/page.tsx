@@ -163,6 +163,7 @@ const ProductDetailPage = () => {
 
             {/* Image principale */}
             <img
+              // src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath}
               src={
                 mainImage || process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
               }
