@@ -124,7 +124,7 @@ function Footer() {
                 className={style.inputField}
               />
               <button type="submit" className={style.submitButton}>
-                S'inscrire
+                S&apos;inscrire
               </button>
             </form>
           </div>

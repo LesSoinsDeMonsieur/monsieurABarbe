@@ -46,6 +46,12 @@
   row-gap: 13px;
 }
 
+.liste a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
 .icones {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
