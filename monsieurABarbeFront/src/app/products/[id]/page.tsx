@@ -13,6 +13,7 @@ const ProductDetailPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<string | null>(null);
+  const [mainImage, setMainImage] = useState<string | null>(null);
 
   // Récupère le token une fois que le composant est monté
   useEffect(() => {
@@ -108,6 +109,13 @@ const ProductDetailPage = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(product);
+    if (product?.imageUrl) {
+      setMainImage("/Gel-douche-burberry-1.jpeg");
+    }
+  }, [product]);
+
   if (loading) return <div className="p-5 text-center">Chargement…</div>;
   if (error) return <div className="p-5 text-center text-danger">{error}</div>;
   if (!product) return <div className="p-5 text-center">Produit introuvable.</div>;
@@ -117,21 +125,66 @@ const ProductDetailPage = () => {
   return (
     <div className="container py-5">
       <div className="row g-4">
+        {/* Colonne image à gauche */}
         <div className="col-md-6">
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="img-fluid rounded shadow"
-            style={{ maxHeight: "500px", objectFit: "cover" }}
-          />
+          <div className="d-flex align-items-start gap-3">
+            {/* Liste d’images miniatures */}
+            <ul
+              className="list-unstyled d-flex flex-column gap-2"
+              style={{
+                width: "80px", // largeur figée ici
+                maxHeight: "500px",
+                overflowY: "auto",
+                flexShrink: 0, // empêche que ça se réduise
+              }}
+            >
+              {[
+                "/Gel-douche-burberry-1.jpeg",
+                "/Gel-douche-burberry-2.jpg",
+                "/Gel-douche-burberry-2.jpg",
+              ].map((img, idx) => (
+                <li key={idx}>
+                  <button onClick={() => setMainImage(img)} className="border-0 bg-transparent p-0">
+                    <img
+                      src={img}
+                      alt={product.name}
+                      className="img-fluid rounded shadow"
+                      style={{
+                        height: "60px",
+                        width: "60px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            {/* Image principale */}
+            <img
+              src={mainImage || product.imageUrl}
+              alt={product.name}
+              className="img-fluid rounded shadow"
+              style={{
+                width: "100%",
+                maxHeight: "500px",
+                objectFit: "cover",
+                flex: 1, // occupe l'espace restant
+              }}
+            />
+          </div>
         </div>
+
+        {/* Colonne texte à droite */}
         <div className="col-md-6">
           <h2 className="fw-bold mb-3">{product.name}</h2>
           <p className="text-muted mb-4">{product.description}</p>
           <h4 className="text-dark mb-3">{product.price.toFixed(2)} €</h4>
           <div className="mb-3 text-warning fs-4">{"★".repeat(5)}</div>
+          <p className="text-muted mb-4">
+            <b>Il ne reste plus que {product.stock} exemplaire(s) en stock.</b>
+          </p>
 
-          {/* Affichage dynamique des boutons */}
           {cartItem ? (
             <div className="d-flex align-items-center gap-3">
               <button className="btn btn-outline-dark" onClick={handleDecrement}>
