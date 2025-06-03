@@ -134,7 +134,7 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.page}>
-        <Footer/>
+        <Footer />
       </div>
     </main>
   );

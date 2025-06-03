@@ -34,10 +34,7 @@ function Footer() {
             <Link href="/CGV" className={style.CGV}>
               CGV & Mentions Légales
             </Link>
-            <Link
-              href="/paiements-securises"
-              className={style.paiementsSecurises}
-            >
+            <Link href="/paiements-securises" className={style.paiementsSecurises}>
               Paiements Sécurisés
             </Link>
           </div>
@@ -72,31 +69,16 @@ function Footer() {
           </div>
           <div className={style.icones}>
             <Link href="https://www.facebook.com/profile.php?id=61567811841372&locale=fr_FR">
-              <Image
-                src="/facebook.png"
-                alt="Facebook"
-                width={24}
-                height={24}
-              />
+              <Image src="/facebook.png" alt="Facebook" width={24} height={24} />
             </Link>
             <Link href="https://www.instagram.com/monsieur_a_barbe/">
-              <Image
-                src="/instagram.png"
-                alt="Instagram"
-                width={24}
-                height={24}
-              />
+              <Image src="/instagram.png" alt="Instagram" width={24} height={24} />
             </Link>
             <Link href="https://www.tiktok.com/monsieurabarbe/" target="_blank">
               <Image src="/tiktok.png" alt="tiktok" width={24} height={24} />
             </Link>
             <Link href="https://www.linkedin.com/monsieurabarbe/">
-              <Image
-                src="/linkedin.png"
-                alt="linkedin"
-                width={24}
-                height={24}
-              />
+              <Image src="/linkedin.png" alt="linkedin" width={24} height={24} />
             </Link>
           </div>
         </div>
@@ -107,8 +89,8 @@ function Footer() {
           </div>
           <div className={style.description}>
             <p className={style.descriptionText}>
-              Pour recevoir des surprises dans votre boîte aux lettres tous les
-              mois, rejoignez Monsieur à Barbe.
+              Pour recevoir des surprises dans votre boîte aux lettres tous les mois, rejoignez
+              Monsieur à Barbe.
             </p>
             <form className={style.newsletterForm}>
               <input
@@ -117,12 +99,7 @@ function Footer() {
                 placeholder="Nom et prénom"
                 className={style.inputField}
               />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className={style.inputField}
-              />
+              <input type="email" name="email" placeholder="Email" className={style.inputField} />
               <button type="submit" className={style.submitButton}>
                 S&apos;inscrire
               </button>
