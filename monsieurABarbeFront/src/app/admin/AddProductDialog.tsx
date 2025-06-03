@@ -22,7 +22,6 @@ interface AddProductDialogProps {
 export default function AddProductDialog({ open, onClose, close }: AddProductDialogProps) {
   const [editedProduct, setEditedProduct] = useState<NewProduct>({
     description: "",
-    imageUrl: "",
     name: "",
     price: 0,
     stock: 1,
