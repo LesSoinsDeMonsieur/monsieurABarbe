@@ -119,7 +119,7 @@ const ProductDetailPage = () => {
       <div className="row g-4">
         <div className="col-md-6">
           <img
-            src={product.imageUrl}
+            src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath}
             alt={product.name}
             className="img-fluid rounded shadow"
             style={{ maxHeight: "500px", objectFit: "cover" }}
