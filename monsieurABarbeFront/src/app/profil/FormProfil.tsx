@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "./profil.module.css";
-import { AuthStatus, useAuth } from "@/contexts/AuthContext";
+import { AuthStatus } from "@/contexts/AuthContext";
 import { authStatusToString } from "@/utils/enumToString";
 import { redirect } from "next/navigation";
 
@@ -15,7 +15,7 @@ export default function FormProfil() {
   const [userName, setUserName] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   // const { submitRegister } = useAuth();
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
 
   type UserProfil = {
     prenom: string;
@@ -38,7 +38,7 @@ export default function FormProfil() {
       }
     } catch (err) {
       console.error(err);
-      setError("Impossible de récupérer le profil.");
+      // setError("Impossible de récupérer le profil.");
     }
   };
 
