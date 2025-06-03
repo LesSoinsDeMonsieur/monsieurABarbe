@@ -2,7 +2,10 @@ package com.monsieurabarbeback.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -34,8 +37,9 @@ public class Product {
     private String imageUrl;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("id ASC")
     @JsonManagedReference
-    private Set<ProductImage> images = new HashSet<>();
+    private List<ProductImage> images = new ArrayList<>();
 
     // Constructeur custom pour ProductController
     public Product(Long id, String name, String description, double price, Integer stock, String imageUrl) {
