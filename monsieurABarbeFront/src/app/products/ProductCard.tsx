@@ -13,7 +13,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <Link href={`/products/${product.id}`} className="text-decoration-none text-dark">
       <div className="card h-100 shadow-sm border-0">
         <img
-          src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath}
+          src={
+            product.images[0]
+              ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
+              : undefined
+          }
           alt={product.name}
           className="card-img-top"
           style={{ height: "250px", objectFit: "cover" }}

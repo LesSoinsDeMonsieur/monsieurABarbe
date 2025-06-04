@@ -75,7 +75,7 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
               <Link href="/profile" className="me-3" onClick={() => setMenuOpen(false)}>
                 <Image src="/user.png" alt="Profile" width={32} height={32} />
               </Link>
-              <Link href="/panier" onClick={() => setMenuOpen(false)}>
+              <Link href="/cart" onClick={() => setMenuOpen(false)}>
                 <Image src="/bag.png" alt="Panier" width={32} height={32} />
               </Link>
             </div>
