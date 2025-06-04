@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import axios from "axios";
 import Product from "@/types/product";
 import CartItem from "@/types/cartItem";
 import { getProduct } from "@/api/products/products";
@@ -12,7 +11,6 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [mainImage, setMainImage] = useState<string | null>(null);
 
@@ -73,7 +71,7 @@ const ProductDetailPage = () => {
   }, [product]);
 
   if (loading) return <div className="p-5 text-center">Chargement…</div>;
-  if (error) return <div className="p-5 text-center text-danger">{error}</div>;
+  // if (error) return <div className="p-5 text-center text-danger">{error}</div>;
   if (!product) return <div className="p-5 text-center">Produit introuvable.</div>;
 
   const cartItem = getCartItem();
