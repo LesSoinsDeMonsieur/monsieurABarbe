@@ -1,24 +1,34 @@
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
+import Footer from "./Footer/page";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import axiosI from "@/axiosInterceptor";
+import Product from "@/types/product";
+import { useEffect } from "react";
+import ListeProduits from "@/components/ListeProduits";
+import ListeAbonnements from "@/components/ListeAbonnements";
+import ListeAvis from "@/components/ListeAvis";
 
 export default function Home() {
+  const fetchData = async () => {
+    const response = await axiosI.get<Product[]>("/products");
+    console.log(response.data);
+    return response.data;
+  };
+
+  useEffect(() => {
+    fetchData();
+  });
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className={styles.main}>
+      <div className={styles.intro}>
+        <h1>
+          La box pensée <br />
+          pour chaque <br />
+          Monsieur à Barbe
+        </h1>
 
         <div className={styles.ctas}>
           <a
@@ -27,69 +37,105 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
+            JE LA VEUX
           </a>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      </div>
+      <h1>Nouveau mois, nouvel homme</h1>
+      <div className={styles.decouverte}>
+        {
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            className={styles.logo}
+            src="/Produits-cosmetiques.jpg"
+            alt="Vercel logomark"
+            width={400}
+            height={400}
           />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        }
+        <div className={styles.contenu}>
+          <p>
+            La <strong>seule</strong> box pour barbe sur abonnement : l’élégance et le soin offerts
+            chaque mois avec <strong>Monsieur à Barbe !</strong>
+          </p>
+          <p>
+            Chaque mois, recevez une nouvelle box contenant des produits pour entretenir et prendre
+            soin de votre barbe…
+          </p>
+          <a href="">JE DÉCOUVRE</a>
+        </div>
+      </div>
+      <div className={styles.tutoriel}>
+        <h1>Comment ça marche</h1>
+        <div className={styles.etapes}>
+          <div className={styles.etape}>
+            {
+              <Image
+                className={styles.logo}
+                src="/tuto_etape1.png"
+                alt="Vercel logomark"
+                width={200}
+                height={200}
+              />
+            }
+            <h2>1</h2>
+            <p>Je choisis mon abonnement</p>
+          </div>
+
+          <div className={styles.etape}>
+            {
+              <Image
+                className={styles.logo}
+                src="/tuto_etape2.png"
+                alt="Vercel logomark"
+                width={300}
+                height={300}
+              />
+            }
+            <h2>2</h2>
+            <p>Je reçois ma Box</p>
+          </div>
+
+          <div className={styles.etape}>
+            {
+              <Image
+                className={styles.logo}
+                src="/tuto_etape3.png"
+                alt="Vercel logomark"
+                width={200}
+                height={200}
+              />
+            }
+            <h2>3</h2>
+            <p>Je découvre ce qu’on m’a préparé</p>
+          </div>
+        </div>
+        <a href="">PLUS DE DÉTAILS</a>
+      </div>
+      <div className={styles.section_abonnements}>
+        <h1> Nos offres d’abonnement </h1>
+        <ListeAbonnements />
+        <a href="">J’OFFRE UN ABONNEMENT</a>
+        <div className={styles.section_avis}>
+          <div className={styles.voir_tous_les_avis}>
+            <h2>Les avis parlent d’eux-mêmes</h2>
+            <p>Consultez les avis de nos clients avant de vous lancer</p>
+            <a href="">VOIR TOUS LES AVIS</a>
+          </div>
+          <ListeAvis />
+        </div>
+      </div>
+      <div className={styles.section_produits}>
+        <h1>Dans vos box, retrouvez ces produits</h1>
+        <ListeProduits />
+        <div>
+          <a href="" className={styles.voir_tous_les_produits}>
+            VOIR TOUS LES PRODUITS
+          </a>
+        </div>
+      </div>
+      <div className={styles.page}>
+        <Footer />
+      </div>
+    </main>
   );
 }
