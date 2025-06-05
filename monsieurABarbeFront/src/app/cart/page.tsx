@@ -81,7 +81,10 @@ const CartPage = () => {
                 <div className="card p-3 shadow-sm h-100 d-flex flex-row">
                   <img
                     src={
-                      process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + item.product.images[0].filePath
+                      item.product.images[0]
+                        ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE +
+                          item.product.images[0].filePath
+                        : undefined
                     }
                     alt={item.product.name}
                     className="rounded"

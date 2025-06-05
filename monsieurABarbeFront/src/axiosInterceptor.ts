@@ -9,7 +9,11 @@ const axiosI = axios.create({
     "Access-Control-Allow-Origin": "*",
   },
 });
+const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
 
+if (token) {
+  axiosI.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
 // Ajoutez un intercepteur pour gérer les erreurs 401
 axiosI.interceptors.response.use(
   (response) => response,
@@ -17,8 +21,7 @@ axiosI.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      //TODO Gérer de redemander à l'utilisateur de se connecter si il est déconnecté
-      // originalRequest.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
+      originalRequest.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
       return axiosI(originalRequest);
     }
     return Promise.reject(error);
