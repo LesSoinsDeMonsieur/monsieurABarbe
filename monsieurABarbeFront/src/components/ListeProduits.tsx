@@ -1,4 +1,4 @@
-import Produit from "./Produit";
+import Produit from "./ProduitComponent";
 import styles from "../app/page.module.css";
 import { useState } from "react";
 
