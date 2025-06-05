@@ -16,12 +16,14 @@ export async function updateProduct({
   await axiosI.put(`/products/${id}`, updatedProduct);
 }
 
-export async function addImages({ images, id }: { id: number; images: File[] }) {
-  const formData = new FormData();
-  images.forEach((file) => formData.append("images", file));
-  await axiosI.post(`/products/${id}/images`, formData);
-}
-
-export async function deleteImage(id: number) {
-  await axiosI.delete(`/products/images/${id}`);
+export async function getProduct({ id }: { id: number }): Promise<Product | null> {
+  try {
+    const response = await axiosI.get<Product>(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 }

@@ -11,7 +11,8 @@ import {
 } from "@mui/material";
 import Product from "@/types/product";
 import RemovableLabel from "@/components/RemovableLabel";
-import { addImages, deleteImage, updateProduct } from "@/api/products/products";
+import { updateProduct } from "@/api/products/products";
+import { addImages, deleteImage } from "@/api/products/products.images";
 
 interface EditProductDialogProps {
   open: boolean;

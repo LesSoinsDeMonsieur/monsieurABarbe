@@ -10,8 +10,9 @@ import {
   Button,
 } from "@mui/material";
 import Product, { NewProduct } from "@/types/product";
-import { addImages, addProducts } from "@/api/products/products";
+import { addImages } from "@/api/products/products.images";
 import RemovableLabel from "@/components/RemovableLabel";
+import { addProducts } from "@/api/products/products";
 
 interface AddProductDialogProps {
   open: boolean;
