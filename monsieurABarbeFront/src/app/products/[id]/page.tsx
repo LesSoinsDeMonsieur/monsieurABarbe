@@ -2,76 +2,51 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import axios from "axios";
 import Product from "@/types/product";
 import CartItem from "@/types/cartItem";
+import { getProduct } from "@/api/products/products";
+import { addItemToCart, decrementItemToCart, getCart } from "@/api/cart/cart";
+import { LoginState, useAuth } from "@/contexts/AuthContext";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [token, setToken] = useState<string | null>(null);
   const [mainImage, setMainImage] = useState<string | null>(null);
+  const { userInfo } = useAuth();
 
-  // Récupère le token une fois que le composant est monté
   useEffect(() => {
-    const storedToken = localStorage.getItem("accessToken");
-    setToken(storedToken);
-  }, []);
+    if (userInfo && userInfo.state == LoginState.LOGGED_IN) fetchCart();
+  }, [userInfo]);
 
   // Récupère le produit
   useEffect(() => {
-    if (!token) return;
     const fetchProduct = async () => {
-      try {
-        const response = await axios.get<Product>(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
-        setProduct(response.data);
-      } catch (err) {
-        console.error(err);
-        setError("Erreur lors du chargement du produit");
-      } finally {
+      const data = await getProduct({ id: Number(id) });
+      if (data) {
+        setProduct(data);
         setLoading(false);
       }
     };
 
     fetchProduct();
-  }, [id, token]);
+  }, [id]);
 
   // Récupère le panier
   const fetchCart = async () => {
-    if (!token) return;
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setCartItems(response.data?.cartItems || []);
-    } catch (err) {
-      console.error(err);
-      console.error("Erreur lors du chargement du panier");
+    const data = await getCart();
+    if (data) setCartItems(data.cartItems || []);
+    else {
     }
   };
-
-  useEffect(() => {
-    if (token) fetchCart();
-  }, [token]);
 
   const getCartItem = () => cartItems.find((item) => item.product.id === Number(id));
 
   const handleAddToCart = async () => {
-    if (!product || !token) return;
+    if (!product) return;
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/add`,
-        { productId: product.id, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      await addItemToCart({ product });
       await fetchCart();
     } catch (err) {
       console.error(err);
@@ -79,29 +54,10 @@ const ProductDetailPage = () => {
     }
   };
 
-  const handleIncrement = async () => {
-    if (!product || !token) return;
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/add`,
-        { productId: product.id, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      await fetchCart();
-    } catch (err) {
-      console.error(err);
-      console.error("Erreur increment");
-    }
-  };
-
   const handleDecrement = async () => {
-    if (!product || !token) return;
+    if (!product) return;
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/decrement`,
-        { productId: product.id, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      await decrementItemToCart({ product });
       await fetchCart();
     } catch (err) {
       console.error(err);
@@ -111,13 +67,13 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     console.log(product);
-    if (product?.images) {
+    if (product?.images && product?.images[0]) {
       setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath);
     }
   }, [product]);
 
   if (loading) return <div className="p-5 text-center">Chargement…</div>;
-  if (error) return <div className="p-5 text-center text-danger">{error}</div>;
+  // if (error) return <div className="p-5 text-center text-danger">{error}</div>;
   if (!product) return <div className="p-5 text-center">Produit introuvable.</div>;
 
   const cartItem = getCartItem();
@@ -165,7 +121,9 @@ const ProductDetailPage = () => {
             <img
               // src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath}
               src={
-                mainImage || process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
+                mainImage || product.images[0]
+                  ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
+                  : undefined
               }
               alt={product.name}
               className="img-fluid rounded shadow"
@@ -195,7 +153,7 @@ const ProductDetailPage = () => {
                 –
               </button>
               <span className="fw-bold">{cartItem.quantity}</span>
-              <button className="btn btn-outline-dark" onClick={handleIncrement}>
+              <button className="btn btn-outline-dark" onClick={handleAddToCart}>
                 +
               </button>
             </div>
