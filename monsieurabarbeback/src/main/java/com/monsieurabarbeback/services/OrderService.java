@@ -12,7 +12,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+
     private final OrderRepository orderRepository;
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
 
     public List<Order> getOrdersByUser(User user) {
         return orderRepository.findByUser(user);
@@ -23,6 +28,10 @@ public class OrderService {
     }
 
     public Order createOrder(Order order) {
+        return orderRepository.save(order);
+    }
+
+    public Order updateOrder(Order order) {
         return orderRepository.save(order);
     }
 
