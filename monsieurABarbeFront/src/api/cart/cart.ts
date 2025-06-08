@@ -34,3 +34,10 @@ export async function decrementItemToCart({ product }: { product: Product }) {
     return null;
   }
 }
+export async function RemoveItemToCart({ id }: { id: number }) {
+  try {
+    axiosI.post("/cart/remove" + id);
+  } catch (err) {
+    console.error(err);
+  }
+}

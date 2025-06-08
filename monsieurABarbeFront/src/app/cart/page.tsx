@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import Cart from "@/types/cart";
 import CartItem from "@/types/cartItem";
+import { useRouter } from "next/navigation";
+import { getCart, RemoveItemToCart } from "@/api/cart/cart";
+import Link from "next/link";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<string | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
     setToken(storedToken);
@@ -21,13 +22,9 @@ const CartPage = () => {
 
     const fetchCart = async () => {
       try {
-        const response = await axios.get<Cart>(process.env.NEXT_PUBLIC_BACKEND_URL + "/cart", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (response.data.cartItems) {
-          setCartItems(Array.from(response.data.cartItems));
+        const response = await getCart();
+        if (response && response.cartItems) {
+          setCartItems(response.cartItems);
         } else {
           setCartItems([]);
         }
@@ -46,12 +43,7 @@ const CartPage = () => {
     if (!token) return;
 
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/remove/${itemId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      await RemoveItemToCart({ id: itemId });
       setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
     } catch (err) {
       console.error("Erreur lors de la suppression de l'article", err);
@@ -114,7 +106,9 @@ const CartPage = () => {
 
           <div className="mt-4">
             <h4>Total : {getTotalPrice().toFixed(2)} €</h4>
-            <button className="btn btn-success mt-3">Procéder au paiement</button>
+            <Link href={"payement"}>
+              <button className="btn btn-success mt-3">Procéder au paiement</button>
+            </Link>
           </div>
         </>
       )}
