@@ -31,7 +31,7 @@ import com.monsieurabarbeback.entities.Product;
 import com.monsieurabarbeback.entities.User;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/stripe")
 public class StripeController {
     
     @Autowired private UserRepository userRepository;
@@ -66,7 +66,7 @@ public class StripeController {
                     .setPriceData(
                         SessionCreateParams.LineItem.PriceData.builder()
                             .setCurrency("eur")
-                            .setUnitAmount((long) (product.getPrice()))
+                            .setUnitAmount((long) (product.getPrice() * 100))
                             .setProductData(
                                 SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                     .setName(product.getName())
@@ -82,8 +82,8 @@ public class StripeController {
           SessionCreateParams params = SessionCreateParams.builder()
           .addAllLineItem(lineItems)
           .setMode(SessionCreateParams.Mode.PAYMENT)
-          .setSuccessUrl("http://localhost:3000/success")
-          .setCancelUrl("http://localhost:3000/cancel")
+          .setSuccessUrl("http://localhost:3000/payement/success")
+          .setCancelUrl("http://localhost:3000/payement/cancel")
           .build();
           
           Session session = Session.create(params);

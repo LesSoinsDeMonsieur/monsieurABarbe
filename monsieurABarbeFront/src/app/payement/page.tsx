@@ -27,7 +27,12 @@ export default function Page() {
 
     await stripe?.redirectToCheckout({ sessionId: res.sessionId });
   };
-
+  const getTotalPrice = () => {
+    if (cart)
+      return cart.cartItems.reduce((total, item) => {
+        return total + item.product.price * item.quantity;
+      }, 0);
+  };
   return (
     <div
       style={{
@@ -52,6 +57,8 @@ export default function Page() {
               borderRadius: "5px",
               borderWidth: "1px",
               padding: "20px 40px",
+              width: "100%",
+              maxWidth: "500px",
             }}
           >
             <h4>Récapitulatif de vos articles</h4>
@@ -114,6 +121,8 @@ export default function Page() {
               borderRadius: "5px",
               borderWidth: "1px",
               padding: "20px",
+              width: "100%",
+              maxWidth: "500px",
             }}
           >
             <h4>Livraison</h4>
@@ -132,10 +141,11 @@ export default function Page() {
               borderRadius: "8px",
               padding: "20px",
               width: "100%",
-              maxWidth: "600px",
+              maxWidth: "500px",
             }}
           >
             <h3>Paiement</h3>
+            <div>Prix total : {(getTotalPrice() ?? 0).toFixed(2)} €</div>
             <button type="submit">Payer</button>
           </form>
         </>
