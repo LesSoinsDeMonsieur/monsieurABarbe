@@ -5,13 +5,14 @@ import CartItem from "@/types/cartItem";
 import { useRouter } from "next/navigation";
 import { getCart, RemoveItemToCart } from "@/api/cart/cart";
 import Link from "next/link";
+import Image from "next/image";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<string | null>(null);
-  const router = useRouter();
+
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
     setToken(storedToken);
@@ -71,12 +72,12 @@ const CartPage = () => {
             {cartItems.map((item) => (
               <div className="col-md-6" key={item.id}>
                 <div className="card p-3 shadow-sm h-100 d-flex flex-row">
-                  <img
+                  <Image
                     src={
                       item.product.images[0]
                         ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE +
                           item.product.images[0].filePath
-                        : undefined
+                        : ""
                     }
                     alt={item.product.name}
                     className="rounded"

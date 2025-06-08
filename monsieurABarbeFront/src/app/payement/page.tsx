@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import Cart from "@/types/cart";
 import { createStripeSession } from "@/api/stripe/stripe.api";
+import Image from "next/image";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
@@ -64,7 +65,7 @@ export default function Page() {
                     gap: "10px",
                   }}
                 >
-                  <img
+                  <Image
                     style={{
                       width: "100px",
                       height: "100px",
@@ -74,9 +75,10 @@ export default function Page() {
                       item.product.images[0]
                         ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE +
                           item.product.images[0].filePath
-                        : undefined
+                        : ""
                     }
-                  ></img>
+                    alt=""
+                  />
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div>{item.product.name}</div>
                     <div>Quantité : {item.quantity}</div>

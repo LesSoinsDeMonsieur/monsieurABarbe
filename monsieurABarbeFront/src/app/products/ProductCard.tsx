@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Product from "@/types/product";
+import Image from "next/image";
 
 interface ProductCardProps {
   product: Product;
@@ -12,11 +13,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Link href={`/products/${product.id}`} className="text-decoration-none text-dark">
       <div className="card h-100 shadow-sm border-0">
-        <img
+        <Image
           src={
             product.images[0]
               ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
-              : undefined
+              : ""
           }
           alt={product.name}
           className="card-img-top"

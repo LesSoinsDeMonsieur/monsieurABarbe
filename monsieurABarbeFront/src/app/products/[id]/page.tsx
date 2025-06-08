@@ -7,6 +7,7 @@ import CartItem from "@/types/cartItem";
 import { getProduct } from "@/api/products/products";
 import { addItemToCart, decrementItemToCart, getCart } from "@/api/cart/cart";
 import { LoginState, useAuth } from "@/contexts/AuthContext";
+import Image from "next/image";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -102,7 +103,7 @@ const ProductDetailPage = () => {
                     }
                     className="border-0 bg-transparent p-0"
                   >
-                    <img
+                    <Image
                       src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath}
                       alt={product.name}
                       className="img-fluid rounded shadow"
@@ -118,12 +119,11 @@ const ProductDetailPage = () => {
             </ul>
 
             {/* Image principale */}
-            <img
-              // src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath}
+            <Image
               src={
                 mainImage || product.images[0]
                   ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
-                  : undefined
+                  : ""
               }
               alt={product.name}
               className="img-fluid rounded shadow"

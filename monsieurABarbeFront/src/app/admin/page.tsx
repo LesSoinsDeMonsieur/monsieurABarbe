@@ -20,6 +20,7 @@ import {
 import { useEffect, useState } from "react";
 import EditProductDialog from "./EditProductDialog";
 import AddProductDialog from "./AddProductDialog";
+import Image from "next/image";
 
 export default function Page() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -165,13 +166,15 @@ export default function Page() {
                     <TableCell align="right">{product.stock}</TableCell>
                     <TableCell align="right" sx={{ width: 100 }}>
                       <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-                        <img
+                        <Image
                           src="edit.svg"
                           style={{ width: "30px", cursor: "pointer" }}
                           onClick={() => handleEdit(product)}
+                          alt="edit"
                         />
-                        <img
+                        <Image
                           src="delete.svg"
+                          alt="delete"
                           style={{ width: "30px", cursor: "pointer" }}
                           onClick={() => handleDeleteClick(product)}
                         />
