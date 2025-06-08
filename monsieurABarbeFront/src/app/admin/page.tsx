@@ -168,14 +168,18 @@ export default function Page() {
                       <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
                         <Image
                           src="edit.svg"
-                          style={{ width: "30px", cursor: "pointer" }}
+                          style={{ cursor: "pointer" }}
+                          width={30}
+                          height={30}
                           onClick={() => handleEdit(product)}
                           alt="edit"
                         />
                         <Image
                           src="delete.svg"
                           alt="delete"
-                          style={{ width: "30px", cursor: "pointer" }}
+                          width={30}
+                          height={30}
+                          style={{ cursor: "pointer" }}
                           onClick={() => handleDeleteClick(product)}
                         />
                       </div>

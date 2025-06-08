@@ -107,9 +107,9 @@ const ProductDetailPage = () => {
                       src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath}
                       alt={product.name}
                       className="img-fluid rounded shadow"
+                      width={60}
+                      height={60}
                       style={{
-                        height: "60px",
-                        width: "60px",
                         objectFit: "cover",
                       }}
                     />
@@ -123,15 +123,17 @@ const ProductDetailPage = () => {
               src={
                 mainImage || product.images[0]
                   ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
-                  : ""
+                  : "/image.png"
               }
               alt={product.name}
               className="img-fluid rounded shadow"
+              width={300}
+              height={250}
               style={{
-                width: "100%",
-                maxHeight: "500px",
-                objectFit: "cover",
-                flex: 1, // occupe l'espace restant
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+                flex: "1",
               }}
             />
           </div>

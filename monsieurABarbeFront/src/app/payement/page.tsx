@@ -55,42 +55,55 @@ export default function Page() {
             }}
           >
             <h4>Récapitulatif de vos articles</h4>
-            {cart.cartItems.map((item, i) => (
-              <div key={i}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <Image
+            {cart &&
+              cart.cartItems &&
+              cart.cartItems.map((item, i) => (
+                <div key={i}>
+                  <div
                     style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: "10px",
                     }}
-                    src={
-                      item.product.images[0]
-                        ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE +
-                          item.product.images[0].filePath
-                        : ""
-                    }
-                    alt=""
-                  />
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div>{item.product.name}</div>
-                    <div>Quantité : {item.quantity}</div>
-                    <div>Prix : {(item.product.price * item.quantity).toFixed(2)} €</div>
+                  >
+                    <div
+                      style={{
+                        width: 150,
+                        height: 100,
+                        position: "relative",
+                        overflow: "hidden",
+                        backgroundColor: "#f8f9fa", // léger fond gris pour éviter les trous
+                        flexShrink: 0,
+                      }}
+                    >
+                      <Image
+                        style={{
+                          objectFit: "contain",
+                        }}
+                        fill
+                        src={
+                          item.product.images[0]
+                            ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE +
+                              item.product.images[0].filePath
+                            : "/image.png"
+                        }
+                        alt=""
+                      />
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div>{item.product.name}</div>
+                      <div>Quantité : {item.quantity}</div>
+                      <div>Prix : {(item.product.price * item.quantity).toFixed(2)} €</div>
+                    </div>
                   </div>
+                  {/* Ligne de séparation sauf après le dernier item */}
+                  {i < cart.cartItems.length - 1 && (
+                    <div style={{ borderBottom: "1px solid black", margin: "25px 0" }} key={i} />
+                  )}
                 </div>
-                {/* Ligne de séparation sauf après le dernier item */}
-                {i < cart.cartItems.length - 1 && (
-                  <div style={{ borderBottom: "1px solid black", margin: "25px 0" }} key={i} />
-                )}
-              </div>
-            ))}
+              ))}
           </div>
           {/* REGION */}
           <div
