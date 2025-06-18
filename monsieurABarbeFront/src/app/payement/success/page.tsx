@@ -20,6 +20,7 @@ export default function Page() {
     >
       <Alert severity="success">Le payement a bien été effectué !</Alert>
       <div>
+        <h1>Merci pour votre Achat !</h1>
         Vous recevrez vos articles dans les plus bref délais vous pouvez consulté l'avancé de la
         livraison sur la page{" "}
         <Link href={"/my-order"} style={{ color: "black" }}>

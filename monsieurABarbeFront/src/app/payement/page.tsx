@@ -126,6 +126,7 @@ export default function Page() {
             }}
           >
             <h4>Livraison</h4>
+            Le choix de livraison de vos articles se passe sur la page de payement
           </div>
           {/* 💳 Formulaire de paiement */}
           <form
