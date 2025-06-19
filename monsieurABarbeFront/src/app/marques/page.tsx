@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import styles from "./marques.module.css";
 
 export default function Marques() {
