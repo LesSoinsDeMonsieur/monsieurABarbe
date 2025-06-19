@@ -97,9 +97,12 @@ const ProductDetailPage = () => {
               {product.images.map((image, idx) => (
                 <li key={idx}>
                   <button
-                    onClick={() =>
-                      setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath)
-                    }
+                    onClick={() => {
+                      setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath);
+                      console.log(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath);
+                      console.log(mainImage);
+                      console.log("Test");
+                    }}
                     className="border-0 bg-transparent p-0"
                   >
                     <img
@@ -121,9 +124,9 @@ const ProductDetailPage = () => {
             <img
               // src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath}
               src={
-                mainImage || product.images[0]
-                  ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
-                  : undefined
+                mainImage
+                  ? mainImage
+                  : process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
               }
               alt={product.name}
               className="img-fluid rounded shadow"
