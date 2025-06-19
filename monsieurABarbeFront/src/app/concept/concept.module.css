@@ -1,0 +1,85 @@
+.main {
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  font-family: "Georgia", serif;
+  color: var(--gris);
+  word-break: break-word;
+}
+
+.main h1 {
+  text-align: center;
+}
+
+.createur {
+  display: flex;
+  align-items: center;
+  gap: 5%;
+  padding: 4%;
+}
+
+.createur .contenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.createur .contenu a {
+  margin-top: 20px;
+  background: var(--gris);
+  border-radius: 3px;
+  padding: 12px 40px;
+  color: var(--blanc);
+  text-decoration: none;
+
+  width: fit-content;
+}
+
+.abonnements {
+  background: var(--gris);
+  color: var(--blanc);
+
+  display: flex;
+  padding: 4%;
+  gap: 5%;
+  align-items: center;
+}
+
+.abonnements .contenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.abonnements a {
+  background: var(--blanc);
+
+  border-radius: 3px;
+  padding: 12px 40px;
+  color: var(--gris);
+  text-decoration: none;
+  align-self: flex-end;
+}
+
+.valeurs {
+  display: flex;
+  align-items: center;
+  padding: 4%;
+  gap: 5%;
+}
+
+.valeurs .contenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.valeurs .contenu a {
+  margin-top: 20px;
+  background: var(--gris);
+  border-radius: 3px;
+  padding: 12px 40px;
+  color: var(--blanc);
+  text-decoration: none;
+
+  width: fit-content;
+}
