@@ -56,7 +56,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/boxes/**").permitAll()
                     .requestMatchers(HttpMethod.GET,"/uploads/**").permitAll()
-                    .requestMatchers(HttpMethod.POST,"/api/stripe/webhook").permitAll()
+                    // .requestMatchers(HttpMethod.POST,"/api/stripe/webhook").permitAll()
 
                     // Auth required for anything else
                     .anyRequest().authenticated()
