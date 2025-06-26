@@ -17,20 +17,19 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { userInfo, retrieveUserInfos } = useAuth();
 
+  useEffect(() => {
+    fetch();
+  }, []);
   if (hiddenRoutes.includes(pathname)) {
     return null;
   }
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        await retrieveUserInfos();
-      } catch (e) {
-        console.error("Erreur lors de la récupération du profil :", e);
-      }
-    };
-
-    fetch();
-  }, []);
+  const fetch = async () => {
+    try {
+      await retrieveUserInfos();
+    } catch (e) {
+      console.error("Erreur lors de la récupération du profil :", e);
+    }
+  };
   const ongletsMilieu = [
     { nom: "Box", url: "/Box" },
     { nom: "Shop", url: "/products" },
