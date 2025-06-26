@@ -30,12 +30,12 @@ export default function ProfilPage() {
   if (errorMessage) return <div className="text-red-500">{errorMessage}</div>;
 
   if (!userInfo || userInfo.state === LoginState.LOGGED_OUT)
-    return <div>Vous n'êtes pas connecté.</div>;
+    return <div>Vous n&apos;êtes pas connecté.</div>;
 
   return (
     <div className={styles.profilContainer}>
       <div className={styles.profilItem}>
-        <strong>Nom d'utilisateur :</strong> {userInfo.username}
+        <strong>Nom d&apos;utilisateur :</strong> {userInfo.username}
       </div>
       <div className={styles.profilItem}>
         <strong>Email :</strong> {userInfo.email}
