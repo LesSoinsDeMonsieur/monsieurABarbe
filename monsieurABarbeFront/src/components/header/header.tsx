@@ -22,7 +22,7 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
     { nom: "Box", url: "/Box" },
     { nom: "Shop", url: "/products" },
     { nom: "Offrir", url: "/Offrir" },
-    { nom: "Notre concept", url: "/Notre-concept" },
+    { nom: "Notre concept", url: "/concept" },
     { nom: "Marques partenaires", url: "/Marques-partenaires" },
     { nom: "Contact", url: "/Contact" },
     { nom: "Blog", url: "/Blog" },
