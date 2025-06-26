@@ -6,6 +6,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import Cart from "@/types/cart";
 import { createStripeSession } from "@/api/stripe/stripe.api";
 import Image from "next/image";
+import { createOrder } from "@/api/orders/orders.api";
+import { Order } from "@/types/order";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
@@ -21,11 +23,12 @@ export default function Page() {
     if (data) setCart(data);
   };
   const handlePay = async () => {
+    return await loadStripe();
+  };
+  const loadStripe = async () => {
     const stripe = await stripePromise;
-
     const res = await createStripeSession();
-
-    await stripe?.redirectToCheckout({ sessionId: res.sessionId });
+    return await stripe?.redirectToCheckout({ sessionId: res.sessionId });
   };
   const getTotalPrice = () => {
     if (cart)

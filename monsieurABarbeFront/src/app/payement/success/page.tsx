@@ -1,9 +1,36 @@
 "use client";
 
+import { getCart } from "@/api/cart/cart";
+import { createOrder } from "@/api/orders/orders.api";
+import Cart from "@/types/cart";
 import { Alert, Button } from "@mui/material";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Page() {
+  const [cart, setCart] = useState<Cart>();
+
+  const fetchCart = async () => {
+    const data = await getCart();
+    if (data) setCart(data);
+  };
+  useEffect(() => {
+    async () => {
+      await fetchCart();
+      await sendOrder();
+    };
+  }, []);
+
+  const sendOrder = async () => {
+    const order = await createOrder({
+      items: cart?.cartItems.map((item) => {
+        return {
+          productId: item.product.id,
+          quantity: item.quantity,
+        };
+      }),
+    });
+  };
   return (
     <div
       style={{
