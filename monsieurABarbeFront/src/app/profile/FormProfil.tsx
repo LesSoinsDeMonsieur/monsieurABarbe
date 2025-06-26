@@ -5,7 +5,7 @@ import { useAuth, LoginState } from "@/contexts/AuthContext";
 import styles from "./profil.module.css";
 
 export default function ProfilPage() {
-  const { userInfo, retrieveUserInfos } = useAuth();
+  const { userInfo, retrieveUserInfos, logout } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -34,12 +34,18 @@ export default function ProfilPage() {
 
   return (
     <div className={styles.profilContainer}>
-      <div className={styles.profilItem}>
+      <div>
         <strong>Nom d&apos;utilisateur :</strong> {userInfo.username}
       </div>
-      <div className={styles.profilItem}>
+      <div>
         <strong>Email :</strong> {userInfo.email}
       </div>
+      <button
+        onClick={() => logout()}
+        style={{ display: "flex", justifyContent: "center", width: "100%" }}
+      >
+        Déconnexion
+      </button>
     </div>
   );
 }

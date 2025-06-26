@@ -4,7 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LoginState, useAuth } from "@/contexts/AuthContext";
+import { RoleEnum } from "@/types/role";
 
 interface HeaderProps {
   hiddenRoutes?: string[];
@@ -13,11 +15,21 @@ interface HeaderProps {
 function Header({ hiddenRoutes = [] }: HeaderProps) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { userInfo, retrieveUserInfos } = useAuth();
 
+  useEffect(() => {
+    fetch();
+  }, []);
   if (hiddenRoutes.includes(pathname)) {
     return null;
   }
-
+  const fetch = async () => {
+    try {
+      await retrieveUserInfos();
+    } catch (e) {
+      console.error("Erreur lors de la récupération du profil :", e);
+    }
+  };
   const ongletsMilieu = [
     { nom: "Box", url: "/Box" },
     { nom: "Shop", url: "/products" },
@@ -71,14 +83,33 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
             </ul>
 
             {/* Icônes à droite */}
-            <div className="d-flex align-items-center">
-              <Link href="/profile" className="me-3" onClick={() => setMenuOpen(false)}>
-                <Image src="/user.png" alt="Profile" width={32} height={32} />
-              </Link>
-              <Link href="/cart" onClick={() => setMenuOpen(false)}>
-                <Image src="/bag.png" alt="Panier" width={32} height={32} />
-              </Link>
-            </div>
+            {userInfo && userInfo.state == LoginState.LOGGED_IN && (
+              <div className="d-flex align-items-center">
+                <Link href="/profile" className="me-2" onClick={() => setMenuOpen(false)}>
+                  <Image src="/user-alt-1-svgrepo-com.svg" alt="Profile" width={38} height={38} />
+                </Link>
+                <Link href="/cart" onClick={() => setMenuOpen(false)} className="me-2">
+                  <Image src="/bag-shopping-svgrepo-com.svg" alt="Panier" width={38} height={38} />
+                </Link>
+                {userInfo.role == RoleEnum.ROLE_ADMIN && (
+                  <Link href={"/admin"} onClick={() => setMenuOpen(false)}>
+                    <Image
+                      src="user-shield-alt-1-svgrepo-com.svg"
+                      alt="admin"
+                      width={38}
+                      height={38}
+                    />
+                  </Link>
+                )}
+              </div>
+            )}
+            {userInfo?.state == LoginState.LOGGED_OUT && (
+              <div>
+                <Link className="nav-link" href={"/login"} onClick={() => setMenuOpen(false)}>
+                  Se connecter
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </nav>
