@@ -3,12 +3,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { getProtected, loginRequest, registerRequest, getMeRequest } from "@/api/auth/auth";
 import axios from "axios";
 import axiosI from "@/axiosInterceptor";
-
-// type UserInfo =
-//   | {
-//       state: LoginState.LOGGED_OUT;
-//     }
-//   | { state: LoginState.LOGGED_IN };
+import { RoleEnum } from "@/types/role";
+import { useRouter } from "next/navigation";
 
 type UserInfo =
   | {
@@ -19,6 +15,7 @@ type UserInfo =
       id: number;
       username: string;
       email: string;
+      role: RoleEnum;
     };
 
 export type UserSignup = {
@@ -65,6 +62,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
@@ -103,13 +101,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const me = await getMeRequest();
       if (me) {
-        console.log("Contenu de me :", me);
         setUserInfo({
           state: LoginState.LOGGED_IN,
           ...(me as {
             id: number;
             username: string;
             email: string;
+            role: RoleEnum;
           }),
         });
       } else {
@@ -130,8 +128,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     try {
       const me = await getMeRequest();
-      // const info = await updateLastLoginManagedUser();
-      // const info: UserLogin = { id: "idtest", userName: "test" };
       if (await getProtected()) {
         if (me) {
           setUserInfo({
@@ -139,11 +135,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             id: me.id,
             username: me.username,
             email: me.email,
+            role: me.role,
           });
         }
-        // setUserInfo({
-        //   state: LoginState.LOGGED_IN,
-        // });
       } else {
         setUserInfo({ state: LoginState.LOGGED_OUT });
       }
@@ -176,6 +170,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setAccessToken(null);
     setUserInfo({ state: LoginState.LOGGED_OUT }); //Forces router to wait until user data has been re-retrieved
     localStorage.setItem("accessToken", "");
+    router.push("/");
   };
   const submitRegister = async (user: UserSignup): Promise<AuthStatus> => {
     try {

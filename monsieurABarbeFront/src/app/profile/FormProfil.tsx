@@ -8,7 +8,7 @@ import { CommandeType, getUserOrders2, getProductById } from "@/api/orders/order
 import { Order } from "@/types/order";
 
 export default function ProfilPage() {
-  const { userInfo, retrieveUserInfos } = useAuth();
+  const { userInfo, retrieveUserInfos, logout } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<"profile" | "orders">("profile");
@@ -125,6 +125,12 @@ export default function ProfilPage() {
 
         {activeTab === "orders" && <ListeCommande commandes={commandes} isLoading={false} />}
       </div>
+      <button
+        onClick={() => logout()}
+        style={{ display: "flex", justifyContent: "center", width: "100%" }}
+      >
+        Déconnexion
+      </button>
     </div>
   );
 }
