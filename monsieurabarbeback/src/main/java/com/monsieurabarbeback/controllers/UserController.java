@@ -6,10 +6,14 @@ import com.monsieurabarbeback.mappers.UserMapper;
 import com.monsieurabarbeback.services.UserService;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -27,8 +31,18 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+    public ResponseEntity<UserDTO> getCnnectedUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Optional<User> userOpt = userService.getUserByEmail(username);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return userService.getUserByEmail(username)
+                .map(user -> ResponseEntity.ok(UserMapper.toDto(user)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
     
 }
