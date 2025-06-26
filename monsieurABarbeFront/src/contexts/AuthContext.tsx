@@ -17,7 +17,7 @@ type UserInfo =
   | {
       state: LoginState.LOGGED_IN;
       id: string;
-      userName: string;
+      username: string;
       email: string;
     };
 
@@ -103,11 +103,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const me = await getMeRequest();
       if (me) {
+        console.log("Contenu de me :", me);
         setUserInfo({
           state: LoginState.LOGGED_IN,
           ...(me as {
             id: string;
-            userName: string;
+            username: string;
             email: string;
           }),
         });
@@ -136,7 +137,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setUserInfo({
             state: LoginState.LOGGED_IN,
             id: me.id,
-            userName: me.userName,
+            username: me.username,
             email: me.email,
           });
         }

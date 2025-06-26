@@ -34,9 +34,8 @@ export default function ProfilPage() {
 
   return (
     <div className={styles.profilContainer}>
-      <h2>Mon profil</h2>
       <div className={styles.profilItem}>
-        <strong>Nom d'utilisateur :</strong> {userInfo.userName}
+        <strong>Nom d'utilisateur :</strong> {userInfo.username}
       </div>
       <div className={styles.profilItem}>
         <strong>Email :</strong> {userInfo.email}

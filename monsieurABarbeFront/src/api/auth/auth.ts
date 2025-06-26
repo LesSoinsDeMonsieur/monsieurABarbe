@@ -21,6 +21,7 @@ export async function getProtected() {
 }
 
 export async function getMeRequest() {
-  const response = await axiosI.get("/auth/me");
+  const response = await axiosI.get("/users/me");
+  console.log("Données reçues de /users/me :", response.data);
   return response.data;
 }
