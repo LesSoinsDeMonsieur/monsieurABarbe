@@ -7,6 +7,7 @@ import com.monsieurabarbeback.services.ProductImageService;
 import com.monsieurabarbeback.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
         Product product = new Product(
             null,
@@ -61,6 +63,8 @@ public class ProductController {
     }
 
     @PostMapping("/batch")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     public ResponseEntity<List<Product>> createMultipleProducts(@RequestBody List<ProductDTO> productDTOs) {
         List<Product> savedProducts = productDTOs.stream()
                 .map(dto -> {
@@ -77,11 +81,15 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         return ResponseEntity.ok(productService.updateProduct(id, product));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         productImageService.deleteAllProductImage(id);
@@ -91,6 +99,8 @@ public class ProductController {
     // ----- Images
 
     // Upload images produit
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @PostMapping("/{productId}/images")
     public ResponseEntity<?> uploadProductImages(
             @PathVariable Long productId,
@@ -107,7 +117,9 @@ public class ProductController {
         return ResponseEntity.ok(images);
     }
 
+
     // Supprimer une image spécifique
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/images/{imageId}")
     public ResponseEntity<?> deleteProductImage(@PathVariable Long imageId) throws IOException {
         productImageService.deleteImage(imageId);
@@ -120,4 +132,11 @@ public class ProductController {
         productImageService.cleanOrphanFiles();
         return ResponseEntity.ok("Fichiers orphelins nettoyés.");
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword) {
+    List<Product> products = productService.searchProducts(keyword);
+    return ResponseEntity.ok(products);
+}
+
 }
