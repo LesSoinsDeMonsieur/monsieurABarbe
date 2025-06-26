@@ -133,9 +133,6 @@ export default function Home() {
           </a>
         </div>
       </div>
-      <div className={styles.page}>
-        <Footer />
-      </div>
     </main>
   );
 }

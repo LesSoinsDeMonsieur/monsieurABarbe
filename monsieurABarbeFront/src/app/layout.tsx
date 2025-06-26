@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import styles from "./page.module.css";
 import Header from "@/components/header/header";
+import Footer from "@/components/footer/page";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
           <div className={styles.page}>
             <Header />
             {children}
+            <Footer />
           </div>
         </AuthProvider>
       </body>

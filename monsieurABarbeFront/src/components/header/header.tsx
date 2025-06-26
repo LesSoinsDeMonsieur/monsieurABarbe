@@ -31,13 +31,12 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
     }
   };
   const ongletsMilieu = [
-    { nom: "Box", url: "/Box" },
+    { nom: "Box", url: "/box" },
     { nom: "Shop", url: "/products" },
-    { nom: "Offrir", url: "/Offrir" },
+    { nom: "Offrir", url: "/offrir" },
     { nom: "Notre concept", url: "/concept" },
-    { nom: "Marques partenaires", url: "/Marques-partenaires" },
-    { nom: "Contact", url: "/Contact" },
-    { nom: "Blog", url: "/Blog" },
+    { nom: "Marques partenaires", url: "/marques" },
+    { nom: "Contact", url: "/contact" },
   ];
 
   const bandeauTexte = "Livraison offerte sur tous les abonnements à une box";
