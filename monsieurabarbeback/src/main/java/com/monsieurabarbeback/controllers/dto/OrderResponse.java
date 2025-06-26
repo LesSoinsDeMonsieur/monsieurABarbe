@@ -2,8 +2,11 @@ package com.monsieurabarbeback.controllers.dto;
 
 
 import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.monsieurabarbeback.entities.OrderStatus;
 
 @Data
 public class OrderResponse {
@@ -12,6 +15,7 @@ public class OrderResponse {
     private double total;
     private LocalDateTime createdAt;
     private List<OrderItemResponse> items;
+    private OrderStatus status;
 
     @Data
     public static class OrderItemResponse {
