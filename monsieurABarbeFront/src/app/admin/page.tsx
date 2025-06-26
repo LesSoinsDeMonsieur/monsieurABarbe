@@ -21,6 +21,9 @@ import { useEffect, useState } from "react";
 import EditProductDialog from "./EditProductDialog";
 import AddProductDialog from "./AddProductDialog";
 import Image from "next/image";
+import { LoginState, useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { RoleEnum } from "@/types/role";
 
 export default function Page() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -29,10 +32,22 @@ export default function Page() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [openConfirmDelete, setOpenConfirmDelete] = useState<boolean>(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const { userInfo } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    getProducts();
+    if (
+      !userInfo ||
+      userInfo.state == LoginState.LOGGED_OUT ||
+      userInfo.role == RoleEnum.ROLE_USER
+    ) {
+      router.push("/login");
+    }
   }, []);
+  useEffect(() => {
+    if (userInfo?.state == LoginState.LOGGED_IN && userInfo.role == RoleEnum.ROLE_ADMIN)
+      getProducts();
+  }, [userInfo]);
 
   const getProducts = async () => {
     const response = await axiosI.get("/products");
