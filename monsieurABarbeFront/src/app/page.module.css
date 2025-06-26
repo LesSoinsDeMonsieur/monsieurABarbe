@@ -96,6 +96,7 @@
   display: flex;
   gap: 30px;
   width: 80%;
+  align-items: center;
 }
 
 .decouverte img {
@@ -106,7 +107,9 @@
 .decouverte .contenu {
   width: 50%;
   align-items: center;
-  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .decouverte .contenu p {

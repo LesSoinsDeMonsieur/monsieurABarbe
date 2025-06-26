@@ -14,7 +14,14 @@ export async function registerRequest(user: UserSignup) {
     password: user.password,
   });
 }
+
 export async function getProtected() {
   //   return await axiosI.get("/auth/protected");
   return true;
+}
+
+export async function getMeRequest() {
+  const response = await axiosI.get("/users/me");
+  console.log("Données reçues de /users/me :", response.data);
+  return response.data;
 }
