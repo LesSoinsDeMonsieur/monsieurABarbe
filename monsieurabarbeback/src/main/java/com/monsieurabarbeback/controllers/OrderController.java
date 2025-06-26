@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.monsieurabarbeback.entities.Cart;
+import com.monsieurabarbeback.repositories.UserRepository;
+import com.monsieurabarbeback.services.CartService;
 import com.monsieurabarbeback.services.ProductService;
 
 @RestController
@@ -28,10 +33,12 @@ import com.monsieurabarbeback.services.ProductService;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderService orderService;
-    private final UserService userService;
-    private final ProductService productService;
-
+    @Autowired private UserRepository userRepository;
+    
+    @Autowired OrderService orderService;
+    @Autowired UserService userService;
+    @Autowired ProductService productService;
+    @Autowired private CartService cartService;
     // 🔍 Récupérer toutes les commandes
     @GetMapping
     public ResponseEntity<List<Order>> getAllOrders() {
@@ -55,13 +62,6 @@ public class OrderController {
         }
         return ResponseEntity.notFound().build();
     }
-
-    // ➕ Créer une commande
-    /*@PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        Order createdOrder = orderService.createOrder(order);
-        return ResponseEntity.ok(createdOrder);
-    }*/
 
     // ✏️ Modifier une commande
     @PutMapping("/{id}")
@@ -142,8 +142,17 @@ public class OrderController {
         }).toList();
 
         response.setItems(items);
-
+        Optional<Cart> optionalCart = cartService.getCartByUser(this.getCurrentUser());
+        if (optionalCart.isPresent()){
+            cartService.deleteCart(optionalCart.get().getId());
+        }
         return ResponseEntity.ok(response);
     }
-
+    // 🔁 Récupérer l'utilisateur connecté via JWT
+    private User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+    }
 }

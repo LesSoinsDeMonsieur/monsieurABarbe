@@ -6,8 +6,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import Cart from "@/types/cart";
 import { createStripeSession } from "@/api/stripe/stripe.api";
 import Image from "next/image";
-import { createOrder } from "@/api/orders/orders.api";
-import { Order } from "@/types/order";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 

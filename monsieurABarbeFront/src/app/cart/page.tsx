@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import CartItem from "@/types/cartItem";
-import { useRouter } from "next/navigation";
 import { getCart, RemoveItemToCart } from "@/api/cart/cart";
 import Link from "next/link";
 import Image from "next/image";

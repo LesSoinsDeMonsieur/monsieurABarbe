@@ -5,24 +5,22 @@ import { createOrder } from "@/api/orders/orders.api";
 import Cart from "@/types/cart";
 import { Alert, Button } from "@mui/material";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Page() {
-  const [cart, setCart] = useState<Cart>();
-
   const fetchCart = async () => {
     const data = await getCart();
-    if (data) setCart(data);
+
+    if (data) {
+      await sendOrder(data);
+    }
   };
   useEffect(() => {
-    async () => {
-      await fetchCart();
-      await sendOrder();
-    };
+    fetchCart();
   }, []);
 
-  const sendOrder = async () => {
-    const order = await createOrder({
+  const sendOrder = async (cart: Cart) => {
+    await createOrder({
       items: cart?.cartItems.map((item) => {
         return {
           productId: item.product.id,
@@ -48,8 +46,8 @@ export default function Page() {
       <Alert severity="success">Le payement a bien été effectué !</Alert>
       <div>
         <h1>Merci pour votre Achat !</h1>
-        Vous recevrez vos articles dans les plus bref délais vous pouvez consulté l'avancé de la
-        livraison sur la page{" "}
+        Vous recevrez vos articles dans les plus bref délais vous pouvez consulté l&apos;avancé de
+        la livraison sur la page{" "}
         <Link href={"/my-order"} style={{ color: "black" }}>
           <strong>Mes commandes</strong>
         </Link>
