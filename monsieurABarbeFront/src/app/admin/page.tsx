@@ -32,10 +32,11 @@ export default function Page() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [openConfirmDelete, setOpenConfirmDelete] = useState<boolean>(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
-  const { userInfo } = useAuth();
+  const { userInfo, isAuthReady } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
+    if (!isAuthReady) return;
     if (
       !userInfo ||
       userInfo.state == LoginState.LOGGED_OUT ||
@@ -43,7 +44,7 @@ export default function Page() {
     ) {
       router.push("/login");
     }
-  }, []);
+  }, [userInfo, isAuthReady]);
   useEffect(() => {
     if (userInfo?.state == LoginState.LOGGED_IN && userInfo.role == RoleEnum.ROLE_ADMIN)
       getProducts();
@@ -136,6 +137,7 @@ export default function Page() {
         style={{
           width: "100%",
           marginTop: "5em",
+          marginBottom: "5em",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
