@@ -1,14 +1,25 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getProtected, loginRequest, registerRequest } from "@/api/auth/auth";
+import { getProtected, loginRequest, registerRequest, getMeRequest } from "@/api/auth/auth";
 import axios from "axios";
 import axiosI from "@/axiosInterceptor";
+
+// type UserInfo =
+//   | {
+//       state: LoginState.LOGGED_OUT;
+//     }
+//   | { state: LoginState.LOGGED_IN };
 
 type UserInfo =
   | {
       state: LoginState.LOGGED_OUT;
     }
-  | { state: LoginState.LOGGED_IN };
+  | {
+      state: LoginState.LOGGED_IN;
+      id: string;
+      userName: string;
+      email: string;
+    };
 
 export type UserSignup = {
   userName: string;
@@ -26,7 +37,7 @@ interface IAuthContext {
   submitLogin: ({ email, password }: UserLogin) => Promise<AuthStatus>;
   logout: () => Promise<void>;
   submitRegister: ({ userName, email, password }: UserSignup) => Promise<AuthStatus>;
-  // retrieveUserInfos: () => void;
+  retrieveUserInfos: () => void;
 }
 
 export enum AuthStatus {
@@ -47,7 +58,7 @@ const AuthContext = createContext<IAuthContext>({
   submitLogin: async () => AuthStatus.ERROR,
   logout: async () => {},
   submitRegister: async () => AuthStatus.ERROR,
-  // retrieveUserInfos: async () => {},
+  retrieveUserInfos: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -80,32 +91,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     updateUserInfo();
   }, [accessToken, isReady]);
 
-  // const retrieveUserInfos = async () => {
-  //   if (!isReady) {
-  //     return;
-  //   }
+  const retrieveUserInfos = async () => {
+    if (!isReady) {
+      return;
+    }
 
-  //   if (!accessToken) {
-  //     setUserInfo({ state: LoginState.LOGGED_OUT });
-  //   }
+    if (!accessToken) {
+      setUserInfo({ state: LoginState.LOGGED_OUT });
+    }
 
-  //   try {
-  //     // const me = await getMeRequest();
-  //     // if (me) {
-  //     //   setUserInfo({
-  //     //     state: LoginState.LOGGED_IN,
-  //     //     ...(me as {
-  //     //       id: string;
-  //     //       userName: string;
-  //     //     }),
-  //     //   });
-  //     } else {
-  //       setUserInfo({ state: LoginState.LOGGED_OUT });
-  //     }
-  //   } catch {
-  //     setUserInfo({ state: LoginState.LOGGED_OUT });
-  //   }
-  // };
+    try {
+      const me = await getMeRequest();
+      if (me) {
+        setUserInfo({
+          state: LoginState.LOGGED_IN,
+          ...(me as {
+            id: string;
+            userName: string;
+            email: string;
+          }),
+        });
+      } else {
+        setUserInfo({ state: LoginState.LOGGED_OUT });
+      }
+    } catch {
+      setUserInfo({ state: LoginState.LOGGED_OUT });
+    }
+  };
+
   const updateUserInfo = async () => {
     if (!isReady) {
       return;
@@ -115,13 +128,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUserInfo({ state: LoginState.LOGGED_OUT });
     }
     try {
-      // const me = await getMeRequest();
+      const me = await getMeRequest();
       // const info = await updateLastLoginManagedUser();
       // const info: UserLogin = { id: "idtest", userName: "test" };
       if (await getProtected()) {
-        setUserInfo({
-          state: LoginState.LOGGED_IN,
-        });
+        if (me) {
+          setUserInfo({
+            state: LoginState.LOGGED_IN,
+            id: me.id,
+            userName: me.userName,
+            email: me.email,
+          });
+        }
+        // setUserInfo({
+        //   state: LoginState.LOGGED_IN,
+        // });
       } else {
         setUserInfo({ state: LoginState.LOGGED_OUT });
       }
@@ -184,7 +205,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         submitLogin,
         logout,
         submitRegister,
-        // retrieveUserInfos,
+        retrieveUserInfos,
       }}
     >
       {children}
