@@ -6,14 +6,16 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Page() {
-  const { userInfo } = useAuth();
+  const { userInfo, isAuthReady } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
+    if (!isAuthReady) return;
+
     if (!userInfo || userInfo.state == LoginState.LOGGED_OUT) {
       router.push("/login");
     }
-  }, []);
+  }, [userInfo, isAuthReady]);
   return (
     <div className={styles.loginBody}>
       <h2 className="">Mon Profile</h2>

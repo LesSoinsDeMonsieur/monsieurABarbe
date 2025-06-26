@@ -13,7 +13,7 @@ export default function AdminTabsPage() {
   };
 
   return (
-    <Box sx={{ display: "flex", width: "100%", height: "100vh", marginTop: "3em", color: "black" }}>
+    <Box sx={{ display: "flex", width: "100%", height: "100%", marginTop: "3em", color: "black" }}>
       {/* Onglets en vertical */}
       <Tabs
         orientation="vertical"
