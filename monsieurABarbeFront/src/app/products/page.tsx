@@ -14,15 +14,12 @@ const ProductsPage = () => {
   const fetchProducts = async (searchQuery: string = "") => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("accessToken");
       const url = searchQuery
         ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/search?keyword=${encodeURIComponent(searchQuery)}`
         : `${process.env.NEXT_PUBLIC_BACKEND_URL}/products`;
 
       const response = await axiosI.get(url, {
-        headers: {
-          // Authorization: `Bearer ${token}`,
-        },
+        headers: {},
       });
 
       setProducts(response.data);
