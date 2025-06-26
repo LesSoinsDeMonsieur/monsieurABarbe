@@ -2,11 +2,13 @@ package com.monsieurabarbeback.controllers;
 
 import com.monsieurabarbeback.controllers.dto.OrderCreationRequest;
 import com.monsieurabarbeback.controllers.dto.OrderResponse;
+import com.monsieurabarbeback.controllers.dto.OrderUpdateRequest;
 import com.monsieurabarbeback.entities.Order;
 import com.monsieurabarbeback.entities.OrderItem;
 import com.monsieurabarbeback.entities.OrderStatus;
 import com.monsieurabarbeback.entities.Product;
 import com.monsieurabarbeback.entities.User;
+import com.monsieurabarbeback.mappers.OrderMapper;
 import com.monsieurabarbeback.services.OrderService;
 import com.monsieurabarbeback.services.UserService;
 
@@ -24,6 +26,7 @@ import java.util.Optional;
 
 import com.monsieurabarbeback.services.ProductService;
 
+
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class OrderController {
 
     // 🔍 Récupérer toutes les commandes
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
+    public ResponseEntity<List<OrderResponse>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
@@ -66,19 +69,43 @@ public class OrderController {
 
     // ✏️ Modifier une commande
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
-        Optional<Order> order = orderService.getOrderById(id);
-        if (order.isPresent()) {
-            Order existingOrder = order.get();
-            existingOrder.setStatus(updatedOrder.getStatus());
-            existingOrder.setTotal(updatedOrder.getTotal());
-            existingOrder.setOrderItems(updatedOrder.getOrderItems());
-            // Si besoin : existingOrder.setUser(updatedOrder.getUser());
-            Order savedOrder = orderService.updateOrder(existingOrder);
-            return ResponseEntity.ok(savedOrder);
+    public ResponseEntity<OrderResponse> updateOrder(
+            @PathVariable Long id,
+            @RequestBody OrderUpdateRequest updateRequest) {
+
+        Optional<Order> optionalOrder = orderService.getOrderById(id);
+        if (optionalOrder.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+
+        Order existingOrder = optionalOrder.get();
+
+        if (updateRequest.getStatus() != null) {
+            existingOrder.setStatus(updateRequest.getStatus());
+        }
+        if (updateRequest.getTotal() != null) {
+            existingOrder.setTotal(updateRequest.getTotal());
+        }
+        if (updateRequest.getItems() != null && !updateRequest.getItems().isEmpty()) {
+            // vider les anciens items et ajouter les nouveaux
+            existingOrder.getOrderItems().clear();
+            for (OrderUpdateRequest.OrderItemRequest itemRequest : updateRequest.getItems()) {
+                OrderItem item = new OrderItem();
+                item.setProduct(productService.getProductById(itemRequest.getProductId()).orElseThrow());
+                item.setQuantity(itemRequest.getQuantity());
+                item.setUnitPrice(itemRequest.getUnitPrice());
+                existingOrder.addOrderItem(item);
+            }
+        }
+
+        Order savedOrder = orderService.updateOrder(existingOrder);
+
+        // transformer l'entité en DTO réponse
+        OrderResponse response = OrderMapper.toOrderResponse(savedOrder);
+
+        return ResponseEntity.ok(response);
     }
+
 
     // ❌ Supprimer une commande
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -140,6 +167,7 @@ public class OrderController {
             itemResponse.setProductName(item.getProduct().getName());
             itemResponse.setQuantity(item.getQuantity());
             itemResponse.setUnitPrice(item.getUnitPrice());
+
             return itemResponse;
         }).toList();
 
@@ -147,5 +175,4 @@ public class OrderController {
 
         return ResponseEntity.ok(response);
     }
-
 }
