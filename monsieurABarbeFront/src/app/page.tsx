@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import styles from "./page.module.css";
-import Footer from "../components/footer/page";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import axiosI from "@/axiosInterceptor";
