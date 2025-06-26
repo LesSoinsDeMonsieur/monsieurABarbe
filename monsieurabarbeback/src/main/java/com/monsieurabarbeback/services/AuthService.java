@@ -22,7 +22,7 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         var user = new User();
-        user.setUsername(request.getUsername());
+        user.setUsername(request.getEmail());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.ROLE_USER);
