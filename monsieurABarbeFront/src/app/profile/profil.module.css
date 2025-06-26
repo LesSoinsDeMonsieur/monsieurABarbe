@@ -7,6 +7,46 @@
   gap: 50;
 }
 
+/* Partie onglet */
+
+.tabContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabButton {
+  padding: 0.5rem 1rem;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.tabButton:hover {
+  background-color: #ddd;
+}
+
+.active {
+  background-color: #0070f3;
+  color: white;
+}
+
+.tabContent {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profilItem {
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Partie Profile */
+
 .formLogin {
   display: flex;
   gap: 30;
@@ -40,4 +80,34 @@
 }
 .formAuthMethod:hover {
   cursor: pointer;
+}
+
+/* Partie Commandes */
+.commande {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.informationsCommandes {
+  display: flex;
+  gap: 20px;
+  background-color: var(--gris_clair);
+  padding: 1rem;
+  border-radius: 8px 8px 0 0;
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+}
+
+.informationsHorizontales {
+  display: flex;
+  gap: 10px;
+}
+
+.detailsCommandes {
+  display: flex;
+  gap: 20px;
+  padding: 1rem;
 }

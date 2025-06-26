@@ -5,7 +5,7 @@ export type Order = {
   status: OrderStatus;
   total: number;
   createdAt?: Date;
-  orderItems: OrderItem;
+  orderItems: OrderItem[];
 };
 
 export enum OrderStatus {
