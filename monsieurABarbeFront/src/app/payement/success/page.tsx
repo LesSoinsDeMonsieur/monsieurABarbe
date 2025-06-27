@@ -32,11 +32,12 @@ export default function Page() {
   return (
     <div
       style={{
-        position: "fixed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
+        // position: "fixed",
+        marginTop: "10em",
+        marginLeft: "32em",
+        // transform: "translate(-50%, -50%)",
         display: "flex",
+        height: "40em",
         flexDirection: "column",
         alignItems: "center",
         gap: "35px",
