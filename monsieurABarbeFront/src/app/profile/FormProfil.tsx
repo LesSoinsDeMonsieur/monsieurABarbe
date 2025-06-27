@@ -37,13 +37,13 @@ export default function ProfilPage() {
       setIsLoading(true);
 
       try {
-        const rawOrders = await getUserOrders2(2); // utilise l'ID utilisateur actuel
+        const rawOrders = await getUserOrders2(userInfo.id); // utilise l'ID utilisateur actuel
 
         const enrichedOrders = await Promise.all(
           rawOrders.map(async (order) => {
             const items = await Promise.all(
-              order.orderItems.map(async (item) => {
-                const product = await getProductById(item.id); // attention : il te faut `productId` ici
+              order.items.map(async (item) => {
+                const product = await getProductById(item.productId); // attention : il te faut `productId` ici
                 return {
                   ...item,
                   product,
@@ -69,23 +69,6 @@ export default function ProfilPage() {
 
     fetchOrders();
   }, [activeTab, userInfo]);
-
-  const lesCommandes: CommandeType[] = [
-    {
-      dateAchat: "16/07/2025",
-      dateLivraison: "18/07/2025",
-      total: "15,87",
-      adresseLivraison: "3 La rue du Plouc, 44110 Le Bougre",
-      numeroCommande: "54157845441848",
-    },
-    {
-      dateAchat: "01/08/2025",
-      dateLivraison: "03/08/2025",
-      total: "29,90",
-      adresseLivraison: "12 avenue des Barbus, 75000 Paris",
-      numeroCommande: "98765432198765",
-    },
-  ];
 
   if (isLoading) return <div>Chargement...</div>;
 

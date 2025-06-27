@@ -2,7 +2,7 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  margin-top: 8%;
+  margin-top: 2%;
   margin-bottom: 12%;
   flex-direction: column;
   gap: 50;
@@ -37,6 +37,7 @@
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+  margin-bottom: 1%;
 }
 
 .profilItem {
@@ -102,6 +103,15 @@
   flex-direction: column;
 }
 
+.informationProduit {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 2%;
+  width: auto;
+}
+
 .informationsHorizontales {
   display: flex;
   gap: 10px;
@@ -111,4 +121,11 @@
   display: flex;
   gap: 20px;
   padding: 1rem;
+}
+
+.listeProduits {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 65%;
 }

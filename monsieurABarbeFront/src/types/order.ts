@@ -1,11 +1,10 @@
-import Product from "./product";
-
 export type Order = {
-  id?: number;
-  status: OrderStatus;
+  id: number;
+  userId: number;
   total: number;
-  createdAt?: Date;
-  orderItems: OrderItem[];
+  createdAt: string;
+  status: OrderStatus;
+  items: OrderItem[];
 };
 
 export enum OrderStatus {
@@ -15,8 +14,14 @@ export enum OrderStatus {
 }
 
 export type OrderItem = {
-  id: number;
-  item: Product;
+  productId: number;
+  productName: string;
   quantity: number;
   unitPrice: number;
+};
+
+export const statusLabels: Record<string, string> = {
+  PENDING: "En attente",
+  SHIPPED: "Expédiée",
+  DELIVERED: "Livrée",
 };
