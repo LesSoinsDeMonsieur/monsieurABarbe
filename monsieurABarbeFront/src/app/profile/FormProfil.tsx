@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuth, LoginState } from "@/contexts/AuthContext";
 import styles from "./profil.module.css";
 import ListeCommande from "@/components/ListeCommande";
-import { CommandeType, getUserOrders2, getProductById } from "@/api/orders/orders.api";
+import { getUserOrders2, getProductById } from "@/api/orders/orders.api";
 import { Order } from "@/types/order";
 
 export default function ProfilPage() {

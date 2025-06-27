@@ -2,22 +2,9 @@ import axiosI from "@/axiosInterceptor";
 import { Order } from "@/types/order";
 import Product from "@/types/product";
 
-export type CommandeType = {
-  dateAchat: string;
-  dateLivraison: string;
-  total: string;
-  adresseLivraison: string;
-  numeroCommande: string;
-};
-
 export async function createOrder(payload: { items: { quantity: number; productId: number }[] }) {
   const res = await axiosI.post<{ id: number }>("/orders", payload);
   return res.data;
-}
-
-export async function getUserOrders(): Promise<CommandeType[]> {
-  const response = await axiosI.get("/orders/me");
-  return response.data;
 }
 
 export async function getUserOrders2(userId: number): Promise<Order[]> {
