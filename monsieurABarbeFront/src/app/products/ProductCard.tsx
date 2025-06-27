@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         >
           <Image
             src={
-              product.images[0]
+              product.images && product.images.length > 0 && product.images[0].filePath
                 ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
                 : "/image.png"
             }
