@@ -21,12 +21,12 @@ export async function getUserOrders(): Promise<CommandeType[]> {
 }
 
 export async function getUserOrders2(userId: number): Promise<Order[]> {
-  const response = await axiosI.get(`/api/orders/user/${userId}`);
+  const response = await axiosI.get(`/orders/user/${userId}`);
   console.log("Données reçues des commandes :", response.data);
   return response.data;
 }
 
 export async function getProductById(id: number): Promise<Product> {
-  const response = await axiosI.get(`/api/products/${id}`);
+  const response = await axiosI.get(`/products/${id}`);
   return response.data;
 }

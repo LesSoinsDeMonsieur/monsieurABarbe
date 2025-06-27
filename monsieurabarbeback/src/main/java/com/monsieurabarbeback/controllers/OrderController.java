@@ -59,7 +59,7 @@ public class OrderController {
 
     // 🔍 Récupérer les commandes d'un utilisateur
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Order>> getOrdersByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<OrderResponse>> getOrdersByUser(@PathVariable Long userId) {
         Optional<User> user = userService.getUserById(userId);
         if (user.isPresent()) {
             return ResponseEntity.ok(orderService.getOrdersByUser(user.get()));

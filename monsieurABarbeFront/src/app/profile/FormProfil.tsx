@@ -37,7 +37,7 @@ export default function ProfilPage() {
       setIsLoading(true);
 
       try {
-        const rawOrders = await getUserOrders2(userInfo.id); // utilise l'ID utilisateur actuel
+        const rawOrders = await getUserOrders2(2); // utilise l'ID utilisateur actuel
 
         const enrichedOrders = await Promise.all(
           rawOrders.map(async (order) => {
