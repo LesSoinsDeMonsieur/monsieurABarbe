@@ -40,6 +40,7 @@ public class OrderController {
         return userService.getUserById(userId)
                 .map(user -> ResponseEntity.ok(orderService.getOrdersByUser(user)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
 
     @PutMapping("/{id}")

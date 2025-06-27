@@ -7,11 +7,14 @@ import com.monsieurabarbeback.mappers.OrderMapper;
 import com.monsieurabarbeback.repositories.OrderRepository;
 import com.monsieurabarbeback.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.monsieurabarbeback.mappers.OrderMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -30,9 +33,32 @@ public class OrderService {
         return orders.stream().map(OrderMapper::toOrderResponse).toList();
     }
 
-    // 📦 Récupérer les commandes d’un utilisateur
-    public List<Order> getOrdersByUser(User user) {
-        return orderRepository.findByUser(user);
+
+
+    public List<OrderResponse> getOrdersByUser(User user) {
+        List<Order> userOrders = orderRepository.findByUser(user);
+
+        return userOrders.stream().map(order -> {
+            OrderResponse response = new OrderResponse();
+            response.setStatus(order.getStatus());
+            response.setId(order.getId());
+            response.setUserId(order.getUser().getId());
+            response.setTotal(order.getTotal());
+            response.setCreatedAt(order.getCreatedAt());
+
+
+            List<OrderResponse.OrderItemResponse> items = order.getOrderItems().stream().map(item -> {
+                OrderResponse.OrderItemResponse itemResponse = new OrderResponse.OrderItemResponse();
+                itemResponse.setProductId(item.getProduct().getId());
+                itemResponse.setProductName(item.getProduct().getName());
+                itemResponse.setQuantity(item.getQuantity());
+                itemResponse.setUnitPrice(item.getUnitPrice());
+                return itemResponse;
+            }).toList();
+
+            response.setItems(items);
+            return response;
+        }).toList();
     }
 
     // 📦 Récupérer une commande par ID
