@@ -31,6 +31,7 @@ export type UserLogin = {
 
 interface IAuthContext {
   userInfo: UserInfo | null;
+  isAuthReady: boolean; // ✅ Ajouté ici
   submitLogin: ({ email, password }: UserLogin) => Promise<AuthStatus>;
   logout: () => Promise<void>;
   submitRegister: ({ userName, email, password }: UserSignup) => Promise<AuthStatus>;
@@ -56,6 +57,7 @@ const AuthContext = createContext<IAuthContext>({
   logout: async () => {},
   submitRegister: async () => AuthStatus.ERROR,
   retrieveUserInfos: async () => {},
+  isAuthReady: false,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -63,6 +65,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isReady, setIsReady] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const router = useRouter();
+  const [isAuthReady, setIsAuthReady] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
@@ -119,31 +123,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateUserInfo = async () => {
-    if (!isReady) {
-      return;
-    }
+    if (!isReady) return;
 
     if (!accessToken) {
       setUserInfo({ state: LoginState.LOGGED_OUT });
+      setIsAuthReady(true); // ✅
+      return;
     }
+
     try {
       const me = await getMeRequest();
-      if (await getProtected()) {
-        if (me) {
-          setUserInfo({
-            state: LoginState.LOGGED_IN,
-            id: me.id,
-            username: me.username,
-            email: me.email,
-            role: me.role,
-          });
-        }
+      const isAllowed = await getProtected();
+
+      if (me && isAllowed) {
+        setUserInfo({
+          state: LoginState.LOGGED_IN,
+          id: me.id,
+          username: me.username,
+          email: me.email,
+          role: me.role,
+        });
       } else {
         setUserInfo({ state: LoginState.LOGGED_OUT });
       }
     } catch (e) {
       console.error(e);
       setUserInfo({ state: LoginState.LOGGED_OUT });
+    } finally {
+      setIsAuthReady(true); // ✅ toujours à la fin
     }
   };
   const submitLogin = async (user: UserLogin): Promise<AuthStatus> => {
@@ -198,6 +205,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <AuthContext.Provider
       value={{
         userInfo,
+        isAuthReady,
         submitLogin,
         logout,
         submitRegister,
