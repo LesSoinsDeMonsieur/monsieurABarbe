@@ -93,7 +93,7 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
                 {userInfo.role == RoleEnum.ROLE_ADMIN && (
                   <Link href={"/admin"} onClick={() => setMenuOpen(false)}>
                     <Image
-                      src="user-shield-alt-1-svgrepo-com.svg"
+                      src="/user-shield-alt-1-svgrepo-com.svg"
                       alt="admin"
                       width={38}
                       height={38}
