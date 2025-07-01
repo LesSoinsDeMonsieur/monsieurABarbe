@@ -144,7 +144,7 @@ Projet développé à des fins pédagogiques.
 
 ## 🤛 Auteur
 
-**Marius BOURSE**
-**Jules CROIZIER**
-**Jonathan BOULAY**
-**Mathis CAPRIN**
+- **Marius BOURSE**
+- **Jules CROIZIER**
+- **Jonathan BOULAY**
+- **Mathis CAPRIN**
