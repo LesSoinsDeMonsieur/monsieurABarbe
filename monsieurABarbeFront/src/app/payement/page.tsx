@@ -6,11 +6,13 @@ import { loadStripe } from "@stripe/stripe-js";
 import Cart from "@/types/cart";
 import { createStripeSession } from "@/api/stripe/stripe.api";
 import Image from "next/image";
+import SimpleDialog from "@/components/SimpleDialog";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
 export default function Page() {
   const [cart, setCart] = useState<Cart>();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     fetchCart();
@@ -26,7 +28,11 @@ export default function Page() {
   const loadStripe = async () => {
     const stripe = await stripePromise;
     const res = await createStripeSession();
-    return await stripe?.redirectToCheckout({ sessionId: res.sessionId });
+    if (res.error) {
+      setOpen(true);
+    } else {
+      return await stripe?.redirectToCheckout({ sessionId: res.sessionId });
+    }
   };
   const getTotalPrice = () => {
     if (cart)
@@ -152,6 +158,11 @@ export default function Page() {
           </form>
         </>
       )}
+      <SimpleDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        message="Erreur sur le stock des produits de votre panier. Veuillez refaire votre panier"
+      />
     </div>
   );
 }
