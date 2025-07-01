@@ -45,11 +45,14 @@ public class StripeService {
 
         Cart cart = optionalCart.get();
         Set<CartItem> items = cart.getCartItems();
+        if(items.size() == 0 ){
+            return Map.of("error", "Problème sur le stock du produit");
+        }
 
         // Vérification des quantités disponibles
         for (CartItem item : items) {
             Product product = item.getProduct();
-            if (item.getQuantity() > product.getQuantity()) {
+            if (item.getQuantity() > product.getStock()) {
                 cartService.removeItemFromCart(cart, item);
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST,
