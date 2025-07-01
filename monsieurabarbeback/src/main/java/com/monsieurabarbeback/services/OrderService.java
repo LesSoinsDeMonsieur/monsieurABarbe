@@ -2,10 +2,13 @@ package com.monsieurabarbeback.services;
 
 import com.monsieurabarbeback.controllers.dto.OrderCreationRequest;
 import com.monsieurabarbeback.controllers.dto.OrderResponse;
+import com.monsieurabarbeback.controllers.dto.OrderUpdateRequest;
 import com.monsieurabarbeback.entities.*;
 import com.monsieurabarbeback.mappers.OrderMapper;
 import com.monsieurabarbeback.repositories.OrderRepository;
 import com.monsieurabarbeback.repositories.ProductRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -110,16 +113,51 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
 
         // Vide le panier de l'utilisateur après commande
+        
         cartService.getCartByUser(user).ifPresent(cart -> cartService.deleteCart(cart.getId()));
 
         // Retourne DTO de réponse
         return Optional.of(OrderMapper.toOrderResponse(savedOrder));
     }
 
-    // 📦 Mettre à jour une commande
-    public Order updateOrder(Order order) {
+    public Order updateOrder(Long orderId, OrderUpdateRequest orderRequest) {
+        Optional<Order> optOrder = orderRepository.findById(orderId);
+        if (optOrder.isEmpty()) {
+            throw new EntityNotFoundException("Commande avec l'id " + orderId + " introuvable.");
+        }
+
+        Order order = optOrder.get();
+
+        // Mise à jour du statut et du total si fourni
+        if (orderRequest.getStatus() != null) {
+            order.setStatus(orderRequest.getStatus());
+        }
+        if (orderRequest.getTotal() != null) {
+            order.setTotal(orderRequest.getTotal());
+        }
+
+        // Supprimer les anciens OrderItem
+        order.getOrderItems().clear();
+
+        // Recréer les nouveaux OrderItem à partir des items reçus
+        for (OrderUpdateRequest.OrderItemRequest itemRequest : orderRequest.getItems()) {
+            OrderItem orderItem = new OrderItem();
+            
+            // Recherche du produit par son ID
+            Product product = productRepository.findById(itemRequest.getProductId())
+                    .orElseThrow(() -> new EntityNotFoundException("Produit avec l'id " + itemRequest.getProductId() + " introuvable."));
+
+            orderItem.setProduct(product);
+            orderItem.setQuantity(itemRequest.getQuantity());
+            orderItem.setUnitPrice(itemRequest.getUnitPrice());
+
+            // Ajout à la commande
+            order.addOrderItem(orderItem);
+        }
+
         return orderRepository.save(order);
     }
+
 
     // 📦 Supprimer une commande
     public void deleteOrder(Long id) {

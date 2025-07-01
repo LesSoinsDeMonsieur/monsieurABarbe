@@ -5,8 +5,11 @@ import com.monsieurabarbeback.controllers.dto.OrderResponse;
 import com.monsieurabarbeback.controllers.dto.OrderUpdateRequest;
 import com.monsieurabarbeback.entities.Order;
 import com.monsieurabarbeback.entities.User;
+import com.monsieurabarbeback.mappers.OrderMapper;
 import com.monsieurabarbeback.services.OrderService;
 import com.monsieurabarbeback.services.UserService;
+
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,19 +39,26 @@ public class OrderController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Order>> getOrdersByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<OrderResponse>> getOrdersByUser(@PathVariable Long userId) {
         return userService.getUserById(userId)
-                .map(user -> ResponseEntity.ok(orderService.getOrdersByUser(user)))
+                .map(user -> {
+                    List<OrderResponse> orders = orderService.getOrdersByUser(user);
+                    return ResponseEntity.ok(orders);
+                })
                 .orElseGet(() -> ResponseEntity.notFound().build());
-
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> updateOrder(@PathVariable Long id, @RequestBody OrderUpdateRequest updateRequest) {
-        return orderService.updateOrder(id, updateRequest)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            Order updatedOrder = orderService.updateOrder(id, updateRequest);
+            return ResponseEntity.ok(OrderMapper.toOrderResponse(updatedOrder));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
