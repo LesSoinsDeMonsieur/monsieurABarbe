@@ -121,6 +121,7 @@ NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_...
 - Ajouter un Add-on de base de donnée de type "PostgreSQL" (qui sera normalement proposé automatiquement par clever cloud, si ce n'est pas le cas -> Mettre la base en tant que add-on du backend.)
 - Dans les variables d'environnement, ajouter les deux variable suivantes :
   > "APP_FOLDER" : monsieurabarbeback
+  
   > "CC_JAVA_VERSION" : 21
 - Ajouter les autres variables d'environnements se trouvant dans le fichier .env.sample du backend
 - Lancer le backend
