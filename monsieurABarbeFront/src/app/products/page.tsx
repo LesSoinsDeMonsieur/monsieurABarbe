@@ -15,12 +15,10 @@ const ProductsPage = () => {
     setLoading(true);
     try {
       const url = searchQuery
-        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/search?keyword=${encodeURIComponent(searchQuery)}`
-        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/products`;
+        ? `/products/search?keyword=${encodeURIComponent(searchQuery)}`
+        : `/products`;
 
-      const response = await axiosI.get(url, {
-        headers: {},
-      });
+      const response = await axiosI.get(url);
 
       setProducts(response.data);
     } catch (err) {
