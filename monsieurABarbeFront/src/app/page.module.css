@@ -180,14 +180,14 @@
   width: 90%;
 }
 
-.section_abonnements .abonnements {
+.abonnements {
   display: flex;
   justify-content: center;
   gap: 1rem;
   width: 100%;
 }
 
-.section_abonnements .abonnements .abonnement {
+.abonnements .abonnement {
   display: flex;
   flex-direction: column;
   align-items: center;
