@@ -30,13 +30,9 @@ export default function Home() {
         </h1>
 
         <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="/products"
-            rel="noopener noreferrer"
-          >
+          <Link className={styles.primary} href="/products" rel="noopener noreferrer">
             JE LA VEUX
-          </a>
+          </Link>
         </div>
       </div>
       <h1>Nouveau mois, nouvel homme</h1>
