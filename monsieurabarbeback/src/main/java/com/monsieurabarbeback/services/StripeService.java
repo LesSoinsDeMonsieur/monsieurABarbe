@@ -30,6 +30,8 @@ public class StripeService {
 
     @Value("${stripe.secret.key}")
     private String secretKey;
+    @Value("${url.frontend}")
+    private String urlFrontend;
 
     @Autowired
     private CartService cartService;
@@ -90,8 +92,8 @@ public class StripeService {
                     .build()
             )
             .setMode(SessionCreateParams.Mode.PAYMENT)
-            .setSuccessUrl("http://localhost:3000/payement/success")
-            .setCancelUrl("http://localhost:3000/payement/cancel")
+            .setSuccessUrl(urlFrontend+"/payement/success")
+            .setCancelUrl(urlFrontend+"/payement/cancel")
             .build();
 
         Session session = Session.create(params);
