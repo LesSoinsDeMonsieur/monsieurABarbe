@@ -67,7 +67,6 @@ const ProductDetailPage = () => {
   };
 
   useEffect(() => {
-    console.log(product);
     if (product?.images && product?.images[0]) {
       setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath);
     }
@@ -100,9 +99,6 @@ const ProductDetailPage = () => {
                   <button
                     onClick={() => {
                       setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath);
-                      console.log(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath);
-                      console.log(mainImage);
-                      console.log("Test");
                     }}
                     className="border-0 bg-transparent p-0"
                   >

@@ -12,6 +12,7 @@ import com.monsieurabarbeback.entities.OrderStatus;
 public class OrderResponse {
     private Long id;
     private Long userId;
+    private String userMailAddress;
     private double total;
     private LocalDateTime createdAt;
     private List<OrderItemResponse> items;
