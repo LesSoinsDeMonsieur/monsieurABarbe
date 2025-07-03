@@ -54,7 +54,9 @@ public class CartController {
 
         if (existingItemOpt.isPresent()) {
             CartItem existingItem = existingItemOpt.get();
-            existingItem.setQuantity(existingItem.getQuantity() + request.getQuantity());
+            if(product.getStock() >= existingItem.getQuantity() + request.getQuantity()){
+                existingItem.setQuantity(existingItem.getQuantity() + request.getQuantity());
+            }
         } else {
             CartItem newItem = new CartItem();
             newItem.setCart(cart);

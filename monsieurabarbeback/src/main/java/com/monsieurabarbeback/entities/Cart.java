@@ -49,6 +49,10 @@ public class Cart {
         cartItems.remove(cartItem);
         cartItem.setCart(null);
     }
+
+    public Set<CartItem> getCartItems() {
+        return this.cartItems;
+    }
     
     @Override
     public boolean equals(Object o) {

@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import styles from "./page.module.css";
-import Footer from "./Footer/page";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import axiosI from "@/axiosInterceptor";
@@ -132,9 +131,6 @@ export default function Home() {
             VOIR TOUS LES PRODUITS
           </a>
         </div>
-      </div>
-      <div className={styles.page}>
-        <Footer />
       </div>
     </main>
   );

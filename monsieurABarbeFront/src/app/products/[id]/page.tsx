@@ -6,6 +6,8 @@ import Product from "@/types/product";
 import CartItem from "@/types/cartItem";
 import { getProduct } from "@/api/products/products";
 import { addItemToCart, decrementItemToCart, getCart } from "@/api/cart/cart";
+import { LoginState, useAuth } from "@/contexts/AuthContext";
+import Image from "next/image";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -13,14 +15,17 @@ const ProductDetailPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [mainImage, setMainImage] = useState<string | null>(null);
+  const { userInfo } = useAuth();
 
-  // Récupère le token une fois que le composant est monté
+  useEffect(() => {
+    if (userInfo && userInfo.state == LoginState.LOGGED_IN) fetchCart();
+  }, [userInfo]);
 
   // Récupère le produit
   useEffect(() => {
     const fetchProduct = async () => {
       const data = await getProduct({ id: Number(id) });
-      if (product) {
+      if (data) {
         setProduct(data);
         setLoading(false);
       }
@@ -33,11 +38,9 @@ const ProductDetailPage = () => {
   const fetchCart = async () => {
     const data = await getCart();
     if (data) setCartItems(data.cartItems || []);
+    else {
+    }
   };
-
-  useEffect(() => {
-    fetchCart();
-  }, []);
 
   const getCartItem = () => cartItems.find((item) => item.product.id === Number(id));
 
@@ -65,7 +68,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     console.log(product);
-    if (product?.images) {
+    if (product?.images && product?.images[0]) {
       setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath);
     }
   }, [product]);
@@ -95,18 +98,21 @@ const ProductDetailPage = () => {
               {product.images.map((image, idx) => (
                 <li key={idx}>
                   <button
-                    onClick={() =>
-                      setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath)
-                    }
+                    onClick={() => {
+                      setMainImage(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath);
+                      console.log(process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath);
+                      console.log(mainImage);
+                      console.log("Test");
+                    }}
                     className="border-0 bg-transparent p-0"
                   >
-                    <img
+                    <Image
                       src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + image.filePath}
                       alt={product.name}
                       className="img-fluid rounded shadow"
+                      width={60}
+                      height={60}
                       style={{
-                        height: "60px",
-                        width: "60px",
                         objectFit: "cover",
                       }}
                     />
@@ -116,18 +122,23 @@ const ProductDetailPage = () => {
             </ul>
 
             {/* Image principale */}
-            <img
-              // src={process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath}
+            <Image
               src={
-                mainImage || process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
+                mainImage
+                  ? mainImage
+                  : product.images?.[0]?.filePath
+                    ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
+                    : "/image.png"
               }
               alt={product.name}
               className="img-fluid rounded shadow"
+              width={300}
+              height={250}
               style={{
-                width: "100%",
-                maxHeight: "500px",
-                objectFit: "cover",
-                flex: 1, // occupe l'espace restant
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+                flex: "1",
               }}
             />
           </div>

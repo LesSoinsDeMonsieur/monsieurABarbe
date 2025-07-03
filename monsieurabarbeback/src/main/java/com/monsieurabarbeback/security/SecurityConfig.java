@@ -11,11 +11,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +41,9 @@ public class SecurityConfig {
                 return config;
             }))
             .csrf(csrf -> csrf.disable())
+            .exceptionHandling(exception -> exception
+                .authenticationEntryPoint(authenticationEntryPoint()) // <--- ajout ici
+            )
             .authorizeHttpRequests(req ->
                 req
                     // Public endpoints
@@ -50,6 +56,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/boxes/**").permitAll()
                     .requestMatchers(HttpMethod.GET,"/uploads/**").permitAll()
+                    // .requestMatchers(HttpMethod.POST,"/api/stripe/webhook").permitAll()
 
                     // Auth required for anything else
                     .anyRequest().authenticated()
@@ -59,6 +66,14 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, authException) -> {
+            // Si l'utilisateur n'est pas authentifié ou token invalide
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Non autorisé : " + authException.getMessage());
+        };
     }
 
     @Bean
