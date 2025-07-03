@@ -1,5 +1,4 @@
 "use client";
-import { right } from "@popperjs/core";
 import Image from "next/image";
 import styles from "./offrir.module.css";
 import ListeAbonnements from "@/components/ListeAbonnements";
@@ -148,7 +147,7 @@ export default function Offrir() {
           </p>
         </div>
       </div>
-      
+
       <div className={styles.tutoriel}>
         <h1>Comment ça marche</h1>
         <div className={styles.etapes}>
@@ -197,12 +196,11 @@ export default function Offrir() {
         <a href="">PLUS DE DÉTAILS</a>
       </div>
 
-       <div className={styles.section_abonnements}>
+      <div className={styles.section_abonnements}>
         <h1> Nos offres d’abonnement </h1>
         <ListeAbonnements />
         <a href="">J’OFFRE UN ABONNEMENT</a>
-        </div>
       </div>
-
+    </div>
   );
 }
