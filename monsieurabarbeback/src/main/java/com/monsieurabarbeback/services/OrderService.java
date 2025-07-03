@@ -110,8 +110,6 @@ public class OrderService {
         order.setTotal(total);
 
         order.setStatus(OrderStatus.PENDING);
-        System.out.println(order.getStatus());
-
 
         // Sauvegarde commande
         Order savedOrder = orderRepository.save(order);

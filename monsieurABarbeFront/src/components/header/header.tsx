@@ -31,7 +31,6 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
     }
   };
   const ongletsMilieu = [
-    { nom: "Box", url: "/box" },
     { nom: "Shop", url: "/products" },
     { nom: "Offrir", url: "/offrir" },
     { nom: "Notre concept", url: "/concept" },
@@ -39,17 +38,10 @@ function Header({ hiddenRoutes = [] }: HeaderProps) {
     { nom: "Contact", url: "/contact" },
   ];
 
-  const bandeauTexte = "Livraison offerte sur tous les abonnements à une box";
-
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (
     <>
-      {/* Bandeau promo */}
-      <div className="bg-dark text-white text-center py-2">
-        <p className="mb-0">{bandeauTexte}</p>
-      </div>
-
       {/* Header Navbar */}
       <nav className="navbar navbar-expand-lg bg-white border-bottom">
         <div className="container">

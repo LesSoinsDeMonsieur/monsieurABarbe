@@ -9,7 +9,6 @@ export async function createOrder(payload: { items: { quantity: number; productI
 
 export async function getUserOrders2(userId: number): Promise<Order[]> {
   const response = await axiosI.get(`/orders/user/${userId}`);
-  console.log("Données reçues des commandes :", response.data);
   return response.data;
 }
 

@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import styles from "./offrir.module.css";
 import ListeAbonnements from "@/components/ListeAbonnements";
@@ -6,19 +7,22 @@ import ListeAbonnements from "@/components/ListeAbonnements";
 export default function Offrir() {
   return (
     <div style={{ backgroundColor: "white", fontFamily: "sans-serif" }}>
-      {/* Haut - Bandeau gris */}
+      {/* Haut - Bandeau gris avec image de fond */}
       <div
         style={{
           backgroundImage: "url('/Box-Produits-Barbe.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           display: "flex",
           padding: "40px",
           color: "black",
           justifyContent: "space-between",
           flexWrap: "wrap",
           alignItems: "center",
+          gap: "20px",
         }}
       >
-        <div style={{ maxWidth: "600px" }}>
+        <div style={{ maxWidth: "600px", flex: "1 1 300px" }}>
           <h1 style={{ fontSize: "2rem", fontStyle: "italic", marginBottom: "1rem" }}>
             La Box l’Essentiel du Barbu,
             <br />
@@ -40,6 +44,7 @@ export default function Offrir() {
               border: "none",
               borderRadius: "4px",
               cursor: "pointer",
+              fontSize: "1rem",
             }}
           >
             OFFRIR
@@ -47,19 +52,8 @@ export default function Offrir() {
         </div>
       </div>
 
-      {/* Partie centrale */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gridTemplateRows: "1fr auto 1fr",
-          margin: "100px auto",
-          position: "relative",
-          gap: "40px",
-          paddingRight: "10%",
-          paddingLeft: "10%",
-        }}
-      >
+      {/* Partie centrale - grille responsive */}
+      <div className={styles.gridContainer}>
         {/* Coin haut gauche */}
         <div style={{ gridColumn: 1, gridRow: 1, textAlign: "center" }}>
           <h3>
@@ -68,16 +62,26 @@ export default function Offrir() {
           <p>
             <em>Anniversaire, Noël, fête des pères, ou simplement pour faire plaisir</em>
           </p>
-          <img
+          <Image
+            className={styles.arrowLarge}
             src="/arrow-up-left.png"
-            alt="arrow down left"
-            style={{ width: "70px", height: "auto" }}
+            alt="arrow up left"
+            width={70}
+            height={70}
+            priority
           />
         </div>
 
         {/* Haut centre - flèche vers le bas */}
         <div style={{ gridColumn: 2, gridRow: 3, textAlign: "center" }}>
-          <img src="/arrow-down.png" alt="arrow down" style={{ width: "40px", height: "auto" }} />
+          <Image
+            className={styles.arrowLarge}
+            src="/arrow-down.png"
+            alt="arrow down"
+            width={40}
+            height={40}
+            priority
+          />
         </div>
 
         {/* Coin haut droit */}
@@ -94,22 +98,25 @@ export default function Offrir() {
             </em>
           </p>
 
-          <img
+          <Image
+            className={styles.arrowLarge}
             src="/arrow-up-right.png"
-            alt="arrow down left"
-            style={{ width: "70px", height: "auto" }}
+            alt="arrow up right"
+            width={70}
+            height={70}
+            priority
           />
         </div>
 
         {/* Centre - bloc principal */}
-        <div style={{ gridColumn: "2", gridRow: "2", textAlign: "center" }}>
+        <div style={{ gridColumn: 2, gridRow: 2, textAlign: "center" }}>
           <h2>
             <strong>Une attention qui fait la différence</strong>
           </h2>
         </div>
 
         {/* Coin bas centre */}
-        <div style={{ gridColumn: "2", gridRow: "4", textAlign: "center" }}>
+        <div style={{ gridColumn: 2, gridRow: 4, textAlign: "center" }}>
           <h3>
             <strong>Un cadeau qui dure :</strong>
           </h3>
@@ -120,10 +127,13 @@ export default function Offrir() {
 
         {/* Coin bas gauche */}
         <div style={{ gridColumn: 1, gridRow: 3, textAlign: "center" }}>
-          <img
+          <Image
+            className={styles.arrowLarge}
             src="/arrow-down-left.png"
             alt="arrow down left"
-            style={{ width: "70px", height: "auto" }}
+            width={70}
+            height={70}
+            priority
           />
           <h3>
             <strong>Pour tous les barbus :</strong>
@@ -132,12 +142,16 @@ export default function Offrir() {
             <em>Pour les débutants, amateurs ou expert des soins de barbe</em>
           </p>
         </div>
+
         {/* Coin bas droit */}
         <div style={{ gridColumn: 3, gridRow: 3, textAlign: "center" }}>
-          <img
+          <Image
+            className={styles.arrowLarge}
             src="/arrow-down-right.png"
             alt="arrow down right"
-            style={{ width: "70px", height: "auto" }}
+            width={70}
+            height={70}
+            priority
           />
           <h3>
             <strong>Le meilleur des marques :</strong>
@@ -148,47 +162,45 @@ export default function Offrir() {
         </div>
       </div>
 
+      {/* Section tutoriel */}
       <div className={styles.tutoriel}>
         <h1>Comment ça marche</h1>
         <div className={styles.etapes}>
           <div className={styles.etape}>
-            {
-              <Image
-                className={styles.logo}
-                src="/tuto_etape1.png"
-                alt="Vercel logomark"
-                width={200}
-                height={200}
-              />
-            }
+            <Image
+              className={styles.logo}
+              src="/tuto_etape1.png"
+              alt="Étape 1"
+              width={200}
+              height={200}
+              priority
+            />
             <h2>1</h2>
             <p>Je choisis mon abonnement</p>
           </div>
 
           <div className={styles.etape}>
-            {
-              <Image
-                className={styles.logo}
-                src="/tuto_etape2.png"
-                alt="Vercel logomark"
-                width={300}
-                height={300}
-              />
-            }
+            <Image
+              className={styles.logo}
+              src="/tuto_etape2.png"
+              alt="Étape 2"
+              width={200}
+              height={200}
+              priority
+            />
             <h2>2</h2>
             <p>Je reçois ma Box</p>
           </div>
 
           <div className={styles.etape}>
-            {
-              <Image
-                className={styles.logo}
-                src="/tuto_etape3.png"
-                alt="Vercel logomark"
-                width={200}
-                height={200}
-              />
-            }
+            <Image
+              className={styles.logo}
+              src="/tuto_etape3.png"
+              alt="Étape 3"
+              width={200}
+              height={200}
+              priority
+            />
             <h2>3</h2>
             <p>Je découvre ce qu’on m’a préparé</p>
           </div>
@@ -196,6 +208,7 @@ export default function Offrir() {
         <a href="">PLUS DE DÉTAILS</a>
       </div>
 
+      {/* Section abonnements */}
       <div className={styles.section_abonnements}>
         <h1> Nos offres d’abonnement </h1>
         <ListeAbonnements />
