@@ -126,7 +126,9 @@ const ProductDetailPage = () => {
               src={
                 mainImage
                   ? mainImage
-                  : process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
+                  : product.images?.[0]?.filePath
+                    ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + product.images[0].filePath
+                    : "/image.png"
               }
               alt={product.name}
               className="img-fluid rounded shadow"

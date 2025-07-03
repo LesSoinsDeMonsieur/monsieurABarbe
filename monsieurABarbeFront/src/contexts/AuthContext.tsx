@@ -12,7 +12,7 @@ type UserInfo =
     }
   | {
       state: LoginState.LOGGED_IN;
-      id: string;
+      id: number;
       username: string;
       email: string;
       role: RoleEnum;
@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUserInfo({
           state: LoginState.LOGGED_IN,
           ...(me as {
-            id: string;
+            id: number;
             username: string;
             email: string;
             role: RoleEnum;
