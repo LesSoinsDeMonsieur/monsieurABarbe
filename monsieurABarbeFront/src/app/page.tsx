@@ -13,7 +13,6 @@ import ListeAvis from "@/components/ListeAvis";
 export default function Home() {
   const fetchData = async () => {
     const response = await axiosI.get<Product[]>("/products");
-    console.log(response.data);
     return response.data;
   };
 
