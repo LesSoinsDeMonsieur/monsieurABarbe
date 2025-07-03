@@ -12,6 +12,8 @@ public class OrderMapper {
         response.setUserId(order.getUser().getId());
         response.setTotal(order.getTotal());
         response.setCreatedAt(order.getCreatedAt());
+        response.setStatus(order.getStatus());
+        response.setUserMailAddress(order.getUser().getEmail());
 
         List<OrderResponse.OrderItemResponse> items = order.getOrderItems().stream().map(item -> {
             OrderResponse.OrderItemResponse itemResponse = new OrderResponse.OrderItemResponse();
