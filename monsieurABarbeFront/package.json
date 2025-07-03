@@ -37,6 +37,6 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": "20.15.0"
+    "node": "20.19.3"
   }
 }
