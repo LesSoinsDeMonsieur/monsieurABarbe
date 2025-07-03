@@ -486,7 +486,6 @@ a.secondary {
   }
 }
 
-
 @media screen and (max-width: 768px) {
   .decouverte {
     flex-direction: column;
