@@ -112,28 +112,41 @@ NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_...
 
 ## 🚀 Déploiement
 
-> Se rendre sur [Clever Cloud](https://console.clever-cloud.com/) et connectez vous.
+Le déploiement se fait sur un hébergeur différent pour le backend et le frontend
 
 ### Backend
 
+- Se rendre sur [Clever Cloud](https://console.clever-cloud.com/) et connectez vous.
 - Une fois connecté, allez sur "Create an application" et sélectionner le repo github
 - Choisir java + maven et compléter les informations demandés
 - Ajouter un Add-on de base de donnée de type "PostgreSQL" (qui sera normalement proposé automatiquement par clever cloud, si ce n'est pas le cas -> Mettre la base en tant que add-on du backend.)
 - Dans les variables d'environnement, ajouter les deux variable suivantes :
+
   > "APP_FOLDER" : monsieurabarbeback
-  
+
   > "CC_JAVA_VERSION" : 21
+
 - Ajouter les autres variables d'environnements se trouvant dans le fichier .env.sample du backend
 - Lancer le backend
 
 ### Frontend
 
-- Une fois connecté, allez sur "Create an application" et sélectionner le repo github
-- Choisir Node et compléter les informations demandés
-- Ajouter la variable suivante :
-  > "APP_FOLDER" : monsieurABarbeFront
-- Ajouter les autres variable d'environnement présentes dans le fichier .env.sample
-- Lancer le frontend
+- Se rendre sur [Netlify](https://app.netlify.com/) et sélectionner le projet Monsieur à Barbe (allez le chercher sur le git si ce n'est pas fait)
+- ajouter les variables d'environnement de dev
+- Modifier la version de node pour 20.x dans : project configuration -> build & deploy -> dependency-management
+
+## 🚀 Configuration Netlify
+
+| Champ                     | Valeur                                  |
+| ------------------------- | --------------------------------------- |
+| **Runtime**               | Next.js                                 |
+| **Base directory**        | `monsieurABarbeFront`                   |
+| **Package directory**     | _Not set_                               |
+| **Build command**         | `yarn build`                            |
+| **Publish directory**     | `monsieurABarbeFront/.next`             |
+| **Functions directory**   | `monsieurABarbeFront/netlify/functions` |
+| **Deploy log visibility** | Logs are public                         |
+| **Build status**          | Active                                  |
 
 ---
 
