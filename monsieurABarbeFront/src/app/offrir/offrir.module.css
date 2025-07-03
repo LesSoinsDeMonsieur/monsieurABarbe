@@ -1,0 +1,67 @@
+.bandeau {
+  width: 100%;
+  height: 300px;
+}
+
+.tutoriel {
+  background-color: var(--gris);
+  color: var(--blanc);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem 0;
+  gap: 2rem;
+}
+
+.tutoriel .etapes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  width: 80%;
+}
+.tutoriel .etapes .etape {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.etape img {
+  width: 200px !important;
+  height: 200px !important;
+  margin-bottom: 0.5rem;
+}
+
+.tutoriel .etapes .etape img {
+  width: 100%;
+  height: 100%;
+}
+
+.tutoriel a {
+  color: var(--gris);
+  background-color: var(--blanc);
+  border-radius: 3px !important;
+  padding: 12px 40px;
+}
+
+.section_abonnements {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.section_abonnements a {
+  background: var(--gris);
+  border-radius: 3px;
+  padding: 12px 40px;
+  color: var(--blanc);
+  text-align: center;
+}

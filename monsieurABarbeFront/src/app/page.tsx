@@ -9,11 +9,11 @@ import { useEffect } from "react";
 import ListeProduits from "@/components/ListeProduits";
 import ListeAbonnements from "@/components/ListeAbonnements";
 import ListeAvis from "@/components/ListeAvis";
+import Link from "next/link";
 
 export default function Home() {
   const fetchData = async () => {
     const response = await axiosI.get<Product[]>("/products");
-    console.log(response.data);
     return response.data;
   };
 
@@ -32,8 +32,7 @@ export default function Home() {
         <div className={styles.ctas}>
           <a
             className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
+            href="/products"
             rel="noopener noreferrer"
           >
             JE LA VEUX
@@ -127,9 +126,9 @@ export default function Home() {
         <h1>Dans vos box, retrouvez ces produits</h1>
         <ListeProduits />
         <div>
-          <a href="" className={styles.voir_tous_les_produits}>
+          <Link className={styles.voir_tous_les_produits} href="/products">
             VOIR TOUS LES PRODUITS
-          </a>
+          </Link>
         </div>
       </div>
     </main>

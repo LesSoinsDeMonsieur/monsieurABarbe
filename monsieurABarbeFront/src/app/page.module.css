@@ -180,14 +180,14 @@
   width: 90%;
 }
 
-.section_abonnements .abonnements {
+.abonnements {
   display: flex;
   justify-content: center;
   gap: 1rem;
   width: 100%;
 }
 
-.section_abonnements .abonnements .abonnement {
+.abonnements .abonnement {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -483,5 +483,80 @@ a.secondary {
 @media (prefers-color-scheme: dark) {
   .logo {
     filter: invert();
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .decouverte {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .decouverte img {
+    width: 90% !important;
+  }
+
+  .decouverte .contenu {
+    width: 90%;
+    padding: 0 1rem;
+  }
+
+  .tutoriel .etapes {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .section_abonnements .abonnements {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section_abonnements .abonnements .abonnement {
+    width: 90%;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .section_avis {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section_avis .voir_tous_les_avis {
+    min-width: unset;
+    width: 90%;
+  }
+
+  .section_avis .liste_avis {
+    width: 90%;
+  }
+
+  .section_produits .produits {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section_produits .produits .produit {
+    align-items: center;
+    text-align: center;
+  }
+
+  .intro h1 {
+    font-size: 2rem;
+  }
+
+  .decouverte .contenu p {
+    font-size: 1.2rem;
+  }
+
+  .abonnement .contenu h2 {
+    font-size: 1.8rem;
+  }
+
+  .voir_tous_les_avis h2 {
+    font-size: 1.8rem;
   }
 }

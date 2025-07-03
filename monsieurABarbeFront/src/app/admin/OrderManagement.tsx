@@ -23,6 +23,7 @@ import { OrderStatus } from "@/types/orderStatus";
 interface Order {
   id: number;
   userId: number;
+  userMailAddress: string;
   total: number;
   createdAt: string;
   status: OrderStatus;
@@ -113,7 +114,7 @@ export default function OrdersManagement() {
         filteredOrders.map((order) => (
           <Box key={order.id} sx={{ mb: 4 }}>
             <Typography variant="h6" sx={{ color: "black" }}>
-              Commande n°{order.id} — Utilisateur n°{order.userId}
+              Commande n°{order.id} — Utilisateur : <strong>{order.userMailAddress}</strong>
             </Typography>
             <Typography sx={{ mb: 1, color: "black" }}>
               Total : {order.total.toFixed(2)} € — Créée le{" "}
