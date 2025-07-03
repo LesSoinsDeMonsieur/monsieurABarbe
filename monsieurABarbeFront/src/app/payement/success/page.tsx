@@ -49,7 +49,7 @@ export default function Page() {
         <h1>Merci pour votre Achat !</h1>
         Vous recevrez vos articles dans les plus bref délais vous pouvez consulté l&apos;avancé de
         la livraison sur la page{" "}
-        <Link href={"/my-order"} style={{ color: "black" }}>
+        <Link href={"/profile"} style={{ color: "black" }}>
           <strong>Mes commandes</strong>
         </Link>
       </div>
