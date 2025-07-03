@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import Cart from "@/types/cart";
 import CartItem from "@/types/cartItem";
+import { getCart, RemoveItemToCart } from "@/api/cart/cart";
+import Link from "next/link";
+import Image from "next/image";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -21,13 +22,9 @@ const CartPage = () => {
 
     const fetchCart = async () => {
       try {
-        const response = await axios.get<Cart>(process.env.NEXT_PUBLIC_BACKEND_URL + "/cart", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (response.data.cartItems) {
-          setCartItems(Array.from(response.data.cartItems));
+        const response = await getCart();
+        if (response && response.cartItems) {
+          setCartItems(response.cartItems);
         } else {
           setCartItems([]);
         }
@@ -46,12 +43,7 @@ const CartPage = () => {
     if (!token) return;
 
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/remove/${itemId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      await RemoveItemToCart({ id: itemId });
       setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
     } catch (err) {
       console.error("Erreur lors de la suppression de l'article", err);
@@ -78,19 +70,31 @@ const CartPage = () => {
           <div className="row g-3">
             {cartItems.map((item) => (
               <div className="col-md-6" key={item.id}>
-                <div className="card p-3 shadow-sm h-100 d-flex flex-row">
-                  <img
-                    src={
-                      process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE + item.product.images[0].filePath
-                    }
-                    alt={item.product.name}
-                    className="rounded"
+                <div className="card p-3 shadow-sm h-100 d-flex flex-row align-items-center">
+                  <div
                     style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
+                      width: 100,
+                      height: 100,
+                      position: "relative",
+                      overflow: "hidden",
+                      backgroundColor: "#f8f9fa",
+                      flexShrink: 0,
+                      borderRadius: "0.375rem", // équivalent Bootstrap "rounded"
                     }}
-                  />
+                  >
+                    <Image
+                      src={
+                        item.product.images[0]
+                          ? process.env.NEXT_PUBLIC_BACKEND_URL_IMAGE +
+                            item.product.images[0].filePath
+                          : "/image.png"
+                      }
+                      alt={item.product.name}
+                      fill
+                      style={{ objectFit: "contain" }}
+                    />
+                  </div>
+
                   <div className="ms-3 flex-grow-1">
                     <h5 className="mb-1">{item.product.name}</h5>
                     <p className="mb-1">Quantité : {item.quantity}</p>
@@ -111,7 +115,9 @@ const CartPage = () => {
 
           <div className="mt-4">
             <h4>Total : {getTotalPrice().toFixed(2)} €</h4>
-            <button className="btn btn-success mt-3">Procéder au paiement</button>
+            <Link href={"payement"}>
+              <button className="btn btn-success mt-3">Procéder au paiement</button>
+            </Link>
           </div>
         </>
       )}

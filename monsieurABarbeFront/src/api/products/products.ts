@@ -18,9 +18,7 @@ export async function updateProduct({
 
 export async function getProduct({ id }: { id: number }): Promise<Product | null> {
   try {
-    const response = await axiosI.get<Product>(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
-    );
+    const response = await axiosI.get<Product>(`/products/${id}`);
     return response.data;
   } catch (err) {
     console.error(err);

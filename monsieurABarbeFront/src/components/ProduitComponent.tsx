@@ -26,7 +26,7 @@ export default function Produit({ produit }: ProduitProps) {
         height={400}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        style={{ transition: "3s ease-in-out" }}
+        style={{ transition: "3s ease-in-out", width: "100%" }}
       />
       <Link href="/product">
         <strong>{produit.titre}</strong>

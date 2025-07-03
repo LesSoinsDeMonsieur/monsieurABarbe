@@ -6,6 +6,7 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
+  --gris_clair: #f0f2f2;
   --gris: #3b3b3b;
   --blanc: #ffffff;
 
@@ -46,6 +47,7 @@
   width: 100%;
   font-family: "Georgia", serif;
   color: #3a3a3a;
+  padding-bottom: 50px;
 }
 
 .main a {
@@ -96,6 +98,7 @@
   display: flex;
   gap: 30px;
   width: 80%;
+  align-items: center;
 }
 
 .decouverte img {
@@ -106,7 +109,9 @@
 .decouverte .contenu {
   width: 50%;
   align-items: center;
-  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .decouverte .contenu p {
