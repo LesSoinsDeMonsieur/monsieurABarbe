@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import ListeProduits from "@/components/ListeProduits";
 import ListeAbonnements from "@/components/ListeAbonnements";
 import ListeAvis from "@/components/ListeAvis";
+import Link from "next/link";
 
 export default function Home() {
   const fetchData = async () => {
@@ -127,9 +128,9 @@ export default function Home() {
         <h1>Dans vos box, retrouvez ces produits</h1>
         <ListeProduits />
         <div>
-          <a href="" className={styles.voir_tous_les_produits}>
+          <Link className={styles.voir_tous_les_produits} href="/products">
             VOIR TOUS LES PRODUITS
-          </a>
+          </Link>
         </div>
       </div>
     </main>
