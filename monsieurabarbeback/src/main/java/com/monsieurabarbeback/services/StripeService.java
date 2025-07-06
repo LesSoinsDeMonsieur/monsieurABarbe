@@ -82,7 +82,7 @@ public class StripeService {
                     .build();
             })
             .collect(Collectors.toList());
-
+        System.out.println("user : " + user.getId().toString());
         SessionCreateParams params = SessionCreateParams.builder()
             .addAllLineItem(lineItems)
             .setShippingAddressCollection(
@@ -94,6 +94,11 @@ public class StripeService {
             .setMode(SessionCreateParams.Mode.PAYMENT)
             .setSuccessUrl(urlFrontend+"/payement/success")
             .setCancelUrl(urlFrontend+"/payement/cancel")
+            .setPaymentIntentData(
+                SessionCreateParams.PaymentIntentData.builder()
+                    .putMetadata("user_id", user.getId().toString())
+                    .build()
+            )            
             .build();
 
         Session session = Session.create(params);
