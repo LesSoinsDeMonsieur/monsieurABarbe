@@ -19,6 +19,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { OrderStatus } from "@/types/orderStatus";
+import { statusLabels } from "@/types/order";
 
 interface Order {
   id: number;
@@ -131,7 +132,7 @@ export default function OrdersManagement() {
               >
                 {Object.values(OrderStatus).map((status) => (
                   <MenuItem key={status} value={status}>
-                    {status}
+                    {statusLabels[status] ?? status}
                   </MenuItem>
                 ))}
               </Select>
