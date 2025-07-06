@@ -1,12 +1,22 @@
 package com.monsieurabarbeback.services;
 
+import com.google.gson.JsonSyntaxException;
+import com.monsieurabarbeback.controllers.dto.OrderCreationRequest;
 import com.monsieurabarbeback.entities.Cart;
 import com.monsieurabarbeback.entities.CartItem;
 import com.monsieurabarbeback.entities.Product;
 import com.monsieurabarbeback.entities.User;
+import com.monsieurabarbeback.repositories.CartRepository;
 import com.stripe.Stripe;
+import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
+import com.stripe.model.Event;
+import com.stripe.model.EventDataObjectDeserializer;
+import com.stripe.model.PaymentIntent;
+import com.stripe.model.StripeObject;
 import com.stripe.model.checkout.Session;
+import com.stripe.net.ApiResource;
+import com.stripe.net.Webhook;
 import com.stripe.param.checkout.SessionCreateParams;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,10 +43,18 @@ public class StripeService {
     private String secretKey;
     @Value("${url.frontend}")
     private String urlFrontend;
+    @Value("${secret.endpoint}")
+    private String endpointSecret;
 
     @Autowired
     private CartService cartService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private UserService userService;
 
+    @Autowired 
+    private CartRepository cartRepository;
     public Map<String, String> createCheckoutSession(User user) throws StripeException {
         Stripe.apiKey = secretKey;
 
@@ -105,4 +124,72 @@ public class StripeService {
 
         return Map.of("sessionId", session.getId());
     }
+
+    public ResponseEntity<Void> handlePayement(String payload, String sigHeader) {
+        Event event = null;        
+        try {
+            event = ApiResource.GSON.fromJson(payload, Event.class);
+        } catch (JsonSyntaxException e) {
+            // Invalid payload
+            System.out.println("⚠️  Webhook error while parsing basic request.");
+            
+            return ResponseEntity.badRequest().build();
+            
+        }
+
+        if(endpointSecret != null && sigHeader != null) {
+            // Only verify the event if you have an endpoint secret defined.
+            // Otherwise use the basic event deserialized with GSON.
+            try {
+                event = Webhook.constructEvent(
+                    payload, sigHeader, endpointSecret
+                );
+            } catch (SignatureVerificationException e) {
+                // Invalid signature
+                System.out.println("⚠️  Webhook error while validating signature.");
+                return ResponseEntity.status(400).build();
+            }
+        }
+        
+        EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
+        StripeObject stripeObject = null;
+        if (dataObjectDeserializer.getObject().isPresent()) {
+            stripeObject = dataObjectDeserializer.getObject().get();
+        } else {
+            // Deserialization failed, probably due to an API version mismatch.
+            // Refer to the Javadoc documentation on `EventDataObjectDeserializer` for
+            // instructions on how to handle this case, or return an error here.
+            System.out.println("error");
+        }
+        
+        if("payment_intent.succeeded".equals(event.getType())) {
+            PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
+            // System.out.println("Payment for " + paymentIntent.getAmount() / 100 + "euro succeeded.");
+            
+            String id = paymentIntent.getMetadata().get("user_id");
+            Optional<User> user = userService.getUserById(Long.valueOf(id));
+            if (user.isPresent()){
+                Cart cart = cartRepository.findByUser(user.get()).orElse(null);
+                OrderCreationRequest orderRequest = convertCartToOrderRequest(cart);
+                orderService.createOrder(orderRequest, user.get().getUsername());
+            }else{
+                System.out.println("No user found");
+            }
+        }
+        return ResponseEntity.ok().build();
+    };
+
+    public OrderCreationRequest convertCartToOrderRequest(Cart cart) {
+        OrderCreationRequest request = new OrderCreationRequest();
+
+        List<OrderCreationRequest.OrderItemRequest> itemRequests = cart.getCartItems().stream().map(cartItem -> {
+            OrderCreationRequest.OrderItemRequest itemRequest = new OrderCreationRequest.OrderItemRequest();
+            itemRequest.setProductId(cartItem.getProduct().getId());
+            itemRequest.setQuantity(cartItem.getQuantity());
+            return itemRequest;
+        }).toList();
+
+        request.setItems(itemRequests);
+        return request;
+    };
 }
